@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DigiClock")]
+[assembly: AssemblyTitle("Statamoto")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DigiClock")]
-[assembly: AssemblyCopyright("Copyright ©  2023")]
+[assembly: AssemblyCompany("BXL909")]
+[assembly: AssemblyProduct("Statamoto")]
+[assembly: AssemblyCopyright("FOSS")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

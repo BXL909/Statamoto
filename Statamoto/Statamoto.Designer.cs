@@ -1,6 +1,6 @@
-﻿namespace DigiClock
+﻿namespace Statamoto
 {
-    partial class Form1
+    partial class Statamoto
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Statamoto));
             this.lblTime = new System.Windows.Forms.Label();
             this.lblSeconds = new System.Windows.Forms.Label();
             this.lblDate = new System.Windows.Forms.Label();
@@ -89,6 +89,9 @@
             this.label20 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label22 = new System.Windows.Forms.Label();
+            this.btnSplash = new System.Windows.Forms.Button();
+            this.lblTransactions = new System.Windows.Forms.Label();
+            this.lblBlockSize = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblTime
@@ -97,7 +100,7 @@
             this.lblTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblTime.Font = new System.Drawing.Font("Technology", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTime.ForeColor = System.Drawing.Color.Gray;
-            this.lblTime.Location = new System.Drawing.Point(33, 43);
+            this.lblTime.Location = new System.Drawing.Point(34, 60);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(142, 55);
             this.lblTime.TabIndex = 1;
@@ -109,7 +112,7 @@
             this.lblSeconds.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblSeconds.Font = new System.Drawing.Font("Technology", 22.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSeconds.ForeColor = System.Drawing.Color.Gray;
-            this.lblSeconds.Location = new System.Drawing.Point(168, 61);
+            this.lblSeconds.Location = new System.Drawing.Point(169, 78);
             this.lblSeconds.Name = "lblSeconds";
             this.lblSeconds.Size = new System.Drawing.Size(47, 34);
             this.lblSeconds.TabIndex = 1;
@@ -119,11 +122,11 @@
             // 
             this.lblDate.AutoSize = true;
             this.lblDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblDate.Font = new System.Drawing.Font("Technology", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDate.ForeColor = System.Drawing.Color.Gray;
-            this.lblDate.Location = new System.Drawing.Point(39, 98);
+            this.lblDate.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDate.ForeColor = System.Drawing.Color.Silver;
+            this.lblDate.Location = new System.Drawing.Point(41, 112);
             this.lblDate.Name = "lblDate";
-            this.lblDate.Size = new System.Drawing.Size(192, 22);
+            this.lblDate.Size = new System.Drawing.Size(152, 18);
             this.lblDate.TabIndex = 2;
             this.lblDate.Text = "XXXXXXXX nnxx nnnn";
             // 
@@ -131,11 +134,11 @@
             // 
             this.lblDay.AutoSize = true;
             this.lblDay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblDay.Font = new System.Drawing.Font("Technology", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDay.ForeColor = System.Drawing.Color.Gray;
-            this.lblDay.Location = new System.Drawing.Point(39, 127);
+            this.lblDay.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDay.ForeColor = System.Drawing.Color.Silver;
+            this.lblDay.Location = new System.Drawing.Point(40, 132);
             this.lblDay.Name = "lblDay";
-            this.lblDay.Size = new System.Drawing.Size(100, 22);
+            this.lblDay.Size = new System.Drawing.Size(80, 18);
             this.lblDay.TabIndex = 3;
             this.lblDay.Text = "XXXXXXXXX";
             // 
@@ -147,19 +150,22 @@
             // btnExit
             // 
             this.btnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 4.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 5F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.Gray;
             this.btnExit.Location = new System.Drawing.Point(856, 12);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(0);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(20, 21);
             this.btnExit.TabIndex = 4;
+            this.btnExit.TabStop = false;
             this.btnExit.Text = "x";
             this.btnExit.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            this.btnExit.MouseLeave += new System.EventHandler(this.btnExit_MouseLeave);
-            this.btnExit.MouseHover += new System.EventHandler(this.btnExit_MouseHover);
+            this.btnExit.MouseLeave += new System.EventHandler(this.button_MouseLeave);
+            this.btnExit.MouseHover += new System.EventHandler(this.button_MouseHover);
             // 
             // lblBlockNumber
             // 
@@ -167,7 +173,7 @@
             this.lblBlockNumber.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblBlockNumber.Font = new System.Drawing.Font("Technology", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBlockNumber.ForeColor = System.Drawing.Color.Gray;
-            this.lblBlockNumber.Location = new System.Drawing.Point(287, 43);
+            this.lblBlockNumber.Location = new System.Drawing.Point(313, 60);
             this.lblBlockNumber.Name = "lblBlockNumber";
             this.lblBlockNumber.Size = new System.Drawing.Size(186, 55);
             this.lblBlockNumber.TabIndex = 5;
@@ -185,18 +191,18 @@
             this.label1.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Silver;
             this.label1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label1.Location = new System.Drawing.Point(295, 31);
+            this.label1.Location = new System.Drawing.Point(321, 48);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(42, 15);
+            this.label1.Size = new System.Drawing.Size(91, 15);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Block";
+            this.label1.Text = "Block height";
             // 
             // lblBlockReward
             // 
             this.lblBlockReward.AutoSize = true;
             this.lblBlockReward.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblBlockReward.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBlockReward.Location = new System.Drawing.Point(292, 217);
+            this.lblBlockReward.Location = new System.Drawing.Point(317, 217);
             this.lblBlockReward.Name = "lblBlockReward";
             this.lblBlockReward.Size = new System.Drawing.Size(90, 27);
             this.lblBlockReward.TabIndex = 7;
@@ -209,7 +215,7 @@
             this.label2.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Silver;
             this.label2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label2.Location = new System.Drawing.Point(294, 201);
+            this.label2.Location = new System.Drawing.Point(319, 201);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(133, 15);
             this.label2.TabIndex = 8;
@@ -294,18 +300,19 @@
             this.label3.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Silver;
             this.label3.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label3.Location = new System.Drawing.Point(294, 249);
+            this.label3.Location = new System.Drawing.Point(319, 249);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(217, 15);
+            this.label3.Size = new System.Drawing.Size(224, 15);
             this.label3.TabIndex = 17;
-            this.label3.Text = "Next difficulty adjustment (%)";
+            this.label3.Text = "Next difficulty adjustment (%)*";
+            this.toolTip1.SetToolTip(this.label3, "(estimated)");
             // 
             // lblDifficultyAdjEst
             // 
             this.lblDifficultyAdjEst.AutoSize = true;
             this.lblDifficultyAdjEst.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblDifficultyAdjEst.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDifficultyAdjEst.Location = new System.Drawing.Point(292, 265);
+            this.lblDifficultyAdjEst.Location = new System.Drawing.Point(317, 265);
             this.lblDifficultyAdjEst.Name = "lblDifficultyAdjEst";
             this.lblDifficultyAdjEst.Size = new System.Drawing.Size(90, 27);
             this.lblDifficultyAdjEst.TabIndex = 16;
@@ -343,7 +350,7 @@
             this.label13.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.Silver;
             this.label13.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label13.Location = new System.Drawing.Point(294, 337);
+            this.label13.Location = new System.Drawing.Point(319, 337);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(175, 15);
             this.label13.TabIndex = 21;
@@ -354,7 +361,7 @@
             this.lblEstHashrate.AutoSize = true;
             this.lblEstHashrate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblEstHashrate.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEstHashrate.Location = new System.Drawing.Point(292, 353);
+            this.lblEstHashrate.Location = new System.Drawing.Point(317, 353);
             this.lblEstHashrate.Name = "lblEstHashrate";
             this.lblEstHashrate.Size = new System.Drawing.Size(90, 27);
             this.lblEstHashrate.TabIndex = 20;
@@ -391,7 +398,7 @@
             this.label8.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Silver;
             this.label8.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label8.Location = new System.Drawing.Point(294, 380);
+            this.label8.Location = new System.Drawing.Point(319, 380);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(245, 15);
             this.label8.TabIndex = 25;
@@ -402,7 +409,7 @@
             this.lblHashesToSolve.AutoSize = true;
             this.lblHashesToSolve.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblHashesToSolve.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHashesToSolve.Location = new System.Drawing.Point(292, 396);
+            this.lblHashesToSolve.Location = new System.Drawing.Point(317, 396);
             this.lblHashesToSolve.Name = "lblHashesToSolve";
             this.lblHashesToSolve.Size = new System.Drawing.Size(90, 27);
             this.lblHashesToSolve.TabIndex = 24;
@@ -415,7 +422,7 @@
             this.label9.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.Silver;
             this.label9.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label9.Location = new System.Drawing.Point(294, 292);
+            this.label9.Location = new System.Drawing.Point(319, 292);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(252, 15);
             this.label9.TabIndex = 27;
@@ -426,7 +433,7 @@
             this.lblNextDifficultyChange.AutoSize = true;
             this.lblNextDifficultyChange.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblNextDifficultyChange.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNextDifficultyChange.Location = new System.Drawing.Point(292, 308);
+            this.lblNextDifficultyChange.Location = new System.Drawing.Point(317, 308);
             this.lblNextDifficultyChange.Name = "lblNextDifficultyChange";
             this.lblNextDifficultyChange.Size = new System.Drawing.Size(90, 27);
             this.lblNextDifficultyChange.TabIndex = 26;
@@ -439,7 +446,7 @@
             this.label10.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.Silver;
             this.label10.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label10.Location = new System.Drawing.Point(294, 423);
+            this.label10.Location = new System.Drawing.Point(319, 423);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(182, 15);
             this.label10.TabIndex = 29;
@@ -450,7 +457,7 @@
             this.lbl24HourTransCount.AutoSize = true;
             this.lbl24HourTransCount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lbl24HourTransCount.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl24HourTransCount.Location = new System.Drawing.Point(292, 439);
+            this.lbl24HourTransCount.Location = new System.Drawing.Point(317, 439);
             this.lbl24HourTransCount.Name = "lbl24HourTransCount";
             this.lbl24HourTransCount.Size = new System.Drawing.Size(90, 27);
             this.lbl24HourTransCount.TabIndex = 28;
@@ -463,7 +470,7 @@
             this.label12.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.Silver;
             this.label12.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label12.Location = new System.Drawing.Point(294, 466);
+            this.label12.Location = new System.Drawing.Point(319, 466);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(217, 15);
             this.label12.TabIndex = 31;
@@ -474,7 +481,7 @@
             this.lbl24HourBTCSent.AutoSize = true;
             this.lbl24HourBTCSent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lbl24HourBTCSent.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl24HourBTCSent.Location = new System.Drawing.Point(292, 482);
+            this.lbl24HourBTCSent.Location = new System.Drawing.Point(317, 482);
             this.lbl24HourBTCSent.Name = "lbl24HourBTCSent";
             this.lbl24HourBTCSent.Size = new System.Drawing.Size(90, 27);
             this.lbl24HourBTCSent.TabIndex = 30;
@@ -484,35 +491,37 @@
             // 
             this.btnMinimise.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
             this.btnMinimise.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMinimise.Font = new System.Drawing.Font("Microsoft Sans Serif", 4.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMinimise.Font = new System.Drawing.Font("Microsoft Sans Serif", 5F, System.Drawing.FontStyle.Bold);
             this.btnMinimise.ForeColor = System.Drawing.Color.Gray;
             this.btnMinimise.Location = new System.Drawing.Point(830, 12);
             this.btnMinimise.Name = "btnMinimise";
             this.btnMinimise.Size = new System.Drawing.Size(20, 21);
             this.btnMinimise.TabIndex = 32;
+            this.btnMinimise.TabStop = false;
             this.btnMinimise.Text = "-";
             this.btnMinimise.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnMinimise.UseVisualStyleBackColor = false;
             this.btnMinimise.Click += new System.EventHandler(this.btnMinimise_Click);
-            this.btnMinimise.MouseLeave += new System.EventHandler(this.btnMinimise_MouseLeave);
-            this.btnMinimise.MouseHover += new System.EventHandler(this.btnMinimise_MouseHover);
+            this.btnMinimise.MouseLeave += new System.EventHandler(this.button_MouseLeave);
+            this.btnMinimise.MouseHover += new System.EventHandler(this.button_MouseHover);
             // 
             // btnMoveWindow
             // 
             this.btnMoveWindow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
             this.btnMoveWindow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMoveWindow.Font = new System.Drawing.Font("Microsoft Sans Serif", 4.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMoveWindow.Font = new System.Drawing.Font("Microsoft Sans Serif", 5F, System.Drawing.FontStyle.Bold);
             this.btnMoveWindow.ForeColor = System.Drawing.Color.Gray;
             this.btnMoveWindow.Location = new System.Drawing.Point(774, 12);
             this.btnMoveWindow.Name = "btnMoveWindow";
             this.btnMoveWindow.Size = new System.Drawing.Size(50, 21);
             this.btnMoveWindow.TabIndex = 33;
+            this.btnMoveWindow.TabStop = false;
             this.btnMoveWindow.Text = "---";
             this.btnMoveWindow.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnMoveWindow.UseVisualStyleBackColor = false;
             this.btnMoveWindow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnMoveWindow_MouseDown);
-            this.btnMoveWindow.MouseLeave += new System.EventHandler(this.btnMoveWindow_MouseLeave);
-            this.btnMoveWindow.MouseHover += new System.EventHandler(this.btnMoveWindow_MouseHover);
+            this.btnMoveWindow.MouseLeave += new System.EventHandler(this.button_MouseLeave);
+            this.btnMoveWindow.MouseHover += new System.EventHandler(this.button_MouseHover);
             this.btnMoveWindow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnMoveWindow_MouseUp);
             // 
             // label14
@@ -522,18 +531,19 @@
             this.label14.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.Color.Silver;
             this.label14.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label14.Location = new System.Drawing.Point(294, 509);
+            this.label14.Location = new System.Drawing.Point(319, 509);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(168, 15);
+            this.label14.Size = new System.Drawing.Size(175, 15);
             this.label14.TabIndex = 35;
-            this.label14.Text = "Avg no. of transactions";
+            this.label14.Text = "Avg no. of transactions*";
+            this.toolTip1.SetToolTip(this.label14, "calculated over the\r\nlast 100 blocks");
             // 
             // lblAvgNoTransactions
             // 
             this.lblAvgNoTransactions.AutoSize = true;
             this.lblAvgNoTransactions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblAvgNoTransactions.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAvgNoTransactions.Location = new System.Drawing.Point(292, 525);
+            this.lblAvgNoTransactions.Location = new System.Drawing.Point(317, 525);
             this.lblAvgNoTransactions.Name = "lblAvgNoTransactions";
             this.lblAvgNoTransactions.Size = new System.Drawing.Size(90, 27);
             this.lblAvgNoTransactions.TabIndex = 34;
@@ -683,6 +693,7 @@
             this.label17.Size = new System.Drawing.Size(196, 15);
             this.label17.TabIndex = 48;
             this.label17.Text = "Transactions in next block*";
+            this.toolTip1.SetToolTip(this.label17, "(estimated)");
             // 
             // lblTransInNextBlock
             // 
@@ -720,6 +731,7 @@
             this.label19.Size = new System.Drawing.Size(147, 15);
             this.label19.TabIndex = 50;
             this.label19.Text = "Max fee rate (sats)*";
+            this.toolTip1.SetToolTip(this.label19, "(estimated)");
             // 
             // lblNextBlockMinFee
             // 
@@ -745,6 +757,7 @@
             this.label21.Size = new System.Drawing.Size(147, 15);
             this.label21.TabIndex = 52;
             this.label21.Text = "Min fee rate (sats)*";
+            this.toolTip1.SetToolTip(this.label21, "(estimated)");
             // 
             // lblNextBlockTotalFees
             // 
@@ -770,6 +783,7 @@
             this.label20.Size = new System.Drawing.Size(126, 15);
             this.label20.TabIndex = 54;
             this.label20.Text = "Total fees (BTC)*";
+            this.toolTip1.SetToolTip(this.label20, "(estimated)");
             // 
             // toolTip1
             // 
@@ -782,20 +796,65 @@
             this.label22.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label22.ForeColor = System.Drawing.Color.Silver;
             this.label22.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label22.Location = new System.Drawing.Point(40, 31);
+            this.label22.Location = new System.Drawing.Point(41, 48);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(77, 15);
             this.label22.TabIndex = 57;
             this.label22.Text = "Local time";
             // 
-            // Form1
+            // btnSplash
+            // 
+            this.btnSplash.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.btnSplash.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSplash.Font = new System.Drawing.Font("Microsoft Sans Serif", 5F, System.Drawing.FontStyle.Bold);
+            this.btnSplash.ForeColor = System.Drawing.Color.Gray;
+            this.btnSplash.Location = new System.Drawing.Point(12, 12);
+            this.btnSplash.Name = "btnSplash";
+            this.btnSplash.Size = new System.Drawing.Size(20, 21);
+            this.btnSplash.TabIndex = 58;
+            this.btnSplash.Text = "?";
+            this.btnSplash.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnSplash.UseVisualStyleBackColor = false;
+            this.btnSplash.Click += new System.EventHandler(this.btnSplash_Click);
+            this.btnSplash.MouseLeave += new System.EventHandler(this.button_MouseLeave);
+            this.btnSplash.MouseHover += new System.EventHandler(this.button_MouseHover);
+            // 
+            // lblTransactions
+            // 
+            this.lblTransactions.AutoSize = true;
+            this.lblTransactions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblTransactions.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTransactions.ForeColor = System.Drawing.Color.Silver;
+            this.lblTransactions.Location = new System.Drawing.Point(320, 112);
+            this.lblTransactions.Name = "lblTransactions";
+            this.lblTransactions.Size = new System.Drawing.Size(80, 18);
+            this.lblTransactions.TabIndex = 59;
+            this.lblTransactions.Text = "XXXXXXXXX";
+            // 
+            // lblBlockSize
+            // 
+            this.lblBlockSize.AutoSize = true;
+            this.lblBlockSize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblBlockSize.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBlockSize.ForeColor = System.Drawing.Color.Silver;
+            this.lblBlockSize.Location = new System.Drawing.Point(320, 132);
+            this.lblBlockSize.Name = "lblBlockSize";
+            this.lblBlockSize.Size = new System.Drawing.Size(80, 18);
+            this.lblBlockSize.TabIndex = 60;
+            this.lblBlockSize.Text = "XXXXXXXXX";
+            // 
+            // Statamoto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(44)))));
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(888, 627);
+            this.Controls.Add(this.lblBlockSize);
+            this.Controls.Add(this.lblTransactions);
+            this.Controls.Add(this.btnSplash);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.lblNextBlockTotalFees);
             this.Controls.Add(this.label20);
@@ -854,8 +913,9 @@
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "Statamoto";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Statamoto";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             this.ResumeLayout(false);
@@ -924,6 +984,9 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Button btnSplash;
+        private System.Windows.Forms.Label lblTransactions;
+        private System.Windows.Forms.Label lblBlockSize;
     }
 }
 
