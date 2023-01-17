@@ -43,7 +43,7 @@
             this.pictureBox1.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.InitialImage")));
             this.pictureBox1.Location = new System.Drawing.Point(1, 1);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(220, 220);
+            this.pictureBox1.Size = new System.Drawing.Size(192, 206);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -55,9 +55,9 @@
             this.btnExitSplash.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExitSplash.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExitSplash.ForeColor = System.Drawing.Color.Gray;
-            this.btnExitSplash.Location = new System.Drawing.Point(74, 323);
+            this.btnExitSplash.Location = new System.Drawing.Point(248, 133);
             this.btnExitSplash.Name = "btnExitSplash";
-            this.btnExitSplash.Size = new System.Drawing.Size(75, 32);
+            this.btnExitSplash.Size = new System.Drawing.Size(66, 30);
             this.btnExitSplash.TabIndex = 1;
             this.btnExitSplash.Text = "close";
             this.btnExitSplash.UseVisualStyleBackColor = false;
@@ -71,11 +71,11 @@
             this.label2.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Silver;
             this.label2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label2.Location = new System.Drawing.Point(51, 235);
+            this.label2.Location = new System.Drawing.Point(227, 51);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(120, 18);
             this.label2.TabIndex = 9;
-            this.label2.Text = "Statamoto v0.9";
+            this.label2.Text = "Statamoto v1.0";
             // 
             // linkLabel1
             // 
@@ -83,7 +83,7 @@
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel1.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.linkLabel1.Location = new System.Drawing.Point(43, 263);
+            this.linkLabel1.Location = new System.Drawing.Point(221, 77);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(136, 18);
             this.linkLabel1.TabIndex = 10;
@@ -98,7 +98,7 @@
             this.linkLabel2.AutoSize = true;
             this.linkLabel2.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel2.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.linkLabel2.Location = new System.Drawing.Point(67, 293);
+            this.linkLabel2.Location = new System.Drawing.Point(241, 105);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(88, 18);
             this.linkLabel2.TabIndex = 11;
@@ -109,16 +109,17 @@
             // 
             // splash
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.CancelButton = this.btnExitSplash;
-            this.ClientSize = new System.Drawing.Size(223, 367);
+            this.ClientSize = new System.Drawing.Size(378, 209);
             this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnExitSplash);
             this.Controls.Add(this.pictureBox1);
+            this.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "splash";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

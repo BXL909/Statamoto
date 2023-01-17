@@ -2,7 +2,7 @@
 // add green up and red down indicators on relevant values by comparing new vs prev?
 // improve layout. 
 // disable all focus if possible. 
-// why doesn't text on splash screen stay centred when executed? (screen scaling?)
+
 
 using System;
 using System.Collections.Generic;
@@ -99,6 +99,7 @@ namespace Statamoto
         {
             try
             {
+
                 // FEES
                 var client = new HttpClient();
                 var response = client.GetAsync("https://bitcoinexplorer.org/api/mempool/fees").Result;
@@ -154,6 +155,34 @@ namespace Statamoto
                     secondField3 = Math.Round((secondField3/1000), 2); // if more than 1MB
                     lblBlockSize.Text = Convert.ToString(secondField3) + " MB";
                 }
+
+                // NEXT DIFFICULTY ADJUSTMENT BLOCK
+
+                var response4 = client.GetAsync("https://api.blockchain.info/stats").Result;
+                var json4 = response4.Content.ReadAsStringAsync().Result;
+                var data4 = JObject.Parse(json4);
+                var firstField4 = (string)data4["nextretarget"];
+                lblNextDifficultyChange.Text = Convert.ToString(firstField4);
+
+                // ATH & 24hr data
+                var response5 = client.GetAsync("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false").Result;
+                var json5 = response5.Content.ReadAsStringAsync().Result;
+                var data5 = JArray.Parse(json5);
+                var ath = data5.Where(x => (string)x["symbol"] == "btc").Select(x => (string)x["ath"]).FirstOrDefault();
+                var athDate = data5.Where(x => (string)x["symbol"] == "btc").Select(x => (string)x["ath_date"]).FirstOrDefault();
+                var athDifference = data5.Where(x => (string)x["symbol"] == "btc").Select(x => (string)x["ath_change_percentage"]).FirstOrDefault();
+                var twentyFourHourHigh = data5.Where(x => (string)x["symbol"] == "btc").Select(x => (string)x["high_24h"]).FirstOrDefault();
+                var twentyFourHourLow = data5.Where(x => (string)x["symbol"] == "btc").Select(x => (string)x["low_24h"]).FirstOrDefault();
+                DateTime date = DateTime.Parse(athDate);
+                string strATHDate = date.ToString("dd MMM yyyy");
+                lblATH.Text = ath;
+                lblATHDate.Location = new Point(lblATH.Location.X + lblATH.Width, lblATHDate.Location.Y); // place the ATH date according to the width of the ATH (future proofed for hyperbitcoinization!)
+                lblATHDate.Text = "(" + strATHDate + ")";
+                double dblATHDifference = Convert.ToDouble(athDifference);
+                dblATHDifference = Math.Round(dblATHDifference, 2);
+                lblATHDifference.Text = Convert.ToString(dblATHDifference) + "%";
+                lbl24HrHigh.Text = twentyFourHourHigh;
+                lbl24HrLow.Text = twentyFourHourLow;
             }
             catch (Exception ex)
             {
@@ -177,18 +206,26 @@ namespace Statamoto
                     lblPriceUSD.Text = client.DownloadString("https://bitcoinexplorer.org/api/price/usd"); // price of 1BTC in USD
                     lblMoscowTime.Text = client.DownloadString("https://bitcoinexplorer.org/api/price/usd/sats"); // value of 1USD in sats
                     lblMarketCapUSD.Text = client.DownloadString("https://bitcoinexplorer.org/api/price/usd/marketcap"); // BTC marketcap
-                    lblDifficultyAdjEst.Text = client.DownloadString("https://bitcoinexplorer.org/api/mining/diff-adj-estimate"); // next difficulty adjustment estimate as a percentage
+                    lblDifficultyAdjEst.Text = client.DownloadString("https://bitcoinexplorer.org/api/mining/diff-adj-estimate") + "%"; // next difficulty adjustment estimate as a percentage
                     lblTXInMempool.Text = client.DownloadString("https://bitcoinexplorer.org/api/mempool/count"); // transactions in mempool
-                    lblAvgNoTransactions.Text = client.DownloadString("https://blockchain.info/q/avgtxnumber"); // average number of transactions in last 100 blocks
+                    var AvgNoTransactions = client.DownloadString("https://blockchain.info/q/avgtxnumber"); // average number of transactions in last 100 blocks (to about 6 decimal places!)
+                    double dblAvgNoTransactions = Convert.ToDouble(AvgNoTransactions);
+                    dblAvgNoTransactions = Math.Round(dblAvgNoTransactions); // so lets get it down to an integer
+                    lblAvgNoTransactions.Text = Convert.ToString(dblAvgNoTransactions);
                     lblBlockNumber.Text = client.DownloadString("https://blockchain.info/q/getblockcount"); // most recent block number
                     lblBlockReward.Text = client.DownloadString("https://blockchain.info/q/bcperblock"); // current block reward
                     lblEstHashrate.Text = client.DownloadString("https://blockchain.info/q/hashrate"); // hashrate estimate
+                    var secondsBetweenBlocks = client.DownloadString("https://blockchain.info/q/interval"); // average time between blocks in seconds
+                    double dblSecondsBetweenBlocks = Convert.ToDouble(secondsBetweenBlocks);
+                    TimeSpan time = TimeSpan.FromSeconds(dblSecondsBetweenBlocks);
+                    string timeString = string.Format("{0:%m}m {0:%s}s", time);
+                    lblAvgTimeBetweenBlocks.Text = timeString;
+
                     var TotalBTC = client.DownloadString("https://blockchain.info/q/totalbc"); // total sats in circulation
                     double dblTotalBTC = Convert.ToDouble(TotalBTC);
                     dblTotalBTC = dblTotalBTC / 100000000; // convert sats to bitcoin
                     lblBTCInCirc.Text = Convert.ToString(dblTotalBTC);
                     lblHashesToSolve.Text = client.DownloadString("https://blockchain.info/q/hashestowin"); // avg number of hashes to win a block
-                    lblNextDifficultyChange.Text = client.DownloadString("https://blockchain.info/q/nextretarget"); // next block targetted for a difficulty adjustment
                     lbl24HourTransCount.Text = client.DownloadString("https://blockchain.info/q/24hrtransactioncount"); // number of transactions in last 24 hours
                     var TwentFourHrBTCSent = client.DownloadString("https://blockchain.info/q/24hrbtcsent"); // number of sats sent in 24 hours
                     double dbl24HrBTCSent = Convert.ToDouble(TwentFourHrBTCSent);
