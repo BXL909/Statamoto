@@ -88,6 +88,8 @@
             this.lblNextBlockTotalFees = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.lblAvgTimeBetweenBlocks = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.btnSplash = new System.Windows.Forms.Button();
             this.lblTransactions = new System.Windows.Forms.Label();
@@ -101,11 +103,17 @@
             this.lbl24HrLow = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.lblAvgTimeBetweenBlocks = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
+            this.lblHodlingAddresses = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.lblBlocksIn24Hours = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.lblNodes = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.lblBlockchainSize = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblTime
@@ -803,6 +811,32 @@
             // 
             this.toolTip1.AutomaticDelay = 750;
             // 
+            // lblAvgTimeBetweenBlocks
+            // 
+            this.lblAvgTimeBetweenBlocks.AutoSize = true;
+            this.lblAvgTimeBetweenBlocks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblAvgTimeBetweenBlocks.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAvgTimeBetweenBlocks.Location = new System.Drawing.Point(278, 248);
+            this.lblAvgTimeBetweenBlocks.Name = "lblAvgTimeBetweenBlocks";
+            this.lblAvgTimeBetweenBlocks.Size = new System.Drawing.Size(90, 27);
+            this.lblAvgTimeBetweenBlocks.TabIndex = 71;
+            this.lblAvgTimeBetweenBlocks.Text = "888888";
+            this.toolTip1.SetToolTip(this.lblAvgTimeBetweenBlocks, "(estimated)");
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label27.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.ForeColor = System.Drawing.Color.Silver;
+            this.label27.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label27.Location = new System.Drawing.Point(280, 233);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(196, 15);
+            this.label27.TabIndex = 70;
+            this.label27.Text = "Average time between blocks";
+            this.toolTip1.SetToolTip(this.label27, "(estimated)");
+            // 
             // label22
             // 
             this.label22.AutoSize = true;
@@ -964,32 +998,6 @@
             this.label24.TabIndex = 69;
             this.label24.Text = "24hr low (USD)";
             // 
-            // lblAvgTimeBetweenBlocks
-            // 
-            this.lblAvgTimeBetweenBlocks.AutoSize = true;
-            this.lblAvgTimeBetweenBlocks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblAvgTimeBetweenBlocks.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAvgTimeBetweenBlocks.Location = new System.Drawing.Point(278, 248);
-            this.lblAvgTimeBetweenBlocks.Name = "lblAvgTimeBetweenBlocks";
-            this.lblAvgTimeBetweenBlocks.Size = new System.Drawing.Size(90, 27);
-            this.lblAvgTimeBetweenBlocks.TabIndex = 71;
-            this.lblAvgTimeBetweenBlocks.Text = "888888";
-            this.toolTip1.SetToolTip(this.lblAvgTimeBetweenBlocks, "(estimated)");
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label27.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.ForeColor = System.Drawing.Color.Silver;
-            this.label27.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label27.Location = new System.Drawing.Point(280, 233);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(196, 15);
-            this.label27.TabIndex = 70;
-            this.label27.Text = "Average time between blocks";
-            this.toolTip1.SetToolTip(this.label27, "(estimated)");
-            // 
             // label25
             // 
             this.label25.AutoSize = true;
@@ -1026,6 +1034,106 @@
             this.label29.TabIndex = 74;
             this.label29.Text = "1day";
             // 
+            // lblHodlingAddresses
+            // 
+            this.lblHodlingAddresses.AutoSize = true;
+            this.lblHodlingAddresses.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblHodlingAddresses.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHodlingAddresses.Location = new System.Drawing.Point(33, 490);
+            this.lblHodlingAddresses.Name = "lblHodlingAddresses";
+            this.lblHodlingAddresses.Size = new System.Drawing.Size(90, 27);
+            this.lblHodlingAddresses.TabIndex = 75;
+            this.lblHodlingAddresses.Text = "888888";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label30.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.ForeColor = System.Drawing.Color.Silver;
+            this.label30.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label30.Location = new System.Drawing.Point(36, 475);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(196, 15);
+            this.label30.TabIndex = 76;
+            this.label30.Text = "Number of hodling addresses";
+            // 
+            // lblBlocksIn24Hours
+            // 
+            this.lblBlocksIn24Hours.AutoSize = true;
+            this.lblBlocksIn24Hours.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblBlocksIn24Hours.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBlocksIn24Hours.Location = new System.Drawing.Point(553, 517);
+            this.lblBlocksIn24Hours.Name = "lblBlocksIn24Hours";
+            this.lblBlocksIn24Hours.Size = new System.Drawing.Size(90, 27);
+            this.lblBlocksIn24Hours.TabIndex = 77;
+            this.lblBlocksIn24Hours.Text = "888888";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label31.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.ForeColor = System.Drawing.Color.Silver;
+            this.label31.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label31.Location = new System.Drawing.Point(555, 502);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(217, 15);
+            this.label31.TabIndex = 78;
+            this.label31.Text = "24 hour number of blocks mined";
+            // 
+            // lblNodes
+            // 
+            this.lblNodes.AutoSize = true;
+            this.lblNodes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblNodes.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNodes.Location = new System.Drawing.Point(553, 557);
+            this.lblNodes.Name = "lblNodes";
+            this.lblNodes.Size = new System.Drawing.Size(90, 27);
+            this.lblNodes.TabIndex = 79;
+            this.lblNodes.Text = "888888";
+            this.toolTip1.SetToolTip(this.lblNodes, "(estimated)");
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label32.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label32.ForeColor = System.Drawing.Color.Silver;
+            this.label32.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label32.Location = new System.Drawing.Point(555, 544);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(210, 15);
+            this.label32.TabIndex = 80;
+            this.label32.Text = "Number of discoverable nodes*";
+            this.toolTip1.SetToolTip(this.label32, "(estimated)");
+            // 
+            // lblBlockchainSize
+            // 
+            this.lblBlockchainSize.AutoSize = true;
+            this.lblBlockchainSize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblBlockchainSize.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBlockchainSize.Location = new System.Drawing.Point(553, 475);
+            this.lblBlockchainSize.Name = "lblBlockchainSize";
+            this.lblBlockchainSize.Size = new System.Drawing.Size(90, 27);
+            this.lblBlockchainSize.TabIndex = 81;
+            this.lblBlockchainSize.Text = "888888";
+            this.toolTip1.SetToolTip(this.lblBlockchainSize, "(estimated)");
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label33.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label33.ForeColor = System.Drawing.Color.Silver;
+            this.label33.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label33.Location = new System.Drawing.Point(555, 460);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(147, 15);
+            this.label33.TabIndex = 82;
+            this.label33.Text = "Blockchain size (GB)";
+            this.toolTip1.SetToolTip(this.label33, "(estimated)");
+            // 
             // Statamoto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1035,6 +1143,14 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(800, 588);
+            this.Controls.Add(this.label33);
+            this.Controls.Add(this.lblBlockchainSize);
+            this.Controls.Add(this.label32);
+            this.Controls.Add(this.lblNodes);
+            this.Controls.Add(this.label31);
+            this.Controls.Add(this.lblBlocksIn24Hours);
+            this.Controls.Add(this.label30);
+            this.Controls.Add(this.lblHodlingAddresses);
             this.Controls.Add(this.label29);
             this.Controls.Add(this.label28);
             this.Controls.Add(this.label25);
@@ -1199,6 +1315,14 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label lblHodlingAddresses;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label lblBlocksIn24Hours;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label lblNodes;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label lblBlockchainSize;
+        private System.Windows.Forms.Label label33;
     }
 }
 

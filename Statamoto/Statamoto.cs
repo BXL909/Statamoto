@@ -19,6 +19,8 @@ using System.Windows.Forms;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace Statamoto
@@ -183,6 +185,20 @@ namespace Statamoto
                 lblATHDifference.Text = Convert.ToString(dblATHDifference) + "%";
                 lbl24HrHigh.Text = twentyFourHourHigh;
                 lbl24HrLow.Text = twentyFourHourLow;
+
+                // EXTRA BITS
+                string json6 = client.GetStringAsync("https://api.blockchair.com/bitcoin/stats").Result;
+                dynamic data6 = JsonConvert.DeserializeObject(json6);
+                int hodling_addresses = data6.data.hodling_addresses;
+                lblHodlingAddresses.Text = hodling_addresses.ToString();
+                int blocksIn24Hours = data6.data.blocks_24h;
+                lblBlocksIn24Hours.Text= blocksIn24Hours.ToString();
+                int numberOfNodes = data6.data.nodes;
+                lblNodes.Text = numberOfNodes.ToString();
+                dynamic blockchainSize = data6.data.blockchain_size;
+                double blockchainSizeGB = Math.Round(Convert.ToDouble(blockchainSize) / 1073741824.0, 2);
+                lblBlockchainSize.Text = blockchainSizeGB.ToString();
+
             }
             catch (Exception ex)
             {
@@ -279,7 +295,7 @@ namespace Statamoto
         // Mousehover button effects for all buttons
         private void button_MouseHover(object sender, EventArgs e) 
         {
-            Button button = (Button)sender;
+            System.Windows.Forms.Button button = (System.Windows.Forms.Button)sender;
             button.BackColor = Color.Gray;
             button.ForeColor = System.Drawing.ColorTranslator.FromHtml("#1D1D1D");
         }
@@ -287,7 +303,7 @@ namespace Statamoto
         // Mouseleave button effects for all buttons
         private void button_MouseLeave(object sender, EventArgs e)
         {
-            Button button = (Button)sender;
+            System.Windows.Forms.Button button = (System.Windows.Forms.Button)sender;
             button.BackColor = System.Drawing.ColorTranslator.FromHtml("#1D1D1D");
             button.ForeColor = Color.Gray;
         }
