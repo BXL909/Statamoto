@@ -1,7 +1,19 @@
-﻿
-// add green up and red down indicators on relevant values by comparing new vs prev?
-// improve layout. 
-// disable all focus if possible. 
+﻿/*
+────██──██─────  ╔═╗┌┬┐┌─┐┌┬┐┌─┐┌┬┐┌─┐┌┬┐┌─┐
+███████████▄───  ╚═╗ │ ├─┤ │ ├─┤││││ │ │ │ │
+──███████████▄─  ╚═╝ ┴ ┴ ┴ ┴ ┴ ┴┴ ┴└─┘ ┴ └─┘
+──███────▀████─  Version history
+──███──────███─  1.0 initial release
+──███────▄███▀─  1.1 Used threading on API calls for speed and UI responsiveness. Added 4 new fields (number of hodling addresses, Blockchain size, 24 hour number of blocks mined, Number of discoverable nodes)
+──█████████▀───  
+──███████████▄─  To do:
+──███─────▀████  option to disable individual API's, and possibly add alternatives
+──███───────███  improve error message layout (sometimes the error message goes onto a second line)
+──███─────▄████
+──████████████─
+████████████▀──
+────██──██─────
+*/
 
 
 using System;
@@ -22,17 +34,21 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-
 namespace Statamoto
 {
-
     public partial class Statamoto : Form
     {
-        
-        [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]  // needed for the code that moves the form
+        //====================================================================================================================
+        //---------------------------INITIALISE-------------------------------
+
+        private int intCountdownToRefresh = 60; // countdown to display seconds to next refresh
+        private int int1MinTimerInterval = 60000; // milliseconds, used to set the interval of the timer for api refresh
+        private int int1MinTimerIntervalSecs = 60;
+
+        [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]  // needed for the code that moves the form as not using a standard control
         private extern static void ReleaseCapture();
 
-        [DllImport("user32.dll", EntryPoint = "SendMessage")] // needed for the code that moves the form
+        [DllImport("user32.dll", EntryPoint = "SendMessage")] // needed for the code that moves the form as not using a standard control
         private extern static void SendMessage(System.IntPtr hwnd, int wmsg, int wparam, int lparam);
 
         public Statamoto()
@@ -40,169 +56,386 @@ namespace Statamoto
             InitializeComponent();
         }
 
-        private int intCountdownToRefresh = 10; // countdown to display seconds to next refresh
-
-        private void timer_Tick(object sender, EventArgs e) // update the calendar time and date
+        private void Form1_Load(object sender, EventArgs e) // on form loading
         {
-            lblTime.Text = DateTime.Now.ToString("HH:mm");
-            lblSeconds.Text = DateTime.Now.ToString("ss");
-            lblDate.Text = DateTime.Now.ToString("MMMM dd yyyy");
-            lblDay.Text = DateTime.Now.ToString("dddd");
-            lblSeconds.Location = new Point(lblTime.Location.X + lblTime.Width-10, lblSeconds.Location.Y); // place the seconds according to the width of the minutes/seconds (lblTime)
-            lblSecsCountdown.Text = Convert.ToString(intCountdownToRefresh); // update the countdown on the form
-            intCountdownToRefresh--; // reduce the countdown by 1 (second)
-            
-            if (intCountdownToRefresh == 0) // if the counter has reached zero
+            update60SecondBitcoinDataFields(); // setting them now avoids waiting a whole minute for the first refresh
+            updateDailyData(); // set the initial data for the daily updates to avoid waiting a whole day for the first data
+            startTheClocksTicking(); // start all the timers
+        }
+
+        //--------------------------END INITIALISE--------------------------
+        //====================================================================================================================
+        // -------------------------CLOCK TICKS-----------------------------
+
+        private void startTheClocksTicking()
+        {
+            timer1Min.Interval = int1MinTimerInterval; // set the frequency of the clock to 60 seconds
+            timer1Sec.Start(); // timer used to refresh the clock values
+            timer1Min.Start(); // timer used to refresh most btc data
+            timer1Day.Start(); // start timer for daily btc data refresh}
+        }
+        private void timer1Sec_Tick(object sender, EventArgs e) // update the calendar time and date
+        {
+            updateOnScreenClock();
+            updateOnScreenCountdownAndFlashLights();
+        }
+
+        private void timer60Sec_Tick(object sender, EventArgs e) // call the function to update the btc fields
+        {
+            clearAlertAndErrorMessage(); // wipe anything that may be showing in the error area (it should be empty anyway)
+            update60SecondBitcoinDataFields();
+        }
+
+        private void timer1Day_Tick(object sender, EventArgs e)
+        {
+            updateDailyData();
+        }
+
+        //-------------------------END CLOCK TICKS-----------------------------
+        //====================================================================================================================
+        //-------------------------UPDATE FORM FIELDS---------------------------
+
+        public async void update60SecondBitcoinDataFields()
+        {
+            using (WebClient client = new WebClient())
             {
-                intCountdownToRefresh = 20; // reset it
-            }
-            lblSecsCountdown.Location = new Point(lblStatusMessPart1.Location.X + lblStatusMessPart1.Width - 8, lblSecsCountdown.Location.Y); // place the countdown according to the width of the status message
-            if (intCountdownToRefresh < 19) // if more than a second has expired since the data from the blocktimer was refreshed...
-            {
-                if (lblStatusLight.ForeColor != Color.DarkRed && lblStatusLight.ForeColor != Color.Green) // check whether a data refresh has just occured to see if a status light flash needs dimming
+                bool errorOccurred = false;
+                Task task1 = Task.Run(() =>  // call bitcoinexplorer.org endpoints and populate the fields on the form
                 {
-                    if (lblStatusLight.ForeColor == Color.Lime) // successful data refresh has occured
+                    try
                     {
-                        lblStatusLight.ForeColor = Color.Green; // reset the colours to a duller version to give appearance of a flash
-                    }
-                    else // an error must have just occured
-                    {
-                        lblStatusLight.ForeColor = Color.DarkRed; // reset the colours to a duller version to give appearance of a flash
-                        if (intCountdownToRefresh < 11) // after 10 seconds...
+                        var result = bitcoinExplorerOrgEndpointsRefresh();
+                        // move returned data to the labels on the form
+                        lblPriceUSD.Invoke((MethodInvoker)delegate
                         {
-                            lblErrorMessage.Text = ""; // hide the error message after 10 seconds
-                            lblAlert.Text = ""; // and hide the alert icon
-                        }
+                            lblPriceUSD.Text = result.priceUSD;
+                        });
+                        lblMoscowTime.Invoke((MethodInvoker)delegate
+                        {
+                            lblMoscowTime.Text = result.moscowTime;
+                        });
+                        lblMarketCapUSD.Invoke((MethodInvoker)delegate
+                        {
+                            lblMarketCapUSD.Text = result.marketCapUSD;
+                        });
+                        lblDifficultyAdjEst.Invoke((MethodInvoker)delegate
+                        {
+                            lblDifficultyAdjEst.Text = result.difficultyAdjEst;
+                        });
+                        lblTXInMempool.Invoke((MethodInvoker)delegate
+                        {
+                            lblTXInMempool.Text = result.txInMempool;
+                        });
+                        // set successful lights and messages on the form
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
+                        });
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.Text = "🟢"; // green light
+                        });
+                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
+                        });
+                        intCountdownToRefresh = int1MinTimerIntervalSecs; // reset the timer
                     }
+                    catch (Exception ex)
+                    {
+                        errorOccurred = true; 
+                        lblErrorMessage.Invoke((MethodInvoker)delegate
+                        {
+                            lblErrorMessage.Text = ex.Message; // move returned error to the error message label on the form
+                        });
+                    }
+                });
+
+                Task task2 = Task.Run(() => // call blockchain.info endpoints and populate the fields on the form
+                {
+                    try
+                    {
+                        var result2 = blockchainInfoEndpointsRefresh();
+                        // move returned data to the labels on the form
+                        lblAvgNoTransactions.Invoke((MethodInvoker)delegate
+                        {
+                            lblAvgNoTransactions.Text = result2.avgNoTransactions;
+                        });
+                        lblBlockNumber.Invoke((MethodInvoker)delegate
+                        {
+                            lblBlockNumber.Text = result2.blockNumber;
+                        });
+                        lblBlockReward.Invoke((MethodInvoker)delegate
+                        {
+                            lblBlockReward.Text = result2.blockReward;
+                        });
+                        lblEstHashrate.Invoke((MethodInvoker)delegate
+                        {
+                            lblEstHashrate.Text = result2.estHashrate;
+                        });
+                        lblAvgTimeBetweenBlocks.Invoke((MethodInvoker)delegate
+                        {
+                            lblAvgTimeBetweenBlocks.Text = result2.avgTimeBetweenBlocks;
+                        });
+                        lblBTCInCirc.Invoke((MethodInvoker)delegate
+                        {
+                            lblBTCInCirc.Text = result2.btcInCirc;
+                        });
+                        lblHashesToSolve.Invoke((MethodInvoker)delegate
+                        {
+                            lblHashesToSolve.Text = result2.hashesToSolve;
+                        });
+                        lbl24HourTransCount.Invoke((MethodInvoker)delegate
+                        {
+                            lbl24HourTransCount.Text = result2.twentyFourHourTransCount;
+                        });
+                        lbl24HourBTCSent.Invoke((MethodInvoker)delegate
+                        {
+                            lbl24HourBTCSent.Text = result2.twentyFourHourBTCSent;
+                        });
+                        // set successful lights and messages on the form
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
+                        });
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.Text = "🟢"; // green light
+                        });
+                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
+                        });
+                        intCountdownToRefresh = int1MinTimerIntervalSecs; // reset the timer
+                    }
+                    catch (Exception ex)
+                    {
+                        errorOccurred = true;
+                        lblErrorMessage.Invoke((MethodInvoker)delegate
+                        {
+                            lblErrorMessage.Text = ex.Message; // move returned error to the error message label on the form
+                        });
+                    }
+                });
+
+                Task task3 = Task.Run(() => // call Bitcoinexplorer.org JSON
+                {
+                    try
+                    {
+                        var result3 = bitcoinExplorerOrgJSONRefresh();
+                        // move returned data to the labels on the form
+                        lblfeesNextBlock.Invoke((MethodInvoker)delegate
+                        {
+                            lblfeesNextBlock.Text = result3.nextBlockFee;
+                        });
+                        lblFees30Mins.Invoke((MethodInvoker)delegate
+                        {
+                            lblFees30Mins.Text = result3.thirtyMinFee;
+                        });
+                        lblFees60Mins.Invoke((MethodInvoker)delegate
+                        {
+                            lblFees60Mins.Text = result3.sixtyMinFee;
+                        });
+                        lblFees1Day.Invoke((MethodInvoker)delegate
+                        {
+                            lblFees1Day.Text = result3.oneDayFee;
+                        });
+                        lblTransInNextBlock.Invoke((MethodInvoker)delegate
+                        {
+                            lblTransInNextBlock.Text = result3.txInNextBlock;
+                        });
+                        lblNextBlockMinFee.Invoke((MethodInvoker)delegate
+                        {
+                            lblNextBlockMinFee.Text = result3.nextBlockMinFee;
+                        });
+                        lblNextBlockMaxFee.Invoke((MethodInvoker)delegate
+                        {
+                            lblNextBlockMaxFee.Text = result3.nextBlockMaxFee;
+                        });
+                        lblNextBlockTotalFees.Invoke((MethodInvoker)delegate
+                        {
+                            lblNextBlockTotalFees.Text = result3.nextBlockTotalFees;
+                        });
+                        // set successful lights and messages on the form
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
+                        });
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.Text = "🟢"; // green light
+                        });
+                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
+                        });
+                        intCountdownToRefresh = int1MinTimerIntervalSecs; // reset the timer
+                    }
+                    catch (Exception ex)
+                    {
+                        errorOccurred = true;
+                        lblErrorMessage.Invoke((MethodInvoker)delegate
+                        {
+                            lblErrorMessage.Text = ex.Message; // move returned error to the error message label on the form
+                        });
+                    }
+                });
+
+                Task task4 = Task.Run(() => //call blockchain.info JSON
+                {
+                    try
+                    {
+                        var result4 = blockchainInfoJSONRefresh();
+                        // move returned data to the labels on the form
+                        lblTransactions.Invoke((MethodInvoker)delegate
+                        {
+                            lblTransactions.Text = result4.n_tx;
+                        });
+                        lblBlockSize.Invoke((MethodInvoker)delegate
+                        {
+                            lblBlockSize.Text = result4.size;
+                        });
+                        lblNextDifficultyChange.Invoke((MethodInvoker)delegate
+                        {
+                            lblNextDifficultyChange.Text = result4.nextretarget;
+                        });
+                        // set successful lights and messages on the form
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
+                        });
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.Text = "🟢"; // green light
+                        });
+                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
+                        });
+                        intCountdownToRefresh = int1MinTimerIntervalSecs; // reset the timer
+                    }
+                    catch (Exception ex)
+                    {
+                        errorOccurred = true;
+                        lblErrorMessage.Invoke((MethodInvoker)delegate
+                        {
+                            lblErrorMessage.Text = ex.Message; // move returned error to the error message label on the form
+                        });
+                    }
+                });
+
+                Task task5 = Task.Run(() => // call CoinGecko.com JSON
+                {
+                    try
+                    {
+                        var result5 = coingeckoComJSONRefresh();
+                        // move returned data to the labels on the form
+                        lblATH.Invoke((MethodInvoker)delegate
+                        {
+                            lblATH.Text = result5.ath;
+                        });
+                        lblATHDate.Invoke((MethodInvoker)delegate
+                        {
+                            lblATHDate.Location = new Point(lblATH.Location.X + lblATH.Width, lblATHDate.Location.Y); // place the ATH date according to the width of the ATH (future proofed for hyperbitcoinization!)
+                        });
+                        lblATHDate.Invoke((MethodInvoker)delegate
+                        {
+                            lblATHDate.Text = "(" + result5.athDate + ")";
+                        });
+                        lblATHDifference.Invoke((MethodInvoker)delegate
+                        {
+                            lblATHDifference.Text = result5.athDifference;
+                        });
+                        lbl24HrHigh.Invoke((MethodInvoker)delegate
+                        {
+                            lbl24HrHigh.Text = result5.twentyFourHourHigh;
+                        });
+                        lbl24HrLow.Invoke((MethodInvoker)delegate
+                        {
+                            lbl24HrLow.Text = result5.twentyFourHourLow;
+                        });
+                        // set successful lights and messages on the form
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
+                        });
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.Text = "🟢"; // green light
+                        });
+                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
+                        });
+                        intCountdownToRefresh = int1MinTimerIntervalSecs; // reset the timer
+                    }
+                    catch (Exception ex)
+                    {
+                        errorOccurred = true;
+                        lblErrorMessage.Invoke((MethodInvoker)delegate
+                        {
+                            lblErrorMessage.Text = ex.Message; // move returned error to the error message label on the form
+                        });
+                    }
+                });
+                //Task task2 = Task.Run(() =>
+                //{
+                //    // blockchainInfoEndpointsRefresh();
+                //});
+
+                //await Task.WhenAll(task1, task2);
+                await Task.WhenAll(task1, task2, task3, task4, task5);
+
+                // If any errors occurred with any of the API calls, a decent error message has already been displayed. Now display the red light and generic error.
+                if (errorOccurred)
+                {
+                    intCountdownToRefresh = int1MinTimerIntervalSecs;
+                    lblAlert.Invoke((MethodInvoker)delegate
+                    {
+                        lblAlert.Text = "⚠️";
+                    });
+                    lblStatusLight.Invoke((MethodInvoker)delegate
+                    {
+                        lblStatusLight.ForeColor = Color.Red;
+                    });
+                    lblStatusLight.Invoke((MethodInvoker)delegate
+                    {
+                        lblStatusLight.Text = "🔴"; // red light
+                    });
+                    lblStatusMessPart1.Invoke((MethodInvoker)delegate
+                    {
+                        lblStatusMessPart1.Text = "One or more fields failed to update. Trying again in ";
+                    });
                 }
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e) // on form loading
-        {
-            updateFields(); // set the initial btc data values to avoid waiting 10 secs for the first clock ticks
-            updateJSON(); // set the initial btc JSON values to avoid waiting 10 secs for the first clock ticks
-            timerForClock.Start(); // timer used to refresh the clock values
-            timerForBlocks.Start(); // timer used to refresh the btc data
-        }
-
-        private void btnExit_Click(object sender, EventArgs e) // exit
-        {
-            this.Close();
-        }
-
-        private void timerForBlocks_Tick(object sender, EventArgs e) // call the function to update the btc fields
-        {
-            updateFields();
-            updateJSON();
-        }
-
-        public void updateJSON()
+        private void updateDailyData()
         {
             try
             {
-
-                // FEES
                 var client = new HttpClient();
-                var response = client.GetAsync("https://bitcoinexplorer.org/api/mempool/fees").Result;
-                var json = response.Content.ReadAsStringAsync().Result;
-                var data = JObject.Parse(json);
-                var firstField = (string)data["nextBlock"];
-                lblfeesNextBlock.Text = firstField;
-                var secondField = (string)data["30min"];
-                lblFees30Mins.Text = secondField;
-                var thirdField = (string)data["60min"];
-                lblFees60Mins.Text = thirdField;
-                var fourthfield = (string)data["1day"];
-                lblFees1Day.Text = fourthfield;
-
-                // NEXT BLOCK
-                var response2 = client.GetAsync("https://bitcoinexplorer.org/api/mining/next-block").Result;
-                var json2 = response2.Content.ReadAsStringAsync().Result;
-                var data2 = JObject.Parse(json2);
-                var firstField2 = (string)data2["txCount"]; //transaction count
-                lblTransInNextBlock.Text = firstField2;
-                var secondField2 = (string)data2["minFeeRate"]; // minimum fee rate
-                double valuetoround = Convert.ToDouble(secondField2);
-                double roundedValue = Math.Round(valuetoround, 2);
-                lblNextBlockMinFee.Text = Convert.ToString(roundedValue);
-                var thirdField2 = (string)data2["maxFeeRate"]; // maximum fee rate
-                valuetoround = Convert.ToDouble(thirdField2);
-                roundedValue = Math.Round(valuetoround, 2);
-                lblNextBlockMaxFee.Text = Convert.ToString(roundedValue);
-                var fourthField2 = (string)data2["totalFees"]; // total fees
-                valuetoround = Convert.ToDouble(fourthField2);
-                roundedValue = Math.Round(valuetoround, 2);
-                lblNextBlockTotalFees.Text = Convert.ToString(roundedValue);
-
-                // LATEST BLOCK
-
-                string jsonurl = "https://blockchain.info/rawblock/"; // use this...
-                string blocknumber = lblBlockNumber.Text; // combined with current block number...
-                string finalurl = jsonurl + blocknumber; // to build a url to the json feed
-
-                var response3 = client.GetAsync(finalurl).Result;
-                var json3 = response3.Content.ReadAsStringAsync().Result;
-                var data3 = JObject.Parse(json3);
-                var firstField3 = (string)data3["n_tx"]; // number of transactions
-                lblTransactions.Text = Convert.ToString(firstField3) + " transactions";
-                var secondField3 = ((double)data3["size"]/1000); // size in bytes divided by 1000 to get kb
-                secondField3 = Math.Round(secondField3, 2); // round to 2 decimal places
-                if (secondField3 < 1024) // if less than 1MB
-                {
-                    lblBlockSize.Text = Convert.ToString(secondField3) + " KB";
-                }
-                else 
-                {
-                    secondField3 = Math.Round((secondField3/1000), 2); // if more than 1MB
-                    lblBlockSize.Text = Convert.ToString(secondField3) + " MB";
-                }
-
-                // NEXT DIFFICULTY ADJUSTMENT BLOCK
-
-                var response4 = client.GetAsync("https://api.blockchain.info/stats").Result;
-                var json4 = response4.Content.ReadAsStringAsync().Result;
-                var data4 = JObject.Parse(json4);
-                var firstField4 = (string)data4["nextretarget"];
-                lblNextDifficultyChange.Text = Convert.ToString(firstField4);
-
-                // ATH & 24hr data
-                var response5 = client.GetAsync("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false").Result;
-                var json5 = response5.Content.ReadAsStringAsync().Result;
-                var data5 = JArray.Parse(json5);
-                var ath = data5.Where(x => (string)x["symbol"] == "btc").Select(x => (string)x["ath"]).FirstOrDefault();
-                var athDate = data5.Where(x => (string)x["symbol"] == "btc").Select(x => (string)x["ath_date"]).FirstOrDefault();
-                var athDifference = data5.Where(x => (string)x["symbol"] == "btc").Select(x => (string)x["ath_change_percentage"]).FirstOrDefault();
-                var twentyFourHourHigh = data5.Where(x => (string)x["symbol"] == "btc").Select(x => (string)x["high_24h"]).FirstOrDefault();
-                var twentyFourHourLow = data5.Where(x => (string)x["symbol"] == "btc").Select(x => (string)x["low_24h"]).FirstOrDefault();
-                DateTime date = DateTime.Parse(athDate);
-                string strATHDate = date.ToString("dd MMM yyyy");
-                lblATH.Text = ath;
-                lblATHDate.Location = new Point(lblATH.Location.X + lblATH.Width, lblATHDate.Location.Y); // place the ATH date according to the width of the ATH (future proofed for hyperbitcoinization!)
-                lblATHDate.Text = "(" + strATHDate + ")";
-                double dblATHDifference = Convert.ToDouble(athDifference);
-                dblATHDifference = Math.Round(dblATHDifference, 2);
-                lblATHDifference.Text = Convert.ToString(dblATHDifference) + "%";
-                lbl24HrHigh.Text = twentyFourHourHigh;
-                lbl24HrLow.Text = twentyFourHourLow;
-
-                // EXTRA BITS
                 string json6 = client.GetStringAsync("https://api.blockchair.com/bitcoin/stats").Result;
                 dynamic data6 = JsonConvert.DeserializeObject(json6);
                 int hodling_addresses = data6.data.hodling_addresses;
-                lblHodlingAddresses.Text = hodling_addresses.ToString();
+                if (hodling_addresses > 0) // this api sometimes doesn't populate this field with anything but 0
+                {
+                    lblHodlingAddresses.Text = hodling_addresses.ToString();
+                }
+                else
+                {
+                    lblHodlingAddresses.Text = "no data";
+                }
                 int blocksIn24Hours = data6.data.blocks_24h;
-                lblBlocksIn24Hours.Text= blocksIn24Hours.ToString();
+                lblBlocksIn24Hours.Text = blocksIn24Hours.ToString();
                 int numberOfNodes = data6.data.nodes;
                 lblNodes.Text = numberOfNodes.ToString();
                 dynamic blockchainSize = data6.data.blockchain_size;
                 double blockchainSizeGB = Math.Round(Convert.ToDouble(blockchainSize) / 1073741824.0, 2);
                 lblBlockchainSize.Text = blockchainSizeGB.ToString();
-
             }
             catch (Exception ex)
             {
-                intCountdownToRefresh = 20;
                 lblAlert.Text = "⚠️";
                 lblErrorMessage.Text = ex.Message;
                 lblStatusLight.ForeColor = Color.Red;
@@ -211,58 +444,19 @@ namespace Statamoto
             }
         }
 
-        public void updateFields()
+        //--------------------------END UPDATE FORM FIELDS----------------------------
+        //====================================================================================================================        
+        //-------------------------- FORM NAVIGATION CONTROLS--------------------------
+
+        private void btnSplash_Click(object sender, EventArgs e)
         {
-            using (WebClient client = new WebClient())
-            {
-                try
-                {
-                    lblAlert.Text = ""; // clear any error message
-                    lblErrorMessage.Text = ""; // clear any error message
-                    lblPriceUSD.Text = client.DownloadString("https://bitcoinexplorer.org/api/price/usd"); // price of 1BTC in USD
-                    lblMoscowTime.Text = client.DownloadString("https://bitcoinexplorer.org/api/price/usd/sats"); // value of 1USD in sats
-                    lblMarketCapUSD.Text = client.DownloadString("https://bitcoinexplorer.org/api/price/usd/marketcap"); // BTC marketcap
-                    lblDifficultyAdjEst.Text = client.DownloadString("https://bitcoinexplorer.org/api/mining/diff-adj-estimate") + "%"; // next difficulty adjustment estimate as a percentage
-                    lblTXInMempool.Text = client.DownloadString("https://bitcoinexplorer.org/api/mempool/count"); // transactions in mempool
-                    var AvgNoTransactions = client.DownloadString("https://blockchain.info/q/avgtxnumber"); // average number of transactions in last 100 blocks (to about 6 decimal places!)
-                    double dblAvgNoTransactions = Convert.ToDouble(AvgNoTransactions);
-                    dblAvgNoTransactions = Math.Round(dblAvgNoTransactions); // so lets get it down to an integer
-                    lblAvgNoTransactions.Text = Convert.ToString(dblAvgNoTransactions);
-                    lblBlockNumber.Text = client.DownloadString("https://blockchain.info/q/getblockcount"); // most recent block number
-                    lblBlockReward.Text = client.DownloadString("https://blockchain.info/q/bcperblock"); // current block reward
-                    lblEstHashrate.Text = client.DownloadString("https://blockchain.info/q/hashrate"); // hashrate estimate
-                    var secondsBetweenBlocks = client.DownloadString("https://blockchain.info/q/interval"); // average time between blocks in seconds
-                    double dblSecondsBetweenBlocks = Convert.ToDouble(secondsBetweenBlocks);
-                    TimeSpan time = TimeSpan.FromSeconds(dblSecondsBetweenBlocks);
-                    string timeString = string.Format("{0:%m}m {0:%s}s", time);
-                    lblAvgTimeBetweenBlocks.Text = timeString;
+            splash splash = new splash(); // invoke the about/splash screen
+            splash.ShowDialog();
+        }
 
-                    var TotalBTC = client.DownloadString("https://blockchain.info/q/totalbc"); // total sats in circulation
-                    double dblTotalBTC = Convert.ToDouble(TotalBTC);
-                    dblTotalBTC = dblTotalBTC / 100000000; // convert sats to bitcoin
-                    lblBTCInCirc.Text = Convert.ToString(dblTotalBTC);
-                    lblHashesToSolve.Text = client.DownloadString("https://blockchain.info/q/hashestowin"); // avg number of hashes to win a block
-                    lbl24HourTransCount.Text = client.DownloadString("https://blockchain.info/q/24hrtransactioncount"); // number of transactions in last 24 hours
-                    var TwentFourHrBTCSent = client.DownloadString("https://blockchain.info/q/24hrbtcsent"); // number of sats sent in 24 hours
-                    double dbl24HrBTCSent = Convert.ToDouble(TwentFourHrBTCSent);
-                    dbl24HrBTCSent = dbl24HrBTCSent / 100000000; // convert sats to bitcoin
-                    lbl24HourBTCSent.Text = Convert.ToString(dbl24HrBTCSent);
-
-                    intCountdownToRefresh = 20;
-                    lblStatusLight.ForeColor = Color.Lime;
-                    lblStatusLight.Text = "🟢"; // green light
-                    lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
-                }
-                catch (Exception ex)
-                {
-                    intCountdownToRefresh = 20;
-                    lblAlert.Text = "⚠️";
-                    lblErrorMessage.Text = ex.Message;
-                    lblStatusLight.ForeColor = Color.Red;
-                    lblStatusLight.Text = "🔴"; // red light
-                    lblStatusMessPart1.Text = "One or more fields failed to update. Trying again in ";
-                }
-            }
+        private void btnExit_Click(object sender, EventArgs e) // exit
+        {
+            this.Close();
         }
 
         private void btnMinimise_Click(object sender, EventArgs e) // minimise the form
@@ -281,32 +475,219 @@ namespace Statamoto
             btnMoveWindow.BackColor = System.Drawing.ColorTranslator.FromHtml("#1D1D1D");
         }
 
-        private void Form1_Paint(object sender, PaintEventArgs e) // place a 1px border around the form
-        {
-            ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Gray, ButtonBorderStyle.Solid);
-        }
-
-        private void btnSplash_Click(object sender, EventArgs e)
-        {
-            splash splash = new splash(); // invoke the about/splash screen
-            splash.ShowDialog();
-        }
-
-        // Mousehover button effects for all buttons
-        private void button_MouseHover(object sender, EventArgs e) 
+        // Mousehover button effects for nav buttons
+        private void button_MouseHover(object sender, EventArgs e)
         {
             System.Windows.Forms.Button button = (System.Windows.Forms.Button)sender;
             button.BackColor = Color.Gray;
             button.ForeColor = System.Drawing.ColorTranslator.FromHtml("#1D1D1D");
         }
 
-        // Mouseleave button effects for all buttons
+        // Mouseleave button effects for nav buttons
         private void button_MouseLeave(object sender, EventArgs e)
         {
             System.Windows.Forms.Button button = (System.Windows.Forms.Button)sender;
             button.BackColor = System.Drawing.ColorTranslator.FromHtml("#1D1D1D");
             button.ForeColor = Color.Gray;
         }
+
+        //-----------------------END FORM NAVIGATION CONTROLS--------------------------
+        //====================================================================================================================
+        //--------------------COUNTDOWN, ERROR MESSAGES AND STATUS LIGHTS--------------
+
+        private void updateOnScreenCountdownAndFlashLights()
+        {
+            lblSecsCountdown.Text = Convert.ToString(intCountdownToRefresh); // update the countdown on the form
+            intCountdownToRefresh--; // reduce the countdown of the 1 minute timer by 1 second
+            if (intCountdownToRefresh <= 0) // if the 1 minute timer countdown has reached zero...
+            {
+                intCountdownToRefresh = int1MinTimerIntervalSecs; // reset it
+            }
+            lblSecsCountdown.Location = new Point(lblStatusMessPart1.Location.X + lblStatusMessPart1.Width - 8, lblSecsCountdown.Location.Y); // place the countdown according to the width of the status message
+            if (intCountdownToRefresh < (int1MinTimerIntervalSecs - 1)) // if more than a second has expired since the data from the blocktimer was refreshed...
+            {
+                changeStatusLightAndClearErrorMessage();
+            }
+        }
+
+        private void changeStatusLightAndClearErrorMessage()
+        {
+            if (lblStatusLight.ForeColor != Color.DarkRed && lblStatusLight.ForeColor != Color.Green) // check whether a data refresh has just occured to see if a status light flash needs dimming
+            {
+                if (lblStatusLight.ForeColor == Color.Lime) // successful data refresh has occured
+                {
+                    lblStatusLight.ForeColor = Color.Green; // reset the colours to a duller version to give appearance of a flash
+                }
+                else // an error must have just occured
+                {
+                    lblStatusLight.ForeColor = Color.DarkRed; // reset the colours to a duller version to give appearance of a flash
+                    if (intCountdownToRefresh < 11) // when there are only 10 seconds left until the refresh...
+                    {
+                        lblErrorMessage.Text = ""; // hide any previous error message
+                        lblAlert.Text = ""; // and hide the alert icon
+                    }
+                }
+            }
+        }
+
+        private void clearAlertAndErrorMessage()
+        {
+            lblAlert.Text = ""; // clear any error message
+            lblErrorMessage.Text = ""; // clear any error message
+        }
+
+        //----------------END COUNTDOWN, ERROR MESSAGES AND STATUS LIGHTS--------------
+        //====================================================================================================================
+        //------------------------------------API CALLS----------------------------
+
+        private (string priceUSD, string moscowTime, string marketCapUSD, string difficultyAdjEst, string txInMempool) bitcoinExplorerOrgEndpointsRefresh()
+        {
+            using (WebClient client = new WebClient())
+            {
+                string priceUSD = client.DownloadString("https://bitcoinexplorer.org/api/price/usd"); // 1 bitcoin = ? usd
+                string moscowTime = client.DownloadString("https://bitcoinexplorer.org/api/price/usd/sats"); // 1 usd = ? sats
+                string marketCapUSD = client.DownloadString("https://bitcoinexplorer.org/api/price/usd/marketcap"); // bitcoin market cap in usd
+                string difficultyAdjEst = client.DownloadString("https://bitcoinexplorer.org/api/mining/diff-adj-estimate") + "%"; // difficulty adjustment as a percentage
+                string txInMempool = client.DownloadString("https://bitcoinexplorer.org/api/mempool/count"); // total number of transactions in the mempool
+                return (priceUSD, moscowTime, marketCapUSD, difficultyAdjEst, txInMempool);
+            }
+        }
+
+        private (string avgNoTransactions, string blockNumber, string blockReward, string estHashrate, string avgTimeBetweenBlocks, string btcInCirc, string hashesToSolve, string twentyFourHourTransCount, string twentyFourHourBTCSent) blockchainInfoEndpointsRefresh()
+        {
+            using (WebClient client = new WebClient())
+            {
+                string avgNoTransactions = client.DownloadString("https://blockchain.info/q/avgtxnumber"); // average number of transactions in last 100 blocks (to about 6 decimal places!)
+                double dblAvgNoTransactions = Convert.ToDouble(avgNoTransactions);
+                dblAvgNoTransactions = Math.Round(dblAvgNoTransactions); // so lets get it down to an integer
+                string avgNoTransactionsText = Convert.ToString(dblAvgNoTransactions);
+                string blockNumber = client.DownloadString("https://blockchain.info/q/getblockcount"); // most recent block number
+                string blockReward = client.DownloadString("https://blockchain.info/q/bcperblock"); // current block reward
+                string estHashrate = client.DownloadString("https://blockchain.info/q/hashrate"); // hashrate estimate
+                string secondsBetweenBlocks = client.DownloadString("https://blockchain.info/q/interval"); // average time between blocks in seconds
+                double dblSecondsBetweenBlocks = Convert.ToDouble(secondsBetweenBlocks);
+                TimeSpan time = TimeSpan.FromSeconds(dblSecondsBetweenBlocks);
+                string timeString = string.Format("{0:%m}m {0:%s}s", time);
+                string avgTimeBetweenBlocks = timeString;
+                string totalBTC = client.DownloadString("https://blockchain.info/q/totalbc"); // total sats in circulation
+                double dblTotalBTC = Convert.ToDouble(totalBTC);
+                dblTotalBTC = dblTotalBTC / 100000000; // convert sats to bitcoin
+                string btcInCirc = Convert.ToString(dblTotalBTC);
+                string hashesToSolve = client.DownloadString("https://blockchain.info/q/hashestowin"); // avg number of hashes to win a block
+                string twentyFourHourTransCount = client.DownloadString("https://blockchain.info/q/24hrtransactioncount"); // number of transactions in last 24 hours
+                string twentyFourHourBTCSent = client.DownloadString("https://blockchain.info/q/24hrbtcsent"); // number of sats sent in 24 hours
+                double dbl24HrBTCSent = Convert.ToDouble(twentyFourHourBTCSent);
+                dbl24HrBTCSent = dbl24HrBTCSent / 100000000; // convert sats to bitcoin
+                twentyFourHourBTCSent = Convert.ToString(dbl24HrBTCSent);
+                return (avgNoTransactionsText, blockNumber, blockReward, estHashrate, avgTimeBetweenBlocks, btcInCirc, hashesToSolve, twentyFourHourTransCount, twentyFourHourBTCSent);
+            }
+        }
+
+        private (string nextBlockFee, string thirtyMinFee, string sixtyMinFee, string oneDayFee, string txInNextBlock, string nextBlockMinFee, string nextBlockMaxFee, string nextBlockTotalFees) bitcoinExplorerOrgJSONRefresh()
+        {
+            // fees
+            var client = new HttpClient();
+            var response = client.GetAsync("https://bitcoinexplorer.org/api/mempool/fees").Result;
+            var json = response.Content.ReadAsStringAsync().Result;
+            var data = JObject.Parse(json);
+            var nextBlockFee = (string)data["nextBlock"];
+            var thirtyMinFee = (string)data["30min"];
+            var sixtyMinFee = (string)data["60min"];
+            var oneDayFee = (string)data["1day"];
+            // next block
+            var response2 = client.GetAsync("https://bitcoinexplorer.org/api/mining/next-block").Result;
+            var json2 = response2.Content.ReadAsStringAsync().Result;
+            var data2 = JObject.Parse(json2);
+            var txInNextBlock = (string)data2["txCount"]; //transaction count
+            var nextBlockMinFee = (string)data2["minFeeRate"]; // minimum fee rate
+            double valuetoround = Convert.ToDouble(nextBlockMinFee); 
+            double roundedValue = Math.Round(valuetoround, 2);
+            nextBlockMinFee = Convert.ToString(roundedValue);
+            var nextBlockMaxFee = (string)data2["maxFeeRate"]; // maximum fee rate
+            valuetoround = Convert.ToDouble(nextBlockMaxFee);
+            roundedValue = Math.Round(valuetoround, 2);
+            nextBlockMaxFee = Convert.ToString(roundedValue);
+            var nextBlockTotalFees = (string)data2["totalFees"]; // total fees
+            valuetoround = Convert.ToDouble(nextBlockTotalFees);
+            roundedValue = Math.Round(valuetoround, 2);
+            nextBlockTotalFees = Convert.ToString(roundedValue);
+            return (nextBlockFee, thirtyMinFee, sixtyMinFee, oneDayFee, txInNextBlock, nextBlockMinFee, nextBlockMaxFee, nextBlockTotalFees);
+        }
+
+        private (string n_tx, string size, string nextretarget) blockchainInfoJSONRefresh()
+        {
+            using (WebClient client = new WebClient())
+            {
+                // LATEST BLOCK
+                string jsonurl = "https://blockchain.info/rawblock/";  // use this...
+                string blockNumberUrl = "https://blockchain.info/q/getblockcount"; 
+                string blocknumber = client.DownloadString(blockNumberUrl); //combined with the result of that (we can't rely on already knowing the latest block number)
+                string finalurl = jsonurl + blocknumber; // to create a url we can use to get the JSON of the latest block
+                string size;
+                var response3 = client.DownloadString(finalurl);
+                var data3 = JObject.Parse(response3); 
+                var n_tx = (string)data3["n_tx"] + " transactions";  // number of transactions
+                var sizeInKB = ((double)data3["size"] /1000); // size in bytes divided by 1000 to get kb
+                if (sizeInKB < 1024) // if less than 1MB
+                {
+                    size = sizeInKB + " KB block size";
+                }
+                else // if more than 1MB
+                {
+                    size = Convert.ToString(Math.Round((sizeInKB / 1000), 2)) + "MB block size"; 
+                }
+                // NEXT DIFFICULTY ADJUSTMENT BLOCK
+                var response4 = client.DownloadString("https://api.blockchain.info/stats");
+                var data4 = JObject.Parse(response4);
+                var nextretarget = (string)data4["nextretarget"];
+                return (n_tx, size, nextretarget);
+            }
+        }
+
+        private (string ath, string athDate, string athDifference, string twentyFourHourHigh, string twentyFourHourLow) coingeckoComJSONRefresh()
+        {
+            using (WebClient client = new WebClient())
+            {
+                // ATH & 24hr data
+                var response5 = client.DownloadString("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false");
+                var data5 = JArray.Parse(response5);
+                var btcData = data5.Where(x => (string)x["symbol"] == "btc").FirstOrDefault();
+                var ath = (string)btcData["ath"];  // all time high value of btc in usd
+                var athDate = (string)btcData["ath_date"]; // date of the all time high
+                DateTime date = DateTime.Parse(athDate); // change it to dd MMM yyyy format
+                string strATHDate = date.ToString("dd MMM yyyy");
+                athDate = strATHDate;
+                double doubleathDifference = (double)btcData["ath_change_percentage"]; // percentage change from ATH to multiple decimal places
+                string formattedAthDifference = doubleathDifference.ToString("0.00"); // round it to 2 decimal places before sending it back
+                string athDifference = Convert.ToString(formattedAthDifference);
+
+                var twentyFourHourHigh = (string)btcData["high_24h"]; // highest value of btc in usd over last 24 hours
+                var twentyFourHourLow = (string)btcData["low_24h"]; // lowest value of btc in usd over last 24 hours
+                return (ath, athDate, athDifference, twentyFourHourHigh, twentyFourHourLow);
+            }
+        }
+
+        //--------------------------END API CALLS------------------------------
+        //====================================================================================================================
+        //--------------------------ON-SCREEN CLOCK----------------------------
+
+        private void updateOnScreenClock()
+        {
+            lblTime.Text = DateTime.Now.ToString("HH:mm");
+            lblSeconds.Text = DateTime.Now.ToString("ss");
+            lblDate.Text = DateTime.Now.ToString("MMMM dd yyyy");
+            lblDay.Text = DateTime.Now.ToString("dddd");
+            lblSeconds.Location = new Point(lblTime.Location.X + lblTime.Width - 10, lblSeconds.Location.Y); // place the seconds according to the width of the minutes/seconds (lblTime)
+        }
+
+        //----------------------END ON-SCREEN CLOCK----------------------------
+        //====================================================================================================================
+        //---------------------- BORDER ROUND WINDOW---------------------------
+
+        private void Form1_Paint(object sender, PaintEventArgs e) // place a 1px border around the form
+        {
+            ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Gray, ButtonBorderStyle.Solid);
+        }
+        //---------------------END BORDER ROUND WINDOW--------------------------
     }
 }
-
