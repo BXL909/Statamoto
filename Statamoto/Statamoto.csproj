@@ -86,6 +86,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomToolTipRenderer.cs" />
+    <Compile Include="settingsScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="settingsScreen.Designer.cs">
+      <DependentUpon>settingsScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="splash.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="settingsScreen.resx">
+      <DependentUpon>settingsScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="splash.resx">
       <DependentUpon>splash.cs</DependentUpon>
     </EmbeddedResource>

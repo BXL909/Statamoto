@@ -115,6 +115,7 @@
             this.lblBlocksIn24Hours = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.timer1Day = new System.Windows.Forms.Timer(this.components);
+            this.btnSettings = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblTime
@@ -912,6 +913,7 @@
             this.btnSplash.Name = "btnSplash";
             this.btnSplash.Size = new System.Drawing.Size(18, 20);
             this.btnSplash.TabIndex = 58;
+            this.btnSplash.TabStop = false;
             this.btnSplash.Text = "?";
             this.btnSplash.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnSplash.UseVisualStyleBackColor = false;
@@ -1139,6 +1141,24 @@
             this.timer1Day.Interval = 86400000;
             this.timer1Day.Tick += new System.EventHandler(this.timer1Day_Tick);
             // 
+            // btnSettings
+            // 
+            this.btnSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSettings.Font = new System.Drawing.Font("Consolas", 7.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSettings.ForeColor = System.Drawing.Color.Gray;
+            this.btnSettings.Location = new System.Drawing.Point(34, 11);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(18, 20);
+            this.btnSettings.TabIndex = 83;
+            this.btnSettings.TabStop = false;
+            this.btnSettings.Text = "🔧";
+            this.btnSettings.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnSettings.UseVisualStyleBackColor = false;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            this.btnSettings.MouseLeave += new System.EventHandler(this.button_MouseLeave);
+            this.btnSettings.MouseHover += new System.EventHandler(this.button_MouseHover);
+            // 
             // Statamoto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1148,6 +1168,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(800, 590);
+            this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.label33);
             this.Controls.Add(this.lblBlockchainSize);
             this.Controls.Add(this.label32);
@@ -1329,6 +1350,7 @@
         private System.Windows.Forms.Label lblBlockchainSize;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Timer timer1Day;
+        private System.Windows.Forms.Button btnSettings;
     }
 }
 

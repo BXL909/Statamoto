@@ -5,11 +5,11 @@
 ──███────▀████─  Version history
 ──███──────███─  1.0 initial release
 ──███────▄███▀─  1.1 Used threading on API calls for speed and UI responsiveness. Added 4 new fields (number of hodling addresses, Blockchain size, 24 hour number of blocks mined, Number of discoverable nodes)
-──█████████▀───  
+──█████████▀───      Added settings screen. Added ability to disable individual API calls. Added options to change API call refresh frequency.
 ──███████████▄─  To do:
-──███─────▀████  option to disable individual API's, and possibly add alternatives
-──███───────███  improve error message layout (sometimes the error message goes onto a second line)
-──███─────▄████
+──███─────▀████  alternative api's?
+──███───────███  option to change api refresh time on 24 hour api
+──███─────▄████  
 ──████████████─
 ████████████▀──
 ────██──██─────
@@ -41,9 +41,17 @@ namespace Statamoto
         //====================================================================================================================
         //---------------------------INITIALISE-------------------------------
 
-        private int intCountdownToRefresh = 60; // countdown to display seconds to next refresh
-        private int int1MinTimerInterval = 60000; // milliseconds, used to set the interval of the timer for api refresh
-        private int int1MinTimerIntervalSecs = 60;
+        private int intCountdownToRefresh; // countdown to display seconds to next refresh
+        private int int1MinTimerInterval; // milliseconds, used to set the interval of the timer for api refresh
+        private int int1MinTimerIntervalSecs;
+        private bool RunBitcoinExplorerEndpointAPI = true;
+        private bool RunBlockchainInfoEndpointAPI = true;
+        private bool RunBitcoinExplorerOrgJSONAPI = true;
+        private bool RunBlockchainInfoJSONAPI = true;
+        private bool RunCoingeckoComJSONAPI = true;
+        private bool RunBlockchairComJSONAPI = true;
+        private int APIGroup1RefreshFrequency = 1; // mins
+        private int APIGroup2RefreshFrequency = 24; // hours
 
         [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]  // needed for the code that moves the form as not using a standard control
         private extern static void ReleaseCapture();
@@ -69,6 +77,9 @@ namespace Statamoto
 
         private void startTheClocksTicking()
         {
+            intCountdownToRefresh = (APIGroup1RefreshFrequency * 60); //turn minutes into seconds. This is the number used to display remaning time until refresh
+            int1MinTimerIntervalSecs = (APIGroup1RefreshFrequency * 60); //turn minutes into seconds. This is kept constant and used to reset the timer to this number
+            int1MinTimerInterval = ((APIGroup1RefreshFrequency * 60) * 1000); // turn minutes into seconds, then into milliseconds
             timer1Min.Interval = int1MinTimerInterval; // set the frequency of the clock to 60 seconds
             timer1Sec.Start(); // timer used to refresh the clock values
             timer1Min.Start(); // timer used to refresh most btc data
@@ -104,28 +115,54 @@ namespace Statamoto
                 {
                     try
                     {
-                        var result = bitcoinExplorerOrgEndpointsRefresh();
-                        // move returned data to the labels on the form
-                        lblPriceUSD.Invoke((MethodInvoker)delegate
+                        if (RunBitcoinExplorerEndpointAPI)
                         {
-                            lblPriceUSD.Text = result.priceUSD;
-                        });
-                        lblMoscowTime.Invoke((MethodInvoker)delegate
+                            var result = bitcoinExplorerOrgEndpointsRefresh();
+                            // move returned data to the labels on the form
+                            lblPriceUSD.Invoke((MethodInvoker)delegate
+                            {
+                                lblPriceUSD.Text = result.priceUSD;
+                            });
+                            lblMoscowTime.Invoke((MethodInvoker)delegate
+                            {
+                                lblMoscowTime.Text = result.moscowTime;
+                            });
+                            lblMarketCapUSD.Invoke((MethodInvoker)delegate
+                            {
+                                lblMarketCapUSD.Text = result.marketCapUSD;
+                            });
+                            lblDifficultyAdjEst.Invoke((MethodInvoker)delegate
+                            {
+                                lblDifficultyAdjEst.Text = result.difficultyAdjEst;
+                            });
+                            lblTXInMempool.Invoke((MethodInvoker)delegate
+                            {
+                                lblTXInMempool.Text = result.txInMempool;
+                            });
+                        }
+                        else
                         {
-                            lblMoscowTime.Text = result.moscowTime;
-                        });
-                        lblMarketCapUSD.Invoke((MethodInvoker)delegate
-                        {
-                            lblMarketCapUSD.Text = result.marketCapUSD;
-                        });
-                        lblDifficultyAdjEst.Invoke((MethodInvoker)delegate
-                        {
-                            lblDifficultyAdjEst.Text = result.difficultyAdjEst;
-                        });
-                        lblTXInMempool.Invoke((MethodInvoker)delegate
-                        {
-                            lblTXInMempool.Text = result.txInMempool;
-                        });
+                            lblPriceUSD.Invoke((MethodInvoker)delegate
+                            {
+                                lblPriceUSD.Text = "disabled";
+                            });
+                            lblMoscowTime.Invoke((MethodInvoker)delegate
+                            {
+                                lblMoscowTime.Text = "disabled";
+                            });
+                            lblMarketCapUSD.Invoke((MethodInvoker)delegate
+                            {
+                                lblMarketCapUSD.Text = "disabled";
+                            });
+                            lblDifficultyAdjEst.Invoke((MethodInvoker)delegate
+                            {
+                                lblDifficultyAdjEst.Text = "disabled";
+                            });
+                            lblTXInMempool.Invoke((MethodInvoker)delegate
+                            {
+                                lblTXInMempool.Text = "disabled";
+                            });
+                        }
                         // set successful lights and messages on the form
                         lblStatusLight.Invoke((MethodInvoker)delegate
                         {
@@ -155,44 +192,87 @@ namespace Statamoto
                 {
                     try
                     {
-                        var result2 = blockchainInfoEndpointsRefresh();
-                        // move returned data to the labels on the form
-                        lblAvgNoTransactions.Invoke((MethodInvoker)delegate
+                        if (RunBlockchainInfoEndpointAPI)
                         {
-                            lblAvgNoTransactions.Text = result2.avgNoTransactions;
-                        });
-                        lblBlockNumber.Invoke((MethodInvoker)delegate
+                            var result2 = blockchainInfoEndpointsRefresh();
+                            // move returned data to the labels on the form
+                            lblAvgNoTransactions.Invoke((MethodInvoker)delegate
+                            {
+                                lblAvgNoTransactions.Text = result2.avgNoTransactions;
+                            });
+                            lblBlockNumber.Invoke((MethodInvoker)delegate
+                            {
+                                lblBlockNumber.Text = result2.blockNumber;
+                            });
+                            lblBlockReward.Invoke((MethodInvoker)delegate
+                            {
+                                lblBlockReward.Text = result2.blockReward;
+                            });
+                            lblEstHashrate.Invoke((MethodInvoker)delegate
+                            {
+                                lblEstHashrate.Text = result2.estHashrate;
+                            });
+                            lblAvgTimeBetweenBlocks.Invoke((MethodInvoker)delegate
+                            {
+                                lblAvgTimeBetweenBlocks.Text = result2.avgTimeBetweenBlocks;
+                            });
+                            lblBTCInCirc.Invoke((MethodInvoker)delegate
+                            {
+                                lblBTCInCirc.Text = result2.btcInCirc;
+                            });
+                            lblHashesToSolve.Invoke((MethodInvoker)delegate
+                            {
+                                lblHashesToSolve.Text = result2.hashesToSolve;
+                            });
+                            lbl24HourTransCount.Invoke((MethodInvoker)delegate
+                            {
+                                lbl24HourTransCount.Text = result2.twentyFourHourTransCount;
+                            });
+                            lbl24HourBTCSent.Invoke((MethodInvoker)delegate
+                            {
+                                lbl24HourBTCSent.Text = result2.twentyFourHourBTCSent;
+                            });
+                        }
+                        else
                         {
-                            lblBlockNumber.Text = result2.blockNumber;
-                        });
-                        lblBlockReward.Invoke((MethodInvoker)delegate
-                        {
-                            lblBlockReward.Text = result2.blockReward;
-                        });
-                        lblEstHashrate.Invoke((MethodInvoker)delegate
-                        {
-                            lblEstHashrate.Text = result2.estHashrate;
-                        });
-                        lblAvgTimeBetweenBlocks.Invoke((MethodInvoker)delegate
-                        {
-                            lblAvgTimeBetweenBlocks.Text = result2.avgTimeBetweenBlocks;
-                        });
-                        lblBTCInCirc.Invoke((MethodInvoker)delegate
-                        {
-                            lblBTCInCirc.Text = result2.btcInCirc;
-                        });
-                        lblHashesToSolve.Invoke((MethodInvoker)delegate
-                        {
-                            lblHashesToSolve.Text = result2.hashesToSolve;
-                        });
-                        lbl24HourTransCount.Invoke((MethodInvoker)delegate
-                        {
-                            lbl24HourTransCount.Text = result2.twentyFourHourTransCount;
-                        });
-                        lbl24HourBTCSent.Invoke((MethodInvoker)delegate
-                        {
-                            lbl24HourBTCSent.Text = result2.twentyFourHourBTCSent;
-                        });
+                            lblAvgNoTransactions.Invoke((MethodInvoker)delegate
+                            {
+                                lblAvgNoTransactions.Text = "disabled";
+                            });
+                            lblBlockNumber.Invoke((MethodInvoker)delegate
+                            {
+                                lblBlockNumber.Text = "disabled";
+                            });
+                            lblBlockReward.Invoke((MethodInvoker)delegate
+                            {
+                                lblBlockReward.Text = "disabled";
+                            });
+                            lblEstHashrate.Invoke((MethodInvoker)delegate
+                            {
+                                lblEstHashrate.Text = "disabled";
+                            });
+                            lblAvgTimeBetweenBlocks.Invoke((MethodInvoker)delegate
+                            {
+                                lblAvgTimeBetweenBlocks.Text = "disabled";
+                            });
+                            lblBTCInCirc.Invoke((MethodInvoker)delegate
+                            {
+                                lblBTCInCirc.Text = "disabled";
+                            });
+                            lblHashesToSolve.Invoke((MethodInvoker)delegate
+                            {
+                                lblHashesToSolve.Text = "disabled";
+                            });
+                            lbl24HourTransCount.Invoke((MethodInvoker)delegate
+                            {
+                                lbl24HourTransCount.Text = "disabled";
+                            });
+                            lbl24HourBTCSent.Invoke((MethodInvoker)delegate
+                            {
+                                lbl24HourBTCSent.Text = "disabled";
+                            });
+                        }
+
                         // set successful lights and messages on the form
                         lblStatusLight.Invoke((MethodInvoker)delegate
                         {
@@ -222,40 +302,79 @@ namespace Statamoto
                 {
                     try
                     {
-                        var result3 = bitcoinExplorerOrgJSONRefresh();
-                        // move returned data to the labels on the form
-                        lblfeesNextBlock.Invoke((MethodInvoker)delegate
+                        if (RunBitcoinExplorerOrgJSONAPI)
                         {
-                            lblfeesNextBlock.Text = result3.nextBlockFee;
-                        });
-                        lblFees30Mins.Invoke((MethodInvoker)delegate
+                            var result3 = bitcoinExplorerOrgJSONRefresh();
+                            // move returned data to the labels on the form
+                            lblfeesNextBlock.Invoke((MethodInvoker)delegate
+                            {
+                                lblfeesNextBlock.Text = result3.nextBlockFee;
+                            });
+                            lblFees30Mins.Invoke((MethodInvoker)delegate
+                            {
+                                lblFees30Mins.Text = result3.thirtyMinFee;
+                            });
+                            lblFees60Mins.Invoke((MethodInvoker)delegate
+                            {
+                                lblFees60Mins.Text = result3.sixtyMinFee;
+                            });
+                            lblFees1Day.Invoke((MethodInvoker)delegate
+                            {
+                                lblFees1Day.Text = result3.oneDayFee;
+                            });
+                            lblTransInNextBlock.Invoke((MethodInvoker)delegate
+                            {
+                                lblTransInNextBlock.Text = result3.txInNextBlock;
+                            });
+                            lblNextBlockMinFee.Invoke((MethodInvoker)delegate
+                            {
+                                lblNextBlockMinFee.Text = result3.nextBlockMinFee;
+                            });
+                            lblNextBlockMaxFee.Invoke((MethodInvoker)delegate
+                            {
+                                lblNextBlockMaxFee.Text = result3.nextBlockMaxFee;
+                            });
+                            lblNextBlockTotalFees.Invoke((MethodInvoker)delegate
+                            {
+                                lblNextBlockTotalFees.Text = result3.nextBlockTotalFees;
+                            });
+                        }
+                        else
                         {
-                            lblFees30Mins.Text = result3.thirtyMinFee;
-                        });
-                        lblFees60Mins.Invoke((MethodInvoker)delegate
-                        {
-                            lblFees60Mins.Text = result3.sixtyMinFee;
-                        });
-                        lblFees1Day.Invoke((MethodInvoker)delegate
-                        {
-                            lblFees1Day.Text = result3.oneDayFee;
-                        });
-                        lblTransInNextBlock.Invoke((MethodInvoker)delegate
-                        {
-                            lblTransInNextBlock.Text = result3.txInNextBlock;
-                        });
-                        lblNextBlockMinFee.Invoke((MethodInvoker)delegate
-                        {
-                            lblNextBlockMinFee.Text = result3.nextBlockMinFee;
-                        });
-                        lblNextBlockMaxFee.Invoke((MethodInvoker)delegate
-                        {
-                            lblNextBlockMaxFee.Text = result3.nextBlockMaxFee;
-                        });
-                        lblNextBlockTotalFees.Invoke((MethodInvoker)delegate
-                        {
-                            lblNextBlockTotalFees.Text = result3.nextBlockTotalFees;
-                        });
+                            lblfeesNextBlock.Invoke((MethodInvoker)delegate
+                            {
+                                lblfeesNextBlock.Text = "n/a";
+                            });
+                            lblFees30Mins.Invoke((MethodInvoker)delegate
+                            {
+                                lblFees30Mins.Text = "n/a";
+                            });
+                            lblFees60Mins.Invoke((MethodInvoker)delegate
+                            {
+                                lblFees60Mins.Text = "n/a";
+                            });
+                            lblFees1Day.Invoke((MethodInvoker)delegate
+                            {
+                                lblFees1Day.Text = "n/a";
+                            });
+                            lblTransInNextBlock.Invoke((MethodInvoker)delegate
+                            {
+                                lblTransInNextBlock.Text = "disabled";
+                            });
+                            lblNextBlockMinFee.Invoke((MethodInvoker)delegate
+                            {
+                                lblNextBlockMinFee.Text = "disabled";
+                            });
+                            lblNextBlockMaxFee.Invoke((MethodInvoker)delegate
+                            {
+                                lblNextBlockMaxFee.Text = "disabled";
+                            });
+                            lblNextBlockTotalFees.Invoke((MethodInvoker)delegate
+                            {
+                                lblNextBlockTotalFees.Text = "disabled";
+                            });
+
+                        }
                         // set successful lights and messages on the form
                         lblStatusLight.Invoke((MethodInvoker)delegate
                         {
@@ -285,20 +404,39 @@ namespace Statamoto
                 {
                     try
                     {
-                        var result4 = blockchainInfoJSONRefresh();
-                        // move returned data to the labels on the form
-                        lblTransactions.Invoke((MethodInvoker)delegate
+                        if (RunBlockchainInfoJSONAPI)
                         {
-                            lblTransactions.Text = result4.n_tx;
-                        });
-                        lblBlockSize.Invoke((MethodInvoker)delegate
+                            var result4 = blockchainInfoJSONRefresh();
+                            // move returned data to the labels on the form
+                            lblTransactions.Invoke((MethodInvoker)delegate
+                            {
+                                lblTransactions.Text = result4.n_tx;
+                            });
+                            lblBlockSize.Invoke((MethodInvoker)delegate
+                            {
+                                lblBlockSize.Text = result4.size;
+                            });
+                            lblNextDifficultyChange.Invoke((MethodInvoker)delegate
+                            {
+                                lblNextDifficultyChange.Text = result4.nextretarget;
+                            });
+                        }
+                        else
                         {
-                            lblBlockSize.Text = result4.size;
-                        });
-                        lblNextDifficultyChange.Invoke((MethodInvoker)delegate
-                        {
-                            lblNextDifficultyChange.Text = result4.nextretarget;
-                        });
+                            lblTransactions.Invoke((MethodInvoker)delegate
+                            {
+                                lblTransactions.Text = "disabled";
+                            });
+                            lblBlockSize.Invoke((MethodInvoker)delegate
+                            {
+                                lblBlockSize.Text = "disabled";
+                            });
+                            lblNextDifficultyChange.Invoke((MethodInvoker)delegate
+                            {
+                                lblNextDifficultyChange.Text = "disabled";
+                            });
+
+                        }
                         // set successful lights and messages on the form
                         lblStatusLight.Invoke((MethodInvoker)delegate
                         {
@@ -328,32 +466,63 @@ namespace Statamoto
                 {
                     try
                     {
-                        var result5 = coingeckoComJSONRefresh();
-                        // move returned data to the labels on the form
-                        lblATH.Invoke((MethodInvoker)delegate
+                        if (RunCoingeckoComJSONAPI)
                         {
-                            lblATH.Text = result5.ath;
-                        });
-                        lblATHDate.Invoke((MethodInvoker)delegate
+                            var result5 = coingeckoComJSONRefresh();
+                            // move returned data to the labels on the form
+                            lblATH.Invoke((MethodInvoker)delegate
+                            {
+                                lblATH.Text = result5.ath;
+                            });
+                            lblATHDate.Invoke((MethodInvoker)delegate
+                            {
+                                lblATHDate.Location = new Point(lblATH.Location.X + lblATH.Width, lblATHDate.Location.Y); // place the ATH date according to the width of the ATH (future proofed for hyperbitcoinization!)
+                            });
+                            lblATHDate.Invoke((MethodInvoker)delegate
+                            {
+                                lblATHDate.Text = "(" + result5.athDate + ")";
+                            });
+                            lblATHDifference.Invoke((MethodInvoker)delegate
+                            {
+                                lblATHDifference.Text = result5.athDifference;
+                            });
+                            lbl24HrHigh.Invoke((MethodInvoker)delegate
+                            {
+                                lbl24HrHigh.Text = result5.twentyFourHourHigh;
+                            });
+                            lbl24HrLow.Invoke((MethodInvoker)delegate
+                            {
+                                lbl24HrLow.Text = result5.twentyFourHourLow;
+                            });
+                        }
+                        else
                         {
-                            lblATHDate.Location = new Point(lblATH.Location.X + lblATH.Width, lblATHDate.Location.Y); // place the ATH date according to the width of the ATH (future proofed for hyperbitcoinization!)
-                        });
-                        lblATHDate.Invoke((MethodInvoker)delegate
-                        {
-                            lblATHDate.Text = "(" + result5.athDate + ")";
-                        });
-                        lblATHDifference.Invoke((MethodInvoker)delegate
-                        {
-                            lblATHDifference.Text = result5.athDifference;
-                        });
-                        lbl24HrHigh.Invoke((MethodInvoker)delegate
-                        {
-                            lbl24HrHigh.Text = result5.twentyFourHourHigh;
-                        });
-                        lbl24HrLow.Invoke((MethodInvoker)delegate
-                        {
-                            lbl24HrLow.Text = result5.twentyFourHourLow;
-                        });
+                            lblATH.Invoke((MethodInvoker)delegate
+                            {
+                                lblATH.Text = "disabled";
+                            });
+                            lblATHDate.Invoke((MethodInvoker)delegate
+                            {
+                                lblATHDate.Location = new Point(lblATH.Location.X + lblATH.Width, lblATHDate.Location.Y); // place the ATH date according to the width of the ATH (future proofed for hyperbitcoinization!)
+                            });
+                            lblATHDate.Invoke((MethodInvoker)delegate
+                            {
+                                lblATHDate.Text = "(" + "disabled" + ")";
+                            });
+                            lblATHDifference.Invoke((MethodInvoker)delegate
+                            {
+                                lblATHDifference.Text = "disabled";
+                            });
+                            lbl24HrHigh.Invoke((MethodInvoker)delegate
+                            {
+                                lbl24HrHigh.Text = "disabled";
+                            });
+                            lbl24HrLow.Invoke((MethodInvoker)delegate
+                            {
+                                lbl24HrLow.Text = "disabled";
+                            });
+                        }
+
                         // set successful lights and messages on the form
                         lblStatusLight.Invoke((MethodInvoker)delegate
                         {
@@ -378,12 +547,7 @@ namespace Statamoto
                         });
                     }
                 });
-                //Task task2 = Task.Run(() =>
-                //{
-                //    // blockchainInfoEndpointsRefresh();
-                //});
 
-                //await Task.WhenAll(task1, task2);
                 await Task.WhenAll(task1, task2, task3, task4, task5);
 
                 // If any errors occurred with any of the API calls, a decent error message has already been displayed. Now display the red light and generic error.
@@ -414,25 +578,37 @@ namespace Statamoto
         {
             try
             {
-                var client = new HttpClient();
-                string json6 = client.GetStringAsync("https://api.blockchair.com/bitcoin/stats").Result;
-                dynamic data6 = JsonConvert.DeserializeObject(json6);
-                int hodling_addresses = data6.data.hodling_addresses;
-                if (hodling_addresses > 0) // this api sometimes doesn't populate this field with anything but 0
+                if (RunBlockchairComJSONAPI)
                 {
-                    lblHodlingAddresses.Text = hodling_addresses.ToString();
+                    var client = new HttpClient();
+                    string json6 = client.GetStringAsync("https://api.blockchair.com/bitcoin/stats").Result;
+                    dynamic data6 = JsonConvert.DeserializeObject(json6);
+                    int hodling_addresses = data6.data.hodling_addresses;
+                    if (hodling_addresses > 0) // this api sometimes doesn't populate this field with anything but 0
+                    {
+                        lblHodlingAddresses.Text = hodling_addresses.ToString();
+                    }
+                    else
+                    {
+                        lblHodlingAddresses.Text = "no data";
+                    }
+                    int blocksIn24Hours = data6.data.blocks_24h;
+                    lblBlocksIn24Hours.Text = blocksIn24Hours.ToString();
+                    int numberOfNodes = data6.data.nodes;
+                    lblNodes.Text = numberOfNodes.ToString();
+                    dynamic blockchainSize = data6.data.blockchain_size;
+                    double blockchainSizeGB = Math.Round(Convert.ToDouble(blockchainSize) / 1073741824.0, 2);
+                    lblBlockchainSize.Text = blockchainSizeGB.ToString();
                 }
                 else
                 {
-                    lblHodlingAddresses.Text = "no data";
+                    lblHodlingAddresses.Text = "disabled";
+                    lblBlocksIn24Hours.Text = "disabled";
+                    lblNodes.Text = "disabled";
+                    lblBlockchainSize.Text = "disabled";
+
                 }
-                int blocksIn24Hours = data6.data.blocks_24h;
-                lblBlocksIn24Hours.Text = blocksIn24Hours.ToString();
-                int numberOfNodes = data6.data.nodes;
-                lblNodes.Text = numberOfNodes.ToString();
-                dynamic blockchainSize = data6.data.blockchain_size;
-                double blockchainSizeGB = Math.Round(Convert.ToDouble(blockchainSize) / 1073741824.0, 2);
-                lblBlockchainSize.Text = blockchainSizeGB.ToString();
+                
             }
             catch (Exception ex)
             {
@@ -688,6 +864,72 @@ namespace Statamoto
         {
             ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Gray, ButtonBorderStyle.Solid);
         }
+
         //---------------------END BORDER ROUND WINDOW--------------------------
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            settingsScreen.CreateInstance();
+            settingsScreen.Instance.ShowDialog();
+            if (settingsScreen.Instance.BitcoinExplorerEndpointsEnabled)
+            {
+                RunBitcoinExplorerEndpointAPI = true;
+            }
+            else
+            {
+                RunBitcoinExplorerEndpointAPI = false;
+            }
+            if (settingsScreen.Instance.BlockchainInfoEndpointsEnabled)
+            {
+                RunBlockchainInfoEndpointAPI = true;
+            }
+            else
+            {
+                RunBlockchainInfoEndpointAPI = false;
+            }
+            if (settingsScreen.Instance.BitcoinExplorerOrgJSONEnabled)
+            {
+                RunBitcoinExplorerOrgJSONAPI = true;
+            }
+            else
+            {
+                RunBitcoinExplorerOrgJSONAPI = false;
+            }
+            if (settingsScreen.Instance.BlockchainInfoJSONEnabled)
+            {
+                RunBlockchainInfoJSONAPI = true;
+            }
+            else
+            {
+                RunBlockchainInfoJSONAPI = false;
+            }
+            if (settingsScreen.Instance.CoingeckoComJSONEnabled)
+            {
+                RunCoingeckoComJSONAPI = true;
+            }
+            else
+            {
+                RunCoingeckoComJSONAPI = false;
+            }
+            if (settingsScreen.Instance.BlockchairComJSONEnabled)
+            {
+                RunBlockchairComJSONAPI = true;
+            }
+            else
+            {
+                RunBlockchairComJSONAPI = false;
+            }
+
+            if (int1MinTimerIntervalSecs != (settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60))
+            {
+                int1MinTimerIntervalSecs = settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60;
+                int1MinTimerInterval = ((settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60) * 1000);
+                intCountdownToRefresh = int1MinTimerIntervalSecs;
+                timer1Min.Stop();    
+                timer1Min.Interval = int1MinTimerInterval;
+                timer1Min.Start();
+            }
+            
+        }
     }
 }
