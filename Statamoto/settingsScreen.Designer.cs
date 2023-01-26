@@ -47,11 +47,11 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownAPIGroup2 = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAPIGroup1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAPIGroup2)).BeginInit();
             this.SuspendLayout();
             // 
             // btnExitSettings
@@ -286,7 +286,7 @@
             this.panel2.Controls.Add(this.lblBlockchairComJSON);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.numericUpDown1);
+            this.panel2.Controls.Add(this.numericUpDownAPIGroup2);
             this.panel2.ForeColor = System.Drawing.Color.DarkGray;
             this.panel2.Location = new System.Drawing.Point(30, 220);
             this.panel2.Name = "panel2";
@@ -304,31 +304,32 @@
             this.label5.TabIndex = 23;
             this.label5.Text = "Refresh freq. (hours)";
             // 
-            // numericUpDown1
+            // numericUpDownAPIGroup2
             // 
-            this.numericUpDown1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.numericUpDown1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.numericUpDown1.Font = new System.Drawing.Font("Consolas", 9F);
-            this.numericUpDown1.ForeColor = System.Drawing.Color.Silver;
-            this.numericUpDown1.Location = new System.Drawing.Point(18, 35);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.numericUpDownAPIGroup2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.numericUpDownAPIGroup2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.numericUpDownAPIGroup2.Font = new System.Drawing.Font("Consolas", 9F);
+            this.numericUpDownAPIGroup2.ForeColor = System.Drawing.Color.Silver;
+            this.numericUpDownAPIGroup2.Location = new System.Drawing.Point(18, 35);
+            this.numericUpDownAPIGroup2.Maximum = new decimal(new int[] {
             24,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.numericUpDownAPIGroup2.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(60, 21);
-            this.numericUpDown1.TabIndex = 22;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.numericUpDownAPIGroup2.Name = "numericUpDownAPIGroup2";
+            this.numericUpDownAPIGroup2.Size = new System.Drawing.Size(60, 21);
+            this.numericUpDownAPIGroup2.TabIndex = 22;
+            this.numericUpDownAPIGroup2.Value = new decimal(new int[] {
             24,
             0,
             0,
             0});
+            this.numericUpDownAPIGroup2.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // settingsScreen
             // 
@@ -353,7 +354,7 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAPIGroup2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -380,6 +381,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown numericUpDownAPIGroup2;
     }
 }

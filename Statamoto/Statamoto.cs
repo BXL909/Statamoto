@@ -5,16 +5,15 @@
 ──███────▀████─  Version history
 ──███──────███─  1.0 initial release
 ──███────▄███▀─  1.1 Used threading on API calls for speed and UI responsiveness. Added 4 new fields (number of hodling addresses, Blockchain size, 24 hour number of blocks mined, Number of discoverable nodes)
-──█████████▀───      Added settings screen. Added ability to disable individual API calls. Added options to change API call refresh frequency.
-──███████████▄─  To do:
-──███─────▀████  alternative api's?
-──███───────███  option to change api refresh time on 24 hour api
+──█████████▀───      Added settings screen. Added ability to disable individual API calls. Added options to change API call refresh frequency. Added a 'last updated' timer.
+──███████████▄─  
+──███─────▀████  To do:
+──███───────███  Add Lightning data
 ──███─────▄████  
 ──████████████─
 ████████████▀──
 ────██──██─────
 */
-
 
 using System;
 using System.Collections.Generic;
@@ -41,17 +40,20 @@ namespace Statamoto
         //====================================================================================================================
         //---------------------------INITIALISE-------------------------------
 
-        private int intCountdownToRefresh; // countdown to display seconds to next refresh
-        private int int1MinTimerInterval; // milliseconds, used to set the interval of the timer for api refresh
-        private int int1MinTimerIntervalSecs;
+        private int intDisplayCountdownToRefresh; // countdown in seconds to next refresh, for display only
+        private int intAPIGroup1TimerIntervalMillisecsConstant; // milliseconds, used to reset the interval of the timer for api group1 refresh
+        private int APIGroup1DisplayTimerIntervalSecsConstant; // seconds, used to reset the countdown display to its original number
+        private int intAPIGroup2TimerIntervalMillisecsConstant; // milliseconds, used to reset the interval of the timer for api group2 refresh
+        // booleans used to say whether to run individual API's or not. All on/true by default.
         private bool RunBitcoinExplorerEndpointAPI = true;
         private bool RunBlockchainInfoEndpointAPI = true;
         private bool RunBitcoinExplorerOrgJSONAPI = true;
         private bool RunBlockchainInfoJSONAPI = true;
         private bool RunCoingeckoComJSONAPI = true;
         private bool RunBlockchairComJSONAPI = true;
-        private int APIGroup1RefreshFrequency = 1; // mins
-        private int APIGroup2RefreshFrequency = 24; // hours
+        private int APIGroup1RefreshFrequency = 1; // mins. Default value 1. Initial value only
+        private int APIGroup2RefreshFrequency = 24; // hours. Default value 2. Initial value only
+        private int intDisplaySecondsElapsedSinceUpdate = 0; // used to count seconds since the data was last refreshed, for display only.
 
         [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]  // needed for the code that moves the form as not using a standard control
         private extern static void ReleaseCapture();
@@ -66,8 +68,8 @@ namespace Statamoto
 
         private void Form1_Load(object sender, EventArgs e) // on form loading
         {
-            update60SecondBitcoinDataFields(); // setting them now avoids waiting a whole minute for the first refresh
-            updateDailyData(); // set the initial data for the daily updates to avoid waiting a whole day for the first data
+            updateAPIGroup1DataFields(); // setting them now avoids waiting a whole minute for the first refresh
+            updateAPIGroup2DataFields(); // set the initial data for the daily updates to avoid waiting a whole day for the first data
             startTheClocksTicking(); // start all the timers
         }
 
@@ -77,36 +79,47 @@ namespace Statamoto
 
         private void startTheClocksTicking()
         {
-            intCountdownToRefresh = (APIGroup1RefreshFrequency * 60); //turn minutes into seconds. This is the number used to display remaning time until refresh
-            int1MinTimerIntervalSecs = (APIGroup1RefreshFrequency * 60); //turn minutes into seconds. This is kept constant and used to reset the timer to this number
-            int1MinTimerInterval = ((APIGroup1RefreshFrequency * 60) * 1000); // turn minutes into seconds, then into milliseconds
-            timer1Min.Interval = int1MinTimerInterval; // set the frequency of the clock to 60 seconds
+            intDisplayCountdownToRefresh = (APIGroup1RefreshFrequency * 60); //turn minutes into seconds. This is the number used to display remaning time until refresh
+            APIGroup1DisplayTimerIntervalSecsConstant = (APIGroup1RefreshFrequency * 60); //turn minutes into seconds. This is kept constant and used to reset the timer to this number
+            intAPIGroup1TimerIntervalMillisecsConstant = ((APIGroup1RefreshFrequency * 60) * 1000); // turn minutes into seconds, then into milliseconds
+            timerAPIGroup1.Interval = intAPIGroup1TimerIntervalMillisecsConstant; // set the timer interval
+            intAPIGroup2TimerIntervalMillisecsConstant = (((APIGroup2RefreshFrequency * 60) *60) * 1000);  // turn hours to minutes, then seconds, then milliseconds
+            timerAPIGroup2.Interval = intAPIGroup2TimerIntervalMillisecsConstant; // set the time interval
             timer1Sec.Start(); // timer used to refresh the clock values
-            timer1Min.Start(); // timer used to refresh most btc data
-            timer1Day.Start(); // start timer for daily btc data refresh}
+            timerAPIGroup1.Start(); // timer used to refresh most btc data
+            timerAPIGroup2.Start(); // start timer for less frequent api calls
         }
         private void timer1Sec_Tick(object sender, EventArgs e) // update the calendar time and date
         {
             updateOnScreenClock();
             updateOnScreenCountdownAndFlashLights();
+            intDisplaySecondsElapsedSinceUpdate ++; // increment displayed time elapsed since last update
+            if (intDisplaySecondsElapsedSinceUpdate == 1)
+            {
+                lblElapsedSinceUpdate.Text = "Last updated " + intDisplaySecondsElapsedSinceUpdate.ToString() + " second ago";
+            }
+            else
+            {
+                lblElapsedSinceUpdate.Text = "Last updated " + intDisplaySecondsElapsedSinceUpdate.ToString() + " seconds ago";
+            }
         }
 
-        private void timer60Sec_Tick(object sender, EventArgs e) // call the function to update the btc fields
+        private void timerAPIGroup1_Tick(object sender, EventArgs e) // call the function to update the btc fields
         {
             clearAlertAndErrorMessage(); // wipe anything that may be showing in the error area (it should be empty anyway)
-            update60SecondBitcoinDataFields();
+            updateAPIGroup1DataFields(); // fetch data and populate fields
         }
 
-        private void timer1Day_Tick(object sender, EventArgs e)
+        private void timerAPIGroup2_Tick(object sender, EventArgs e)
         {
-            updateDailyData();
+            updateAPIGroup2DataFields(); // fetch data and populate fields
         }
 
         //-------------------------END CLOCK TICKS-----------------------------
         //====================================================================================================================
         //-------------------------UPDATE FORM FIELDS---------------------------
 
-        public async void update60SecondBitcoinDataFields()
+        public async void updateAPIGroup1DataFields()
         {
             using (WebClient client = new WebClient())
             {
@@ -170,13 +183,13 @@ namespace Statamoto
                         });
                         lblStatusLight.Invoke((MethodInvoker)delegate
                         {
-                            lblStatusLight.Text = "🟢"; // green light
+                            lblStatusLight.Text = "🟢"; // circle/light
                         });
                         lblStatusMessPart1.Invoke((MethodInvoker)delegate
                         {
                             lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
                         });
-                        intCountdownToRefresh = int1MinTimerIntervalSecs; // reset the timer
+                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
                     }
                     catch (Exception ex)
                     {
@@ -280,13 +293,13 @@ namespace Statamoto
                         });
                         lblStatusLight.Invoke((MethodInvoker)delegate
                         {
-                            lblStatusLight.Text = "🟢"; // green light
+                            lblStatusLight.Text = "🟢"; // circle/light
                         });
                         lblStatusMessPart1.Invoke((MethodInvoker)delegate
                         {
                             lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
                         });
-                        intCountdownToRefresh = int1MinTimerIntervalSecs; // reset the timer
+                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
                     }
                     catch (Exception ex)
                     {
@@ -382,13 +395,13 @@ namespace Statamoto
                         });
                         lblStatusLight.Invoke((MethodInvoker)delegate
                         {
-                            lblStatusLight.Text = "🟢"; // green light
+                            lblStatusLight.Text = "🟢"; // circle/light
                         });
                         lblStatusMessPart1.Invoke((MethodInvoker)delegate
                         {
                             lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
                         });
-                        intCountdownToRefresh = int1MinTimerIntervalSecs; // reset the timer
+                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
                     }
                     catch (Exception ex)
                     {
@@ -444,13 +457,13 @@ namespace Statamoto
                         });
                         lblStatusLight.Invoke((MethodInvoker)delegate
                         {
-                            lblStatusLight.Text = "🟢"; // green light
+                            lblStatusLight.Text = "🟢"; // circle/light
                         });
                         lblStatusMessPart1.Invoke((MethodInvoker)delegate
                         {
                             lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
                         });
-                        intCountdownToRefresh = int1MinTimerIntervalSecs; // reset the timer
+                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
                     }
                     catch (Exception ex)
                     {
@@ -530,13 +543,14 @@ namespace Statamoto
                         });
                         lblStatusLight.Invoke((MethodInvoker)delegate
                         {
-                            lblStatusLight.Text = "🟢"; // green light
+                            lblStatusLight.Text = "🟢"; // circle/light
                         });
                         lblStatusMessPart1.Invoke((MethodInvoker)delegate
                         {
                             lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
                         });
-                        intCountdownToRefresh = int1MinTimerIntervalSecs; // reset the timer
+                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
+                        intDisplaySecondsElapsedSinceUpdate = 0;
                     }
                     catch (Exception ex)
                     {
@@ -553,7 +567,7 @@ namespace Statamoto
                 // If any errors occurred with any of the API calls, a decent error message has already been displayed. Now display the red light and generic error.
                 if (errorOccurred)
                 {
-                    intCountdownToRefresh = int1MinTimerIntervalSecs;
+                    intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant;
                     lblAlert.Invoke((MethodInvoker)delegate
                     {
                         lblAlert.Text = "⚠️";
@@ -574,7 +588,7 @@ namespace Statamoto
             }
         }
 
-        private void updateDailyData()
+        private void updateAPIGroup2DataFields()
         {
             try
             {
@@ -606,9 +620,7 @@ namespace Statamoto
                     lblBlocksIn24Hours.Text = "disabled";
                     lblNodes.Text = "disabled";
                     lblBlockchainSize.Text = "disabled";
-
                 }
-                
             }
             catch (Exception ex)
             {
@@ -616,7 +628,7 @@ namespace Statamoto
                 lblErrorMessage.Text = ex.Message;
                 lblStatusLight.ForeColor = Color.Red;
                 lblStatusLight.Text = "🔴"; // red light
-                lblStatusMessPart1.Text = "A json error has occurred. Trying again in ";
+                lblStatusMessPart1.Text = "One or more fields failed to update. Trying again in ";
             }
         }
 
@@ -673,14 +685,14 @@ namespace Statamoto
 
         private void updateOnScreenCountdownAndFlashLights()
         {
-            lblSecsCountdown.Text = Convert.ToString(intCountdownToRefresh); // update the countdown on the form
-            intCountdownToRefresh--; // reduce the countdown of the 1 minute timer by 1 second
-            if (intCountdownToRefresh <= 0) // if the 1 minute timer countdown has reached zero...
+            lblSecsCountdown.Text = Convert.ToString(intDisplayCountdownToRefresh); // update the countdown on the form
+            intDisplayCountdownToRefresh--; // reduce the countdown of the 1 minute timer by 1 second
+            if (intDisplayCountdownToRefresh <= 0) // if the 1 minute timer countdown has reached zero...
             {
-                intCountdownToRefresh = int1MinTimerIntervalSecs; // reset it
+                intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset it
             }
             lblSecsCountdown.Location = new Point(lblStatusMessPart1.Location.X + lblStatusMessPart1.Width - 8, lblSecsCountdown.Location.Y); // place the countdown according to the width of the status message
-            if (intCountdownToRefresh < (int1MinTimerIntervalSecs - 1)) // if more than a second has expired since the data from the blocktimer was refreshed...
+            if (intDisplayCountdownToRefresh < (APIGroup1DisplayTimerIntervalSecsConstant - 1)) // if more than a second has expired since the data from the blocktimer was refreshed...
             {
                 changeStatusLightAndClearErrorMessage();
             }
@@ -697,7 +709,7 @@ namespace Statamoto
                 else // an error must have just occured
                 {
                     lblStatusLight.ForeColor = Color.DarkRed; // reset the colours to a duller version to give appearance of a flash
-                    if (intCountdownToRefresh < 11) // when there are only 10 seconds left until the refresh...
+                    if (intDisplayCountdownToRefresh < 11) // when there are only 10 seconds left until the refresh...
                     {
                         lblErrorMessage.Text = ""; // hide any previous error message
                         lblAlert.Text = ""; // and hide the alert icon
@@ -871,6 +883,7 @@ namespace Statamoto
         {
             settingsScreen.CreateInstance();
             settingsScreen.Instance.ShowDialog();
+            // read all fields from the settings screen and set variables for use on the main form
             if (settingsScreen.Instance.BitcoinExplorerEndpointsEnabled)
             {
                 RunBitcoinExplorerEndpointAPI = true;
@@ -920,14 +933,22 @@ namespace Statamoto
                 RunBlockchairComJSONAPI = false;
             }
 
-            if (int1MinTimerIntervalSecs != (settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60))
+            if (APIGroup1DisplayTimerIntervalSecsConstant != (settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60)) // if user has changed refresh frequency
             {
-                int1MinTimerIntervalSecs = settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60;
-                int1MinTimerInterval = ((settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60) * 1000);
-                intCountdownToRefresh = int1MinTimerIntervalSecs;
-                timer1Min.Stop();    
-                timer1Min.Interval = int1MinTimerInterval;
-                timer1Min.Start();
+                APIGroup1DisplayTimerIntervalSecsConstant = settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60;
+                intAPIGroup1TimerIntervalMillisecsConstant = ((settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60) * 1000);
+                intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant;
+                timerAPIGroup1.Stop();    
+                timerAPIGroup1.Interval = intAPIGroup1TimerIntervalMillisecsConstant;
+                timerAPIGroup1.Start();
+            }
+
+            if (intAPIGroup2TimerIntervalMillisecsConstant != (((settingsScreen.Instance.APIGroup2RefreshInHoursSelection *60) * 60) * 1000))
+            {
+                intAPIGroup2TimerIntervalMillisecsConstant = (((settingsScreen.Instance.APIGroup2RefreshInHoursSelection * 60) * 60) * 1000);
+                timerAPIGroup2.Stop();
+                timerAPIGroup2.Interval = intAPIGroup2TimerIntervalMillisecsConstant;
+                timerAPIGroup2.Start();
             }
             
         }

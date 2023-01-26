@@ -75,7 +75,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(120, 18);
             this.label2.TabIndex = 9;
-            this.label2.Text = "Statamoto v1.0";
+            this.label2.Text = "Statamoto v1.1";
             // 
             // linkLabel1
             // 

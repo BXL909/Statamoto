@@ -24,6 +24,8 @@ namespace Statamoto
 
         public int APIGroup1RefreshInMinsSelection { get; set; } = 1;
 
+        public int APIGroup2RefreshInHoursSelection { get; set; } = 24;
+
         public static settingsScreen Instance { get; private set; }
         public static void CreateInstance()
         {
@@ -214,6 +216,11 @@ namespace Statamoto
         private void numericUpDownAPIGroup1_ValueChanged(object sender, EventArgs e)
         {
             APIGroup1RefreshInMinsSelection = (int)numericUpDownAPIGroup1.Value;
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            APIGroup2RefreshInHoursSelection = (int)numericUpDownAPIGroup2.Value;
         }
     }
 }

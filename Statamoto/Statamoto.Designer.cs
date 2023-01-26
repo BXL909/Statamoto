@@ -37,7 +37,7 @@
             this.timer1Sec = new System.Windows.Forms.Timer(this.components);
             this.btnExit = new System.Windows.Forms.Button();
             this.lblBlockNumber = new System.Windows.Forms.Label();
-            this.timer1Min = new System.Windows.Forms.Timer(this.components);
+            this.timerAPIGroup1 = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.lblBlockReward = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -114,8 +114,9 @@
             this.label30 = new System.Windows.Forms.Label();
             this.lblBlocksIn24Hours = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
-            this.timer1Day = new System.Windows.Forms.Timer(this.components);
+            this.timerAPIGroup2 = new System.Windows.Forms.Timer(this.components);
             this.btnSettings = new System.Windows.Forms.Button();
+            this.lblElapsedSinceUpdate = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblTime
@@ -203,10 +204,10 @@
             this.lblBlockNumber.TabIndex = 5;
             this.lblBlockNumber.Text = "no data";
             // 
-            // timer1Min
+            // timerAPIGroup1
             // 
-            this.timer1Min.Interval = 60000;
-            this.timer1Min.Tick += new System.EventHandler(this.timer60Sec_Tick);
+            this.timerAPIGroup1.Interval = 60000;
+            this.timerAPIGroup1.Tick += new System.EventHandler(this.timerAPIGroup1_Tick);
             // 
             // label1
             // 
@@ -1136,10 +1137,10 @@
             this.label31.TabIndex = 78;
             this.label31.Text = "24 hour number of blocks mined";
             // 
-            // timer1Day
+            // timerAPIGroup2
             // 
-            this.timer1Day.Interval = 86400000;
-            this.timer1Day.Tick += new System.EventHandler(this.timer1Day_Tick);
+            this.timerAPIGroup2.Interval = 86400000;
+            this.timerAPIGroup2.Tick += new System.EventHandler(this.timerAPIGroup2_Tick);
             // 
             // btnSettings
             // 
@@ -1159,6 +1160,18 @@
             this.btnSettings.MouseLeave += new System.EventHandler(this.button_MouseLeave);
             this.btnSettings.MouseHover += new System.EventHandler(this.button_MouseHover);
             // 
+            // lblElapsedSinceUpdate
+            // 
+            this.lblElapsedSinceUpdate.AutoSize = true;
+            this.lblElapsedSinceUpdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblElapsedSinceUpdate.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblElapsedSinceUpdate.ForeColor = System.Drawing.Color.Gray;
+            this.lblElapsedSinceUpdate.Location = new System.Drawing.Point(572, 565);
+            this.lblElapsedSinceUpdate.Name = "lblElapsedSinceUpdate";
+            this.lblElapsedSinceUpdate.Size = new System.Drawing.Size(203, 15);
+            this.lblElapsedSinceUpdate.TabIndex = 84;
+            this.lblElapsedSinceUpdate.Text = "Last updated xxx seconds ago";
+            // 
             // Statamoto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1168,6 +1181,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(800, 590);
+            this.Controls.Add(this.lblElapsedSinceUpdate);
             this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.label33);
             this.Controls.Add(this.lblBlockchainSize);
@@ -1272,7 +1286,7 @@
         private System.Windows.Forms.Timer timer1Sec;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Label lblBlockNumber;
-        private System.Windows.Forms.Timer timer1Min;
+        private System.Windows.Forms.Timer timerAPIGroup1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblBlockReward;
         private System.Windows.Forms.Label label2;
@@ -1349,8 +1363,9 @@
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label lblBlockchainSize;
         private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.Timer timer1Day;
+        private System.Windows.Forms.Timer timerAPIGroup2;
         private System.Windows.Forms.Button btnSettings;
+        private System.Windows.Forms.Label lblElapsedSinceUpdate;
     }
 }
 
