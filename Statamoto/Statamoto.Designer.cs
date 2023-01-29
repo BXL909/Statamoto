@@ -121,38 +121,30 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lblBlockReward = new System.Windows.Forms.Label();
             this.panelLightningDashboard = new System.Windows.Forms.Panel();
-            this.label50 = new System.Windows.Forms.Label();
-            this.label49 = new System.Windows.Forms.Label();
-            this.lblUnknownCapacity = new System.Windows.Forms.Label();
-            this.label48 = new System.Windows.Forms.Label();
-            this.lblTorCapacity = new System.Windows.Forms.Label();
-            this.label47 = new System.Windows.Forms.Label();
-            this.lblClearnetCapacity = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
-            this.lblTotalCapacity = new System.Windows.Forms.Label();
-            this.aliasLabel1 = new System.Windows.Forms.Label();
-            this.aliasLabel2 = new System.Windows.Forms.Label();
-            this.capacityLabel2 = new System.Windows.Forms.Label();
-            this.capacityLabel1 = new System.Windows.Forms.Label();
-            this.capacityLabel3 = new System.Windows.Forms.Label();
-            this.capacityLabel4 = new System.Windows.Forms.Label();
-            this.aliasLabel4 = new System.Windows.Forms.Label();
-            this.aliasLabel3 = new System.Windows.Forms.Label();
-            this.capacityLabel7 = new System.Windows.Forms.Label();
-            this.capacityLabel8 = new System.Windows.Forms.Label();
-            this.aliasLabel8 = new System.Windows.Forms.Label();
-            this.aliasLabel7 = new System.Windows.Forms.Label();
-            this.capacityLabel5 = new System.Windows.Forms.Label();
-            this.capacityLabel6 = new System.Windows.Forms.Label();
-            this.aliasLabel6 = new System.Windows.Forms.Label();
-            this.aliasLabel5 = new System.Windows.Forms.Label();
-            this.capacityLabel9 = new System.Windows.Forms.Label();
-            this.capacityLabel10 = new System.Windows.Forms.Label();
-            this.aliasLabel10 = new System.Windows.Forms.Label();
-            this.aliasLabel9 = new System.Windows.Forms.Label();
-            this.label51 = new System.Windows.Forms.Label();
-            this.label52 = new System.Windows.Forms.Label();
-            this.label53 = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
+            this.lblMedBaseFeeTokens = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.lblMedFeeRate = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.lblMedCapacity = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
+            this.lblAverageBaseFeeMtokens = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.lblAverageFeeRate = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.lblAverageCapacity = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.lblChannelCount = new System.Windows.Forms.Label();
+            this.label46 = new System.Windows.Forms.Label();
+            this.lblUnannouncedNodes = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
+            this.lblClearnetTorNodes = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.lblClearnetNodes = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.lblNodeCount = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.lblTorNodes = new System.Windows.Forms.Label();
             this.label54 = new System.Windows.Forms.Label();
             this.label55 = new System.Windows.Forms.Label();
             this.label56 = new System.Windows.Forms.Label();
@@ -176,30 +168,38 @@
             this.channelLabel2 = new System.Windows.Forms.Label();
             this.aliasConnLabel2 = new System.Windows.Forms.Label();
             this.aliasConnLabel1 = new System.Windows.Forms.Label();
-            this.label46 = new System.Windows.Forms.Label();
-            this.lblUnannouncedNodes = new System.Windows.Forms.Label();
-            this.label45 = new System.Windows.Forms.Label();
-            this.lblClearnetTorNodes = new System.Windows.Forms.Label();
-            this.label35 = new System.Windows.Forms.Label();
-            this.lblClearnetNodes = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
-            this.lblNodeCount = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.lblTorNodes = new System.Windows.Forms.Label();
-            this.label43 = new System.Windows.Forms.Label();
-            this.lblMedBaseFeeTokens = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.lblMedFeeRate = new System.Windows.Forms.Label();
-            this.label42 = new System.Windows.Forms.Label();
-            this.lblMedCapacity = new System.Windows.Forms.Label();
-            this.label41 = new System.Windows.Forms.Label();
-            this.lblAverageBaseFeeMtokens = new System.Windows.Forms.Label();
-            this.label39 = new System.Windows.Forms.Label();
-            this.lblAverageFeeRate = new System.Windows.Forms.Label();
-            this.label37 = new System.Windows.Forms.Label();
-            this.lblAverageCapacity = new System.Windows.Forms.Label();
-            this.label34 = new System.Windows.Forms.Label();
-            this.lblChannelCount = new System.Windows.Forms.Label();
+            this.label53 = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
+            this.label51 = new System.Windows.Forms.Label();
+            this.capacityLabel9 = new System.Windows.Forms.Label();
+            this.capacityLabel10 = new System.Windows.Forms.Label();
+            this.aliasLabel10 = new System.Windows.Forms.Label();
+            this.aliasLabel9 = new System.Windows.Forms.Label();
+            this.capacityLabel7 = new System.Windows.Forms.Label();
+            this.capacityLabel8 = new System.Windows.Forms.Label();
+            this.aliasLabel8 = new System.Windows.Forms.Label();
+            this.aliasLabel7 = new System.Windows.Forms.Label();
+            this.capacityLabel5 = new System.Windows.Forms.Label();
+            this.capacityLabel6 = new System.Windows.Forms.Label();
+            this.aliasLabel6 = new System.Windows.Forms.Label();
+            this.aliasLabel5 = new System.Windows.Forms.Label();
+            this.capacityLabel3 = new System.Windows.Forms.Label();
+            this.capacityLabel4 = new System.Windows.Forms.Label();
+            this.aliasLabel4 = new System.Windows.Forms.Label();
+            this.aliasLabel3 = new System.Windows.Forms.Label();
+            this.capacityLabel1 = new System.Windows.Forms.Label();
+            this.capacityLabel2 = new System.Windows.Forms.Label();
+            this.aliasLabel2 = new System.Windows.Forms.Label();
+            this.aliasLabel1 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.lblUnknownCapacity = new System.Windows.Forms.Label();
+            this.label48 = new System.Windows.Forms.Label();
+            this.lblTorCapacity = new System.Windows.Forms.Label();
+            this.label47 = new System.Windows.Forms.Label();
+            this.lblClearnetCapacity = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.lblTotalCapacity = new System.Windows.Forms.Label();
             this.panelBitcoinDashboard.SuspendLayout();
             this.panelLightningDashboard.SuspendLayout();
             this.SuspendLayout();
@@ -847,13 +847,13 @@
             this.btnBitcoinDashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBitcoinDashboard.Font = new System.Drawing.Font("Orator Std", 7F);
             this.btnBitcoinDashboard.ForeColor = System.Drawing.Color.Gray;
-            this.btnBitcoinDashboard.Location = new System.Drawing.Point(443, 11);
+            this.btnBitcoinDashboard.Location = new System.Drawing.Point(488, 11);
             this.btnBitcoinDashboard.Margin = new System.Windows.Forms.Padding(0);
             this.btnBitcoinDashboard.Name = "btnBitcoinDashboard";
-            this.btnBitcoinDashboard.Size = new System.Drawing.Size(140, 22);
+            this.btnBitcoinDashboard.Size = new System.Drawing.Size(119, 22);
             this.btnBitcoinDashboard.TabIndex = 85;
             this.btnBitcoinDashboard.TabStop = false;
-            this.btnBitcoinDashboard.Text = "BITCOIN DASHBOARD";
+            this.btnBitcoinDashboard.Text = "BITCOIN STATS";
             this.btnBitcoinDashboard.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnBitcoinDashboard.UseVisualStyleBackColor = false;
             this.btnBitcoinDashboard.Click += new System.EventHandler(this.btnBitcoinDashboard_Click);
@@ -867,13 +867,13 @@
             this.btnLightningDashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLightningDashboard.Font = new System.Drawing.Font("Orator Std", 7F);
             this.btnLightningDashboard.ForeColor = System.Drawing.Color.Gray;
-            this.btnLightningDashboard.Location = new System.Drawing.Point(590, 11);
+            this.btnLightningDashboard.Location = new System.Drawing.Point(615, 11);
             this.btnLightningDashboard.Margin = new System.Windows.Forms.Padding(0);
             this.btnLightningDashboard.Name = "btnLightningDashboard";
-            this.btnLightningDashboard.Size = new System.Drawing.Size(150, 22);
+            this.btnLightningDashboard.Size = new System.Drawing.Size(125, 22);
             this.btnLightningDashboard.TabIndex = 86;
             this.btnLightningDashboard.TabStop = false;
-            this.btnLightningDashboard.Text = "LIGHTNING DASHBOARD";
+            this.btnLightningDashboard.Text = "LIGHTNING STATS";
             this.btnLightningDashboard.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnLightningDashboard.UseVisualStyleBackColor = false;
             this.btnLightningDashboard.Click += new System.EventHandler(this.btnLightningDashboard_Click);
@@ -1447,853 +1447,6 @@
             this.panelLightningDashboard.Visible = false;
             this.panelLightningDashboard.Paint += new System.Windows.Forms.PaintEventHandler(this.panelLightningDashboard_Paint);
             // 
-            // label50
-            // 
-            this.label50.AutoSize = true;
-            this.label50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label50.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label50.ForeColor = System.Drawing.Color.Silver;
-            this.label50.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label50.Location = new System.Drawing.Point(4, 43);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(42, 15);
-            this.label50.TabIndex = 119;
-            this.label50.Text = "(BTC)";
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label49.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label49.ForeColor = System.Drawing.Color.Silver;
-            this.label49.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label49.Location = new System.Drawing.Point(115, 83);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(119, 15);
-            this.label49.TabIndex = 118;
-            this.label49.Text = "Unknown capacity";
-            // 
-            // lblUnknownCapacity
-            // 
-            this.lblUnknownCapacity.AutoSize = true;
-            this.lblUnknownCapacity.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblUnknownCapacity.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUnknownCapacity.Location = new System.Drawing.Point(114, 98);
-            this.lblUnknownCapacity.Name = "lblUnknownCapacity";
-            this.lblUnknownCapacity.Size = new System.Drawing.Size(103, 27);
-            this.lblUnknownCapacity.TabIndex = 117;
-            this.lblUnknownCapacity.Text = "no data";
-            // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label48.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label48.ForeColor = System.Drawing.Color.Silver;
-            this.label48.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label48.Location = new System.Drawing.Point(115, 45);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(91, 15);
-            this.label48.TabIndex = 116;
-            this.label48.Text = "Tor capacity";
-            // 
-            // lblTorCapacity
-            // 
-            this.lblTorCapacity.AutoSize = true;
-            this.lblTorCapacity.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblTorCapacity.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTorCapacity.Location = new System.Drawing.Point(114, 60);
-            this.lblTorCapacity.Name = "lblTorCapacity";
-            this.lblTorCapacity.Size = new System.Drawing.Size(103, 27);
-            this.lblTorCapacity.TabIndex = 115;
-            this.lblTorCapacity.Text = "no data";
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label47.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label47.ForeColor = System.Drawing.Color.Silver;
-            this.label47.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label47.Location = new System.Drawing.Point(116, 3);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(126, 15);
-            this.label47.TabIndex = 114;
-            this.label47.Text = "Clearnet capacity";
-            // 
-            // lblClearnetCapacity
-            // 
-            this.lblClearnetCapacity.AutoSize = true;
-            this.lblClearnetCapacity.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblClearnetCapacity.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblClearnetCapacity.Location = new System.Drawing.Point(115, 18);
-            this.lblClearnetCapacity.Name = "lblClearnetCapacity";
-            this.lblClearnetCapacity.Size = new System.Drawing.Size(103, 27);
-            this.lblClearnetCapacity.TabIndex = 113;
-            this.lblClearnetCapacity.Text = "no data";
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label38.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label38.ForeColor = System.Drawing.Color.Silver;
-            this.label38.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label38.Location = new System.Drawing.Point(3, 3);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(105, 15);
-            this.label38.TabIndex = 92;
-            this.label38.Text = "Total capacity";
-            // 
-            // lblTotalCapacity
-            // 
-            this.lblTotalCapacity.AutoSize = true;
-            this.lblTotalCapacity.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblTotalCapacity.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotalCapacity.Location = new System.Drawing.Point(2, 18);
-            this.lblTotalCapacity.Name = "lblTotalCapacity";
-            this.lblTotalCapacity.Size = new System.Drawing.Size(103, 27);
-            this.lblTotalCapacity.TabIndex = 91;
-            this.lblTotalCapacity.Text = "no data";
-            // 
-            // aliasLabel1
-            // 
-            this.aliasLabel1.AutoSize = true;
-            this.aliasLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasLabel1.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel1.Location = new System.Drawing.Point(551, 33);
-            this.aliasLabel1.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasLabel1.Name = "aliasLabel1";
-            this.aliasLabel1.Size = new System.Drawing.Size(56, 15);
-            this.aliasLabel1.TabIndex = 120;
-            this.aliasLabel1.Text = "no data";
-            // 
-            // aliasLabel2
-            // 
-            this.aliasLabel2.AutoSize = true;
-            this.aliasLabel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasLabel2.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasLabel2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel2.Location = new System.Drawing.Point(552, 48);
-            this.aliasLabel2.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasLabel2.Name = "aliasLabel2";
-            this.aliasLabel2.Size = new System.Drawing.Size(56, 15);
-            this.aliasLabel2.TabIndex = 121;
-            this.aliasLabel2.Text = "no data";
-            // 
-            // capacityLabel2
-            // 
-            this.capacityLabel2.AutoSize = true;
-            this.capacityLabel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.capacityLabel2.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capacityLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.capacityLabel2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel2.Location = new System.Drawing.Point(684, 48);
-            this.capacityLabel2.Name = "capacityLabel2";
-            this.capacityLabel2.Size = new System.Drawing.Size(56, 15);
-            this.capacityLabel2.TabIndex = 122;
-            this.capacityLabel2.Text = "no data";
-            // 
-            // capacityLabel1
-            // 
-            this.capacityLabel1.AutoSize = true;
-            this.capacityLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.capacityLabel1.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capacityLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.capacityLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel1.Location = new System.Drawing.Point(684, 33);
-            this.capacityLabel1.Name = "capacityLabel1";
-            this.capacityLabel1.Size = new System.Drawing.Size(56, 15);
-            this.capacityLabel1.TabIndex = 123;
-            this.capacityLabel1.Text = "no data";
-            // 
-            // capacityLabel3
-            // 
-            this.capacityLabel3.AutoSize = true;
-            this.capacityLabel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.capacityLabel3.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capacityLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.capacityLabel3.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel3.Location = new System.Drawing.Point(684, 63);
-            this.capacityLabel3.Name = "capacityLabel3";
-            this.capacityLabel3.Size = new System.Drawing.Size(56, 15);
-            this.capacityLabel3.TabIndex = 127;
-            this.capacityLabel3.Text = "no data";
-            // 
-            // capacityLabel4
-            // 
-            this.capacityLabel4.AutoSize = true;
-            this.capacityLabel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.capacityLabel4.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capacityLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.capacityLabel4.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel4.Location = new System.Drawing.Point(684, 78);
-            this.capacityLabel4.Name = "capacityLabel4";
-            this.capacityLabel4.Size = new System.Drawing.Size(56, 15);
-            this.capacityLabel4.TabIndex = 126;
-            this.capacityLabel4.Text = "no data";
-            // 
-            // aliasLabel4
-            // 
-            this.aliasLabel4.AutoSize = true;
-            this.aliasLabel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasLabel4.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasLabel4.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel4.Location = new System.Drawing.Point(552, 78);
-            this.aliasLabel4.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasLabel4.Name = "aliasLabel4";
-            this.aliasLabel4.Size = new System.Drawing.Size(56, 15);
-            this.aliasLabel4.TabIndex = 125;
-            this.aliasLabel4.Text = "no data";
-            // 
-            // aliasLabel3
-            // 
-            this.aliasLabel3.AutoSize = true;
-            this.aliasLabel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasLabel3.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasLabel3.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel3.Location = new System.Drawing.Point(551, 63);
-            this.aliasLabel3.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasLabel3.Name = "aliasLabel3";
-            this.aliasLabel3.Size = new System.Drawing.Size(56, 15);
-            this.aliasLabel3.TabIndex = 124;
-            this.aliasLabel3.Text = "no data";
-            // 
-            // capacityLabel7
-            // 
-            this.capacityLabel7.AutoSize = true;
-            this.capacityLabel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.capacityLabel7.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capacityLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.capacityLabel7.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel7.Location = new System.Drawing.Point(685, 123);
-            this.capacityLabel7.Name = "capacityLabel7";
-            this.capacityLabel7.Size = new System.Drawing.Size(56, 15);
-            this.capacityLabel7.TabIndex = 135;
-            this.capacityLabel7.Text = "no data";
-            // 
-            // capacityLabel8
-            // 
-            this.capacityLabel8.AutoSize = true;
-            this.capacityLabel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.capacityLabel8.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capacityLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.capacityLabel8.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel8.Location = new System.Drawing.Point(685, 138);
-            this.capacityLabel8.Name = "capacityLabel8";
-            this.capacityLabel8.Size = new System.Drawing.Size(56, 15);
-            this.capacityLabel8.TabIndex = 134;
-            this.capacityLabel8.Text = "no data";
-            // 
-            // aliasLabel8
-            // 
-            this.aliasLabel8.AutoSize = true;
-            this.aliasLabel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasLabel8.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasLabel8.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel8.Location = new System.Drawing.Point(553, 138);
-            this.aliasLabel8.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasLabel8.Name = "aliasLabel8";
-            this.aliasLabel8.Size = new System.Drawing.Size(56, 15);
-            this.aliasLabel8.TabIndex = 133;
-            this.aliasLabel8.Text = "no data";
-            // 
-            // aliasLabel7
-            // 
-            this.aliasLabel7.AutoSize = true;
-            this.aliasLabel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasLabel7.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasLabel7.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel7.Location = new System.Drawing.Point(552, 123);
-            this.aliasLabel7.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasLabel7.Name = "aliasLabel7";
-            this.aliasLabel7.Size = new System.Drawing.Size(56, 15);
-            this.aliasLabel7.TabIndex = 132;
-            this.aliasLabel7.Text = "no data";
-            // 
-            // capacityLabel5
-            // 
-            this.capacityLabel5.AutoSize = true;
-            this.capacityLabel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.capacityLabel5.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capacityLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.capacityLabel5.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel5.Location = new System.Drawing.Point(685, 93);
-            this.capacityLabel5.Name = "capacityLabel5";
-            this.capacityLabel5.Size = new System.Drawing.Size(56, 15);
-            this.capacityLabel5.TabIndex = 131;
-            this.capacityLabel5.Text = "no data";
-            // 
-            // capacityLabel6
-            // 
-            this.capacityLabel6.AutoSize = true;
-            this.capacityLabel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.capacityLabel6.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capacityLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.capacityLabel6.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel6.Location = new System.Drawing.Point(685, 108);
-            this.capacityLabel6.Name = "capacityLabel6";
-            this.capacityLabel6.Size = new System.Drawing.Size(56, 15);
-            this.capacityLabel6.TabIndex = 130;
-            this.capacityLabel6.Text = "no data";
-            // 
-            // aliasLabel6
-            // 
-            this.aliasLabel6.AutoSize = true;
-            this.aliasLabel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasLabel6.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasLabel6.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel6.Location = new System.Drawing.Point(553, 108);
-            this.aliasLabel6.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasLabel6.Name = "aliasLabel6";
-            this.aliasLabel6.Size = new System.Drawing.Size(56, 15);
-            this.aliasLabel6.TabIndex = 129;
-            this.aliasLabel6.Text = "no data";
-            // 
-            // aliasLabel5
-            // 
-            this.aliasLabel5.AutoSize = true;
-            this.aliasLabel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasLabel5.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasLabel5.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel5.Location = new System.Drawing.Point(552, 93);
-            this.aliasLabel5.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasLabel5.Name = "aliasLabel5";
-            this.aliasLabel5.Size = new System.Drawing.Size(56, 15);
-            this.aliasLabel5.TabIndex = 128;
-            this.aliasLabel5.Text = "no data";
-            // 
-            // capacityLabel9
-            // 
-            this.capacityLabel9.AutoSize = true;
-            this.capacityLabel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.capacityLabel9.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capacityLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.capacityLabel9.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel9.Location = new System.Drawing.Point(686, 153);
-            this.capacityLabel9.Name = "capacityLabel9";
-            this.capacityLabel9.Size = new System.Drawing.Size(56, 15);
-            this.capacityLabel9.TabIndex = 139;
-            this.capacityLabel9.Text = "no data";
-            // 
-            // capacityLabel10
-            // 
-            this.capacityLabel10.AutoSize = true;
-            this.capacityLabel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.capacityLabel10.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capacityLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.capacityLabel10.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel10.Location = new System.Drawing.Point(686, 168);
-            this.capacityLabel10.Name = "capacityLabel10";
-            this.capacityLabel10.Size = new System.Drawing.Size(56, 15);
-            this.capacityLabel10.TabIndex = 138;
-            this.capacityLabel10.Text = "no data";
-            // 
-            // aliasLabel10
-            // 
-            this.aliasLabel10.AutoSize = true;
-            this.aliasLabel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasLabel10.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasLabel10.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel10.Location = new System.Drawing.Point(554, 168);
-            this.aliasLabel10.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasLabel10.Name = "aliasLabel10";
-            this.aliasLabel10.Size = new System.Drawing.Size(56, 15);
-            this.aliasLabel10.TabIndex = 137;
-            this.aliasLabel10.Text = "no data";
-            // 
-            // aliasLabel9
-            // 
-            this.aliasLabel9.AutoSize = true;
-            this.aliasLabel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasLabel9.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasLabel9.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel9.Location = new System.Drawing.Point(553, 153);
-            this.aliasLabel9.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasLabel9.Name = "aliasLabel9";
-            this.aliasLabel9.Size = new System.Drawing.Size(56, 15);
-            this.aliasLabel9.TabIndex = 136;
-            this.aliasLabel9.Text = "no data";
-            // 
-            // label51
-            // 
-            this.label51.AutoSize = true;
-            this.label51.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label51.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label51.ForeColor = System.Drawing.Color.Silver;
-            this.label51.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label51.Location = new System.Drawing.Point(551, 18);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(42, 15);
-            this.label51.TabIndex = 140;
-            this.label51.Text = "Alias";
-            // 
-            // label52
-            // 
-            this.label52.AutoSize = true;
-            this.label52.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label52.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label52.ForeColor = System.Drawing.Color.Silver;
-            this.label52.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label52.Location = new System.Drawing.Point(681, 18);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(63, 15);
-            this.label52.TabIndex = 141;
-            this.label52.Text = "Capacity";
-            // 
-            // label53
-            // 
-            this.label53.AutoSize = true;
-            this.label53.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label53.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label53.ForeColor = System.Drawing.Color.Silver;
-            this.label53.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label53.Location = new System.Drawing.Point(550, 3);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(168, 15);
-            this.label53.TabIndex = 142;
-            this.label53.Text = "Highest liquidity nodes";
-            // 
-            // label54
-            // 
-            this.label54.AutoSize = true;
-            this.label54.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label54.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label54.ForeColor = System.Drawing.Color.Silver;
-            this.label54.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label54.Location = new System.Drawing.Point(555, 188);
-            this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(182, 15);
-            this.label54.TabIndex = 165;
-            this.label54.Text = "Highest conectivity nodes";
-            // 
-            // label55
-            // 
-            this.label55.AutoSize = true;
-            this.label55.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label55.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label55.ForeColor = System.Drawing.Color.Silver;
-            this.label55.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label55.Location = new System.Drawing.Point(686, 203);
-            this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(63, 15);
-            this.label55.TabIndex = 164;
-            this.label55.Text = "Channels";
-            // 
-            // label56
-            // 
-            this.label56.AutoSize = true;
-            this.label56.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label56.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label56.ForeColor = System.Drawing.Color.Silver;
-            this.label56.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label56.Location = new System.Drawing.Point(556, 203);
-            this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(42, 15);
-            this.label56.TabIndex = 163;
-            this.label56.Text = "Alias";
-            // 
-            // channelLabel9
-            // 
-            this.channelLabel9.AutoSize = true;
-            this.channelLabel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.channelLabel9.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.channelLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.channelLabel9.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel9.Location = new System.Drawing.Point(691, 338);
-            this.channelLabel9.Name = "channelLabel9";
-            this.channelLabel9.Size = new System.Drawing.Size(56, 15);
-            this.channelLabel9.TabIndex = 162;
-            this.channelLabel9.Text = "no data";
-            // 
-            // channelLabel10
-            // 
-            this.channelLabel10.AutoSize = true;
-            this.channelLabel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.channelLabel10.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.channelLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.channelLabel10.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel10.Location = new System.Drawing.Point(691, 353);
-            this.channelLabel10.Name = "channelLabel10";
-            this.channelLabel10.Size = new System.Drawing.Size(56, 15);
-            this.channelLabel10.TabIndex = 161;
-            this.channelLabel10.Text = "no data";
-            // 
-            // aliasConnLabel10
-            // 
-            this.aliasConnLabel10.AutoSize = true;
-            this.aliasConnLabel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel10.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasConnLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel10.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel10.Location = new System.Drawing.Point(559, 353);
-            this.aliasConnLabel10.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasConnLabel10.Name = "aliasConnLabel10";
-            this.aliasConnLabel10.Size = new System.Drawing.Size(56, 15);
-            this.aliasConnLabel10.TabIndex = 160;
-            this.aliasConnLabel10.Text = "no data";
-            // 
-            // aliasConnLabel9
-            // 
-            this.aliasConnLabel9.AutoSize = true;
-            this.aliasConnLabel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel9.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasConnLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel9.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel9.Location = new System.Drawing.Point(558, 338);
-            this.aliasConnLabel9.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasConnLabel9.Name = "aliasConnLabel9";
-            this.aliasConnLabel9.Size = new System.Drawing.Size(56, 15);
-            this.aliasConnLabel9.TabIndex = 159;
-            this.aliasConnLabel9.Text = "no data";
-            // 
-            // channelLabel7
-            // 
-            this.channelLabel7.AutoSize = true;
-            this.channelLabel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.channelLabel7.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.channelLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.channelLabel7.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel7.Location = new System.Drawing.Point(690, 308);
-            this.channelLabel7.Name = "channelLabel7";
-            this.channelLabel7.Size = new System.Drawing.Size(56, 15);
-            this.channelLabel7.TabIndex = 158;
-            this.channelLabel7.Text = "no data";
-            // 
-            // channelLabel8
-            // 
-            this.channelLabel8.AutoSize = true;
-            this.channelLabel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.channelLabel8.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.channelLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.channelLabel8.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel8.Location = new System.Drawing.Point(690, 323);
-            this.channelLabel8.Name = "channelLabel8";
-            this.channelLabel8.Size = new System.Drawing.Size(56, 15);
-            this.channelLabel8.TabIndex = 157;
-            this.channelLabel8.Text = "no data";
-            // 
-            // aliasConnLabel8
-            // 
-            this.aliasConnLabel8.AutoSize = true;
-            this.aliasConnLabel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel8.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasConnLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel8.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel8.Location = new System.Drawing.Point(558, 323);
-            this.aliasConnLabel8.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasConnLabel8.Name = "aliasConnLabel8";
-            this.aliasConnLabel8.Size = new System.Drawing.Size(56, 15);
-            this.aliasConnLabel8.TabIndex = 156;
-            this.aliasConnLabel8.Text = "no data";
-            // 
-            // aliasConnLabel7
-            // 
-            this.aliasConnLabel7.AutoSize = true;
-            this.aliasConnLabel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel7.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasConnLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel7.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel7.Location = new System.Drawing.Point(557, 308);
-            this.aliasConnLabel7.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasConnLabel7.Name = "aliasConnLabel7";
-            this.aliasConnLabel7.Size = new System.Drawing.Size(56, 15);
-            this.aliasConnLabel7.TabIndex = 155;
-            this.aliasConnLabel7.Text = "no data";
-            // 
-            // channelLabel5
-            // 
-            this.channelLabel5.AutoSize = true;
-            this.channelLabel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.channelLabel5.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.channelLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.channelLabel5.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel5.Location = new System.Drawing.Point(690, 278);
-            this.channelLabel5.Name = "channelLabel5";
-            this.channelLabel5.Size = new System.Drawing.Size(56, 15);
-            this.channelLabel5.TabIndex = 154;
-            this.channelLabel5.Text = "no data";
-            // 
-            // channelLabel6
-            // 
-            this.channelLabel6.AutoSize = true;
-            this.channelLabel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.channelLabel6.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.channelLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.channelLabel6.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel6.Location = new System.Drawing.Point(690, 293);
-            this.channelLabel6.Name = "channelLabel6";
-            this.channelLabel6.Size = new System.Drawing.Size(56, 15);
-            this.channelLabel6.TabIndex = 153;
-            this.channelLabel6.Text = "no data";
-            // 
-            // aliasConnLabel6
-            // 
-            this.aliasConnLabel6.AutoSize = true;
-            this.aliasConnLabel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel6.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasConnLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel6.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel6.Location = new System.Drawing.Point(558, 293);
-            this.aliasConnLabel6.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasConnLabel6.Name = "aliasConnLabel6";
-            this.aliasConnLabel6.Size = new System.Drawing.Size(56, 15);
-            this.aliasConnLabel6.TabIndex = 152;
-            this.aliasConnLabel6.Text = "no data";
-            // 
-            // aliasConnLabel5
-            // 
-            this.aliasConnLabel5.AutoSize = true;
-            this.aliasConnLabel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel5.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasConnLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel5.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel5.Location = new System.Drawing.Point(557, 278);
-            this.aliasConnLabel5.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasConnLabel5.Name = "aliasConnLabel5";
-            this.aliasConnLabel5.Size = new System.Drawing.Size(56, 15);
-            this.aliasConnLabel5.TabIndex = 151;
-            this.aliasConnLabel5.Text = "no data";
-            // 
-            // channelLabel3
-            // 
-            this.channelLabel3.AutoSize = true;
-            this.channelLabel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.channelLabel3.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.channelLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.channelLabel3.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel3.Location = new System.Drawing.Point(689, 248);
-            this.channelLabel3.Name = "channelLabel3";
-            this.channelLabel3.Size = new System.Drawing.Size(56, 15);
-            this.channelLabel3.TabIndex = 150;
-            this.channelLabel3.Text = "no data";
-            // 
-            // channelLabel4
-            // 
-            this.channelLabel4.AutoSize = true;
-            this.channelLabel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.channelLabel4.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.channelLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.channelLabel4.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel4.Location = new System.Drawing.Point(689, 263);
-            this.channelLabel4.Name = "channelLabel4";
-            this.channelLabel4.Size = new System.Drawing.Size(56, 15);
-            this.channelLabel4.TabIndex = 149;
-            this.channelLabel4.Text = "no data";
-            // 
-            // aliasConnLabel4
-            // 
-            this.aliasConnLabel4.AutoSize = true;
-            this.aliasConnLabel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel4.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasConnLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel4.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel4.Location = new System.Drawing.Point(557, 263);
-            this.aliasConnLabel4.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasConnLabel4.Name = "aliasConnLabel4";
-            this.aliasConnLabel4.Size = new System.Drawing.Size(56, 15);
-            this.aliasConnLabel4.TabIndex = 148;
-            this.aliasConnLabel4.Text = "no data";
-            // 
-            // aliasConnLabel3
-            // 
-            this.aliasConnLabel3.AutoSize = true;
-            this.aliasConnLabel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel3.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasConnLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel3.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel3.Location = new System.Drawing.Point(556, 248);
-            this.aliasConnLabel3.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasConnLabel3.Name = "aliasConnLabel3";
-            this.aliasConnLabel3.Size = new System.Drawing.Size(56, 15);
-            this.aliasConnLabel3.TabIndex = 147;
-            this.aliasConnLabel3.Text = "no data";
-            // 
-            // channelLabel1
-            // 
-            this.channelLabel1.AutoSize = true;
-            this.channelLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.channelLabel1.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.channelLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.channelLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel1.Location = new System.Drawing.Point(689, 218);
-            this.channelLabel1.Name = "channelLabel1";
-            this.channelLabel1.Size = new System.Drawing.Size(56, 15);
-            this.channelLabel1.TabIndex = 146;
-            this.channelLabel1.Text = "no data";
-            // 
-            // channelLabel2
-            // 
-            this.channelLabel2.AutoSize = true;
-            this.channelLabel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.channelLabel2.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.channelLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.channelLabel2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel2.Location = new System.Drawing.Point(689, 233);
-            this.channelLabel2.Name = "channelLabel2";
-            this.channelLabel2.Size = new System.Drawing.Size(56, 15);
-            this.channelLabel2.TabIndex = 145;
-            this.channelLabel2.Text = "no data";
-            // 
-            // aliasConnLabel2
-            // 
-            this.aliasConnLabel2.AutoSize = true;
-            this.aliasConnLabel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel2.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasConnLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel2.Location = new System.Drawing.Point(557, 233);
-            this.aliasConnLabel2.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasConnLabel2.Name = "aliasConnLabel2";
-            this.aliasConnLabel2.Size = new System.Drawing.Size(56, 15);
-            this.aliasConnLabel2.TabIndex = 144;
-            this.aliasConnLabel2.Text = "no data";
-            // 
-            // aliasConnLabel1
-            // 
-            this.aliasConnLabel1.AutoSize = true;
-            this.aliasConnLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel1.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.aliasConnLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
-            this.aliasConnLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel1.Location = new System.Drawing.Point(556, 218);
-            this.aliasConnLabel1.MaximumSize = new System.Drawing.Size(125, 15);
-            this.aliasConnLabel1.Name = "aliasConnLabel1";
-            this.aliasConnLabel1.Size = new System.Drawing.Size(56, 15);
-            this.aliasConnLabel1.TabIndex = 143;
-            this.aliasConnLabel1.Text = "no data";
-            // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label46.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label46.ForeColor = System.Drawing.Color.Silver;
-            this.label46.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label46.Location = new System.Drawing.Point(113, 246);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(126, 15);
-            this.label46.TabIndex = 175;
-            this.label46.Text = "Unannounced nodes";
-            // 
-            // lblUnannouncedNodes
-            // 
-            this.lblUnannouncedNodes.AutoSize = true;
-            this.lblUnannouncedNodes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblUnannouncedNodes.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUnannouncedNodes.Location = new System.Drawing.Point(111, 261);
-            this.lblUnannouncedNodes.Name = "lblUnannouncedNodes";
-            this.lblUnannouncedNodes.Size = new System.Drawing.Size(103, 27);
-            this.lblUnannouncedNodes.TabIndex = 174;
-            this.lblUnannouncedNodes.Text = "no data";
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label45.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label45.ForeColor = System.Drawing.Color.Silver;
-            this.label45.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label45.Location = new System.Drawing.Point(113, 205);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(133, 15);
-            this.label45.TabIndex = 173;
-            this.label45.Text = "Clearnet Tor Nodes";
-            // 
-            // lblClearnetTorNodes
-            // 
-            this.lblClearnetTorNodes.AutoSize = true;
-            this.lblClearnetTorNodes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblClearnetTorNodes.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblClearnetTorNodes.Location = new System.Drawing.Point(113, 220);
-            this.lblClearnetTorNodes.Name = "lblClearnetTorNodes";
-            this.lblClearnetTorNodes.Size = new System.Drawing.Size(103, 27);
-            this.lblClearnetTorNodes.TabIndex = 172;
-            this.lblClearnetTorNodes.Text = "no data";
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label35.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label35.ForeColor = System.Drawing.Color.Silver;
-            this.label35.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label35.Location = new System.Drawing.Point(115, 166);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(105, 15);
-            this.label35.TabIndex = 171;
-            this.label35.Text = "Clearnet nodes";
-            // 
-            // lblClearnetNodes
-            // 
-            this.lblClearnetNodes.AutoSize = true;
-            this.lblClearnetNodes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblClearnetNodes.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblClearnetNodes.Location = new System.Drawing.Point(113, 181);
-            this.lblClearnetNodes.Name = "lblClearnetNodes";
-            this.lblClearnetNodes.Size = new System.Drawing.Size(103, 27);
-            this.lblClearnetNodes.TabIndex = 170;
-            this.lblClearnetNodes.Text = "no data";
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label40.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label40.ForeColor = System.Drawing.Color.Silver;
-            this.label40.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label40.Location = new System.Drawing.Point(4, 126);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(77, 15);
-            this.label40.TabIndex = 169;
-            this.label40.Text = "Node count";
-            // 
-            // lblNodeCount
-            // 
-            this.lblNodeCount.AutoSize = true;
-            this.lblNodeCount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblNodeCount.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNodeCount.Location = new System.Drawing.Point(2, 141);
-            this.lblNodeCount.Name = "lblNodeCount";
-            this.lblNodeCount.Size = new System.Drawing.Size(103, 27);
-            this.lblNodeCount.TabIndex = 168;
-            this.lblNodeCount.Text = "no data";
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label36.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label36.ForeColor = System.Drawing.Color.Silver;
-            this.label36.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label36.Location = new System.Drawing.Point(115, 126);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(70, 15);
-            this.label36.TabIndex = 167;
-            this.label36.Text = "Tor nodes";
-            // 
-            // lblTorNodes
-            // 
-            this.lblTorNodes.AutoSize = true;
-            this.lblTorNodes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblTorNodes.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTorNodes.Location = new System.Drawing.Point(113, 141);
-            this.lblTorNodes.Name = "lblTorNodes";
-            this.lblTorNodes.Size = new System.Drawing.Size(103, 27);
-            this.lblTorNodes.TabIndex = 166;
-            this.lblTorNodes.Text = "no data";
-            // 
             // label43
             // 
             this.label43.AutoSize = true;
@@ -2461,6 +1614,853 @@
             this.lblChannelCount.Size = new System.Drawing.Size(103, 27);
             this.lblChannelCount.TabIndex = 176;
             this.lblChannelCount.Text = "no data";
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label46.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label46.ForeColor = System.Drawing.Color.Silver;
+            this.label46.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label46.Location = new System.Drawing.Point(113, 246);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(126, 15);
+            this.label46.TabIndex = 175;
+            this.label46.Text = "Unannounced nodes";
+            // 
+            // lblUnannouncedNodes
+            // 
+            this.lblUnannouncedNodes.AutoSize = true;
+            this.lblUnannouncedNodes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblUnannouncedNodes.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUnannouncedNodes.Location = new System.Drawing.Point(111, 261);
+            this.lblUnannouncedNodes.Name = "lblUnannouncedNodes";
+            this.lblUnannouncedNodes.Size = new System.Drawing.Size(103, 27);
+            this.lblUnannouncedNodes.TabIndex = 174;
+            this.lblUnannouncedNodes.Text = "no data";
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label45.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label45.ForeColor = System.Drawing.Color.Silver;
+            this.label45.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label45.Location = new System.Drawing.Point(113, 205);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(133, 15);
+            this.label45.TabIndex = 173;
+            this.label45.Text = "Clearnet Tor Nodes";
+            // 
+            // lblClearnetTorNodes
+            // 
+            this.lblClearnetTorNodes.AutoSize = true;
+            this.lblClearnetTorNodes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblClearnetTorNodes.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblClearnetTorNodes.Location = new System.Drawing.Point(113, 220);
+            this.lblClearnetTorNodes.Name = "lblClearnetTorNodes";
+            this.lblClearnetTorNodes.Size = new System.Drawing.Size(103, 27);
+            this.lblClearnetTorNodes.TabIndex = 172;
+            this.lblClearnetTorNodes.Text = "no data";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label35.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label35.ForeColor = System.Drawing.Color.Silver;
+            this.label35.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label35.Location = new System.Drawing.Point(115, 166);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(105, 15);
+            this.label35.TabIndex = 171;
+            this.label35.Text = "Clearnet nodes";
+            // 
+            // lblClearnetNodes
+            // 
+            this.lblClearnetNodes.AutoSize = true;
+            this.lblClearnetNodes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblClearnetNodes.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblClearnetNodes.Location = new System.Drawing.Point(113, 181);
+            this.lblClearnetNodes.Name = "lblClearnetNodes";
+            this.lblClearnetNodes.Size = new System.Drawing.Size(103, 27);
+            this.lblClearnetNodes.TabIndex = 170;
+            this.lblClearnetNodes.Text = "no data";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label40.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.ForeColor = System.Drawing.Color.Silver;
+            this.label40.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label40.Location = new System.Drawing.Point(4, 126);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(77, 15);
+            this.label40.TabIndex = 169;
+            this.label40.Text = "Node count";
+            // 
+            // lblNodeCount
+            // 
+            this.lblNodeCount.AutoSize = true;
+            this.lblNodeCount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblNodeCount.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNodeCount.Location = new System.Drawing.Point(2, 141);
+            this.lblNodeCount.Name = "lblNodeCount";
+            this.lblNodeCount.Size = new System.Drawing.Size(103, 27);
+            this.lblNodeCount.TabIndex = 168;
+            this.lblNodeCount.Text = "no data";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label36.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label36.ForeColor = System.Drawing.Color.Silver;
+            this.label36.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label36.Location = new System.Drawing.Point(115, 126);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(70, 15);
+            this.label36.TabIndex = 167;
+            this.label36.Text = "Tor nodes";
+            // 
+            // lblTorNodes
+            // 
+            this.lblTorNodes.AutoSize = true;
+            this.lblTorNodes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblTorNodes.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTorNodes.Location = new System.Drawing.Point(113, 141);
+            this.lblTorNodes.Name = "lblTorNodes";
+            this.lblTorNodes.Size = new System.Drawing.Size(103, 27);
+            this.lblTorNodes.TabIndex = 166;
+            this.lblTorNodes.Text = "no data";
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label54.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label54.ForeColor = System.Drawing.Color.Silver;
+            this.label54.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label54.Location = new System.Drawing.Point(550, 188);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(182, 15);
+            this.label54.TabIndex = 165;
+            this.label54.Text = "Highest conectivity nodes";
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label55.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label55.ForeColor = System.Drawing.Color.Silver;
+            this.label55.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label55.Location = new System.Drawing.Point(681, 203);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(63, 15);
+            this.label55.TabIndex = 164;
+            this.label55.Text = "Channels";
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label56.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label56.ForeColor = System.Drawing.Color.Silver;
+            this.label56.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label56.Location = new System.Drawing.Point(550, 203);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(42, 15);
+            this.label56.TabIndex = 163;
+            this.label56.Text = "Alias";
+            // 
+            // channelLabel9
+            // 
+            this.channelLabel9.AutoSize = true;
+            this.channelLabel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.channelLabel9.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.channelLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.channelLabel9.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.channelLabel9.Location = new System.Drawing.Point(681, 338);
+            this.channelLabel9.Name = "channelLabel9";
+            this.channelLabel9.Size = new System.Drawing.Size(56, 15);
+            this.channelLabel9.TabIndex = 162;
+            this.channelLabel9.Text = "no data";
+            // 
+            // channelLabel10
+            // 
+            this.channelLabel10.AutoSize = true;
+            this.channelLabel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.channelLabel10.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.channelLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.channelLabel10.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.channelLabel10.Location = new System.Drawing.Point(681, 353);
+            this.channelLabel10.Name = "channelLabel10";
+            this.channelLabel10.Size = new System.Drawing.Size(56, 15);
+            this.channelLabel10.TabIndex = 161;
+            this.channelLabel10.Text = "no data";
+            // 
+            // aliasConnLabel10
+            // 
+            this.aliasConnLabel10.AutoSize = true;
+            this.aliasConnLabel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel10.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasConnLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel10.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasConnLabel10.Location = new System.Drawing.Point(550, 353);
+            this.aliasConnLabel10.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasConnLabel10.Name = "aliasConnLabel10";
+            this.aliasConnLabel10.Size = new System.Drawing.Size(56, 15);
+            this.aliasConnLabel10.TabIndex = 160;
+            this.aliasConnLabel10.Text = "no data";
+            // 
+            // aliasConnLabel9
+            // 
+            this.aliasConnLabel9.AutoSize = true;
+            this.aliasConnLabel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel9.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasConnLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel9.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasConnLabel9.Location = new System.Drawing.Point(550, 338);
+            this.aliasConnLabel9.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasConnLabel9.Name = "aliasConnLabel9";
+            this.aliasConnLabel9.Size = new System.Drawing.Size(56, 15);
+            this.aliasConnLabel9.TabIndex = 159;
+            this.aliasConnLabel9.Text = "no data";
+            // 
+            // channelLabel7
+            // 
+            this.channelLabel7.AutoSize = true;
+            this.channelLabel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.channelLabel7.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.channelLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.channelLabel7.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.channelLabel7.Location = new System.Drawing.Point(681, 308);
+            this.channelLabel7.Name = "channelLabel7";
+            this.channelLabel7.Size = new System.Drawing.Size(56, 15);
+            this.channelLabel7.TabIndex = 158;
+            this.channelLabel7.Text = "no data";
+            // 
+            // channelLabel8
+            // 
+            this.channelLabel8.AutoSize = true;
+            this.channelLabel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.channelLabel8.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.channelLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.channelLabel8.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.channelLabel8.Location = new System.Drawing.Point(681, 323);
+            this.channelLabel8.Name = "channelLabel8";
+            this.channelLabel8.Size = new System.Drawing.Size(56, 15);
+            this.channelLabel8.TabIndex = 157;
+            this.channelLabel8.Text = "no data";
+            // 
+            // aliasConnLabel8
+            // 
+            this.aliasConnLabel8.AutoSize = true;
+            this.aliasConnLabel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel8.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasConnLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel8.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasConnLabel8.Location = new System.Drawing.Point(550, 323);
+            this.aliasConnLabel8.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasConnLabel8.Name = "aliasConnLabel8";
+            this.aliasConnLabel8.Size = new System.Drawing.Size(56, 15);
+            this.aliasConnLabel8.TabIndex = 156;
+            this.aliasConnLabel8.Text = "no data";
+            // 
+            // aliasConnLabel7
+            // 
+            this.aliasConnLabel7.AutoSize = true;
+            this.aliasConnLabel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel7.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasConnLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel7.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasConnLabel7.Location = new System.Drawing.Point(550, 308);
+            this.aliasConnLabel7.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasConnLabel7.Name = "aliasConnLabel7";
+            this.aliasConnLabel7.Size = new System.Drawing.Size(56, 15);
+            this.aliasConnLabel7.TabIndex = 155;
+            this.aliasConnLabel7.Text = "no data";
+            // 
+            // channelLabel5
+            // 
+            this.channelLabel5.AutoSize = true;
+            this.channelLabel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.channelLabel5.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.channelLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.channelLabel5.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.channelLabel5.Location = new System.Drawing.Point(681, 278);
+            this.channelLabel5.Name = "channelLabel5";
+            this.channelLabel5.Size = new System.Drawing.Size(56, 15);
+            this.channelLabel5.TabIndex = 154;
+            this.channelLabel5.Text = "no data";
+            // 
+            // channelLabel6
+            // 
+            this.channelLabel6.AutoSize = true;
+            this.channelLabel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.channelLabel6.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.channelLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.channelLabel6.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.channelLabel6.Location = new System.Drawing.Point(681, 293);
+            this.channelLabel6.Name = "channelLabel6";
+            this.channelLabel6.Size = new System.Drawing.Size(56, 15);
+            this.channelLabel6.TabIndex = 153;
+            this.channelLabel6.Text = "no data";
+            // 
+            // aliasConnLabel6
+            // 
+            this.aliasConnLabel6.AutoSize = true;
+            this.aliasConnLabel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel6.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasConnLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel6.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasConnLabel6.Location = new System.Drawing.Point(550, 293);
+            this.aliasConnLabel6.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasConnLabel6.Name = "aliasConnLabel6";
+            this.aliasConnLabel6.Size = new System.Drawing.Size(56, 15);
+            this.aliasConnLabel6.TabIndex = 152;
+            this.aliasConnLabel6.Text = "no data";
+            // 
+            // aliasConnLabel5
+            // 
+            this.aliasConnLabel5.AutoSize = true;
+            this.aliasConnLabel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel5.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasConnLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel5.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasConnLabel5.Location = new System.Drawing.Point(550, 278);
+            this.aliasConnLabel5.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasConnLabel5.Name = "aliasConnLabel5";
+            this.aliasConnLabel5.Size = new System.Drawing.Size(56, 15);
+            this.aliasConnLabel5.TabIndex = 151;
+            this.aliasConnLabel5.Text = "no data";
+            // 
+            // channelLabel3
+            // 
+            this.channelLabel3.AutoSize = true;
+            this.channelLabel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.channelLabel3.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.channelLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.channelLabel3.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.channelLabel3.Location = new System.Drawing.Point(681, 248);
+            this.channelLabel3.Name = "channelLabel3";
+            this.channelLabel3.Size = new System.Drawing.Size(56, 15);
+            this.channelLabel3.TabIndex = 150;
+            this.channelLabel3.Text = "no data";
+            // 
+            // channelLabel4
+            // 
+            this.channelLabel4.AutoSize = true;
+            this.channelLabel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.channelLabel4.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.channelLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.channelLabel4.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.channelLabel4.Location = new System.Drawing.Point(681, 263);
+            this.channelLabel4.Name = "channelLabel4";
+            this.channelLabel4.Size = new System.Drawing.Size(56, 15);
+            this.channelLabel4.TabIndex = 149;
+            this.channelLabel4.Text = "no data";
+            // 
+            // aliasConnLabel4
+            // 
+            this.aliasConnLabel4.AutoSize = true;
+            this.aliasConnLabel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel4.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasConnLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel4.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasConnLabel4.Location = new System.Drawing.Point(550, 263);
+            this.aliasConnLabel4.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasConnLabel4.Name = "aliasConnLabel4";
+            this.aliasConnLabel4.Size = new System.Drawing.Size(56, 15);
+            this.aliasConnLabel4.TabIndex = 148;
+            this.aliasConnLabel4.Text = "no data";
+            // 
+            // aliasConnLabel3
+            // 
+            this.aliasConnLabel3.AutoSize = true;
+            this.aliasConnLabel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel3.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasConnLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel3.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasConnLabel3.Location = new System.Drawing.Point(550, 248);
+            this.aliasConnLabel3.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasConnLabel3.Name = "aliasConnLabel3";
+            this.aliasConnLabel3.Size = new System.Drawing.Size(56, 15);
+            this.aliasConnLabel3.TabIndex = 147;
+            this.aliasConnLabel3.Text = "no data";
+            // 
+            // channelLabel1
+            // 
+            this.channelLabel1.AutoSize = true;
+            this.channelLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.channelLabel1.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.channelLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.channelLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.channelLabel1.Location = new System.Drawing.Point(681, 218);
+            this.channelLabel1.Name = "channelLabel1";
+            this.channelLabel1.Size = new System.Drawing.Size(56, 15);
+            this.channelLabel1.TabIndex = 146;
+            this.channelLabel1.Text = "no data";
+            // 
+            // channelLabel2
+            // 
+            this.channelLabel2.AutoSize = true;
+            this.channelLabel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.channelLabel2.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.channelLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.channelLabel2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.channelLabel2.Location = new System.Drawing.Point(681, 233);
+            this.channelLabel2.Name = "channelLabel2";
+            this.channelLabel2.Size = new System.Drawing.Size(56, 15);
+            this.channelLabel2.TabIndex = 145;
+            this.channelLabel2.Text = "no data";
+            // 
+            // aliasConnLabel2
+            // 
+            this.aliasConnLabel2.AutoSize = true;
+            this.aliasConnLabel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel2.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasConnLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasConnLabel2.Location = new System.Drawing.Point(550, 233);
+            this.aliasConnLabel2.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasConnLabel2.Name = "aliasConnLabel2";
+            this.aliasConnLabel2.Size = new System.Drawing.Size(56, 15);
+            this.aliasConnLabel2.TabIndex = 144;
+            this.aliasConnLabel2.Text = "no data";
+            // 
+            // aliasConnLabel1
+            // 
+            this.aliasConnLabel1.AutoSize = true;
+            this.aliasConnLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel1.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasConnLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasConnLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasConnLabel1.Location = new System.Drawing.Point(550, 218);
+            this.aliasConnLabel1.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasConnLabel1.Name = "aliasConnLabel1";
+            this.aliasConnLabel1.Size = new System.Drawing.Size(56, 15);
+            this.aliasConnLabel1.TabIndex = 143;
+            this.aliasConnLabel1.Text = "no data";
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label53.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label53.ForeColor = System.Drawing.Color.Silver;
+            this.label53.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label53.Location = new System.Drawing.Point(550, 3);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(168, 15);
+            this.label53.TabIndex = 142;
+            this.label53.Text = "Highest liquidity nodes";
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label52.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label52.ForeColor = System.Drawing.Color.Silver;
+            this.label52.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label52.Location = new System.Drawing.Point(681, 18);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(63, 15);
+            this.label52.TabIndex = 141;
+            this.label52.Text = "Capacity";
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label51.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label51.ForeColor = System.Drawing.Color.Silver;
+            this.label51.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label51.Location = new System.Drawing.Point(550, 18);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(42, 15);
+            this.label51.TabIndex = 140;
+            this.label51.Text = "Alias";
+            // 
+            // capacityLabel9
+            // 
+            this.capacityLabel9.AutoSize = true;
+            this.capacityLabel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.capacityLabel9.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capacityLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.capacityLabel9.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.capacityLabel9.Location = new System.Drawing.Point(681, 153);
+            this.capacityLabel9.Name = "capacityLabel9";
+            this.capacityLabel9.Size = new System.Drawing.Size(56, 15);
+            this.capacityLabel9.TabIndex = 139;
+            this.capacityLabel9.Text = "no data";
+            // 
+            // capacityLabel10
+            // 
+            this.capacityLabel10.AutoSize = true;
+            this.capacityLabel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.capacityLabel10.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capacityLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.capacityLabel10.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.capacityLabel10.Location = new System.Drawing.Point(681, 168);
+            this.capacityLabel10.Name = "capacityLabel10";
+            this.capacityLabel10.Size = new System.Drawing.Size(56, 15);
+            this.capacityLabel10.TabIndex = 138;
+            this.capacityLabel10.Text = "no data";
+            // 
+            // aliasLabel10
+            // 
+            this.aliasLabel10.AutoSize = true;
+            this.aliasLabel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasLabel10.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasLabel10.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasLabel10.Location = new System.Drawing.Point(550, 168);
+            this.aliasLabel10.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasLabel10.Name = "aliasLabel10";
+            this.aliasLabel10.Size = new System.Drawing.Size(56, 15);
+            this.aliasLabel10.TabIndex = 137;
+            this.aliasLabel10.Text = "no data";
+            // 
+            // aliasLabel9
+            // 
+            this.aliasLabel9.AutoSize = true;
+            this.aliasLabel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasLabel9.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasLabel9.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasLabel9.Location = new System.Drawing.Point(550, 153);
+            this.aliasLabel9.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasLabel9.Name = "aliasLabel9";
+            this.aliasLabel9.Size = new System.Drawing.Size(56, 15);
+            this.aliasLabel9.TabIndex = 136;
+            this.aliasLabel9.Text = "no data";
+            // 
+            // capacityLabel7
+            // 
+            this.capacityLabel7.AutoSize = true;
+            this.capacityLabel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.capacityLabel7.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capacityLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.capacityLabel7.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.capacityLabel7.Location = new System.Drawing.Point(681, 123);
+            this.capacityLabel7.Name = "capacityLabel7";
+            this.capacityLabel7.Size = new System.Drawing.Size(56, 15);
+            this.capacityLabel7.TabIndex = 135;
+            this.capacityLabel7.Text = "no data";
+            // 
+            // capacityLabel8
+            // 
+            this.capacityLabel8.AutoSize = true;
+            this.capacityLabel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.capacityLabel8.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capacityLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.capacityLabel8.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.capacityLabel8.Location = new System.Drawing.Point(681, 138);
+            this.capacityLabel8.Name = "capacityLabel8";
+            this.capacityLabel8.Size = new System.Drawing.Size(56, 15);
+            this.capacityLabel8.TabIndex = 134;
+            this.capacityLabel8.Text = "no data";
+            // 
+            // aliasLabel8
+            // 
+            this.aliasLabel8.AutoSize = true;
+            this.aliasLabel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasLabel8.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasLabel8.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasLabel8.Location = new System.Drawing.Point(550, 138);
+            this.aliasLabel8.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasLabel8.Name = "aliasLabel8";
+            this.aliasLabel8.Size = new System.Drawing.Size(56, 15);
+            this.aliasLabel8.TabIndex = 133;
+            this.aliasLabel8.Text = "no data";
+            // 
+            // aliasLabel7
+            // 
+            this.aliasLabel7.AutoSize = true;
+            this.aliasLabel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasLabel7.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasLabel7.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasLabel7.Location = new System.Drawing.Point(550, 123);
+            this.aliasLabel7.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasLabel7.Name = "aliasLabel7";
+            this.aliasLabel7.Size = new System.Drawing.Size(56, 15);
+            this.aliasLabel7.TabIndex = 132;
+            this.aliasLabel7.Text = "no data";
+            // 
+            // capacityLabel5
+            // 
+            this.capacityLabel5.AutoSize = true;
+            this.capacityLabel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.capacityLabel5.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capacityLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.capacityLabel5.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.capacityLabel5.Location = new System.Drawing.Point(681, 93);
+            this.capacityLabel5.Name = "capacityLabel5";
+            this.capacityLabel5.Size = new System.Drawing.Size(56, 15);
+            this.capacityLabel5.TabIndex = 131;
+            this.capacityLabel5.Text = "no data";
+            // 
+            // capacityLabel6
+            // 
+            this.capacityLabel6.AutoSize = true;
+            this.capacityLabel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.capacityLabel6.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capacityLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.capacityLabel6.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.capacityLabel6.Location = new System.Drawing.Point(681, 108);
+            this.capacityLabel6.Name = "capacityLabel6";
+            this.capacityLabel6.Size = new System.Drawing.Size(56, 15);
+            this.capacityLabel6.TabIndex = 130;
+            this.capacityLabel6.Text = "no data";
+            // 
+            // aliasLabel6
+            // 
+            this.aliasLabel6.AutoSize = true;
+            this.aliasLabel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasLabel6.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasLabel6.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasLabel6.Location = new System.Drawing.Point(550, 108);
+            this.aliasLabel6.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasLabel6.Name = "aliasLabel6";
+            this.aliasLabel6.Size = new System.Drawing.Size(56, 15);
+            this.aliasLabel6.TabIndex = 129;
+            this.aliasLabel6.Text = "no data";
+            // 
+            // aliasLabel5
+            // 
+            this.aliasLabel5.AutoSize = true;
+            this.aliasLabel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasLabel5.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasLabel5.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasLabel5.Location = new System.Drawing.Point(550, 93);
+            this.aliasLabel5.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasLabel5.Name = "aliasLabel5";
+            this.aliasLabel5.Size = new System.Drawing.Size(56, 15);
+            this.aliasLabel5.TabIndex = 128;
+            this.aliasLabel5.Text = "no data";
+            // 
+            // capacityLabel3
+            // 
+            this.capacityLabel3.AutoSize = true;
+            this.capacityLabel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.capacityLabel3.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capacityLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.capacityLabel3.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.capacityLabel3.Location = new System.Drawing.Point(681, 63);
+            this.capacityLabel3.Name = "capacityLabel3";
+            this.capacityLabel3.Size = new System.Drawing.Size(56, 15);
+            this.capacityLabel3.TabIndex = 127;
+            this.capacityLabel3.Text = "no data";
+            // 
+            // capacityLabel4
+            // 
+            this.capacityLabel4.AutoSize = true;
+            this.capacityLabel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.capacityLabel4.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capacityLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.capacityLabel4.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.capacityLabel4.Location = new System.Drawing.Point(681, 78);
+            this.capacityLabel4.Name = "capacityLabel4";
+            this.capacityLabel4.Size = new System.Drawing.Size(56, 15);
+            this.capacityLabel4.TabIndex = 126;
+            this.capacityLabel4.Text = "no data";
+            // 
+            // aliasLabel4
+            // 
+            this.aliasLabel4.AutoSize = true;
+            this.aliasLabel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasLabel4.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasLabel4.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasLabel4.Location = new System.Drawing.Point(550, 78);
+            this.aliasLabel4.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasLabel4.Name = "aliasLabel4";
+            this.aliasLabel4.Size = new System.Drawing.Size(56, 15);
+            this.aliasLabel4.TabIndex = 125;
+            this.aliasLabel4.Text = "no data";
+            // 
+            // aliasLabel3
+            // 
+            this.aliasLabel3.AutoSize = true;
+            this.aliasLabel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasLabel3.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasLabel3.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasLabel3.Location = new System.Drawing.Point(550, 63);
+            this.aliasLabel3.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasLabel3.Name = "aliasLabel3";
+            this.aliasLabel3.Size = new System.Drawing.Size(56, 15);
+            this.aliasLabel3.TabIndex = 124;
+            this.aliasLabel3.Text = "no data";
+            // 
+            // capacityLabel1
+            // 
+            this.capacityLabel1.AutoSize = true;
+            this.capacityLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.capacityLabel1.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capacityLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.capacityLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.capacityLabel1.Location = new System.Drawing.Point(681, 33);
+            this.capacityLabel1.Name = "capacityLabel1";
+            this.capacityLabel1.Size = new System.Drawing.Size(56, 15);
+            this.capacityLabel1.TabIndex = 123;
+            this.capacityLabel1.Text = "no data";
+            // 
+            // capacityLabel2
+            // 
+            this.capacityLabel2.AutoSize = true;
+            this.capacityLabel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.capacityLabel2.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capacityLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.capacityLabel2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.capacityLabel2.Location = new System.Drawing.Point(681, 48);
+            this.capacityLabel2.Name = "capacityLabel2";
+            this.capacityLabel2.Size = new System.Drawing.Size(56, 15);
+            this.capacityLabel2.TabIndex = 122;
+            this.capacityLabel2.Text = "no data";
+            // 
+            // aliasLabel2
+            // 
+            this.aliasLabel2.AutoSize = true;
+            this.aliasLabel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasLabel2.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasLabel2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasLabel2.Location = new System.Drawing.Point(550, 48);
+            this.aliasLabel2.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasLabel2.Name = "aliasLabel2";
+            this.aliasLabel2.Size = new System.Drawing.Size(56, 15);
+            this.aliasLabel2.TabIndex = 121;
+            this.aliasLabel2.Text = "no data";
+            // 
+            // aliasLabel1
+            // 
+            this.aliasLabel1.AutoSize = true;
+            this.aliasLabel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aliasLabel1.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aliasLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.aliasLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.aliasLabel1.Location = new System.Drawing.Point(550, 33);
+            this.aliasLabel1.MaximumSize = new System.Drawing.Size(125, 15);
+            this.aliasLabel1.Name = "aliasLabel1";
+            this.aliasLabel1.Size = new System.Drawing.Size(56, 15);
+            this.aliasLabel1.TabIndex = 120;
+            this.aliasLabel1.Text = "no data";
+            // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label50.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label50.ForeColor = System.Drawing.Color.Silver;
+            this.label50.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label50.Location = new System.Drawing.Point(4, 43);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(42, 15);
+            this.label50.TabIndex = 119;
+            this.label50.Text = "(BTC)";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label49.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label49.ForeColor = System.Drawing.Color.Silver;
+            this.label49.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label49.Location = new System.Drawing.Point(115, 83);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(119, 15);
+            this.label49.TabIndex = 118;
+            this.label49.Text = "Unknown capacity";
+            // 
+            // lblUnknownCapacity
+            // 
+            this.lblUnknownCapacity.AutoSize = true;
+            this.lblUnknownCapacity.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblUnknownCapacity.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUnknownCapacity.Location = new System.Drawing.Point(114, 98);
+            this.lblUnknownCapacity.Name = "lblUnknownCapacity";
+            this.lblUnknownCapacity.Size = new System.Drawing.Size(103, 27);
+            this.lblUnknownCapacity.TabIndex = 117;
+            this.lblUnknownCapacity.Text = "no data";
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label48.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label48.ForeColor = System.Drawing.Color.Silver;
+            this.label48.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label48.Location = new System.Drawing.Point(115, 45);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(91, 15);
+            this.label48.TabIndex = 116;
+            this.label48.Text = "Tor capacity";
+            // 
+            // lblTorCapacity
+            // 
+            this.lblTorCapacity.AutoSize = true;
+            this.lblTorCapacity.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblTorCapacity.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTorCapacity.Location = new System.Drawing.Point(114, 60);
+            this.lblTorCapacity.Name = "lblTorCapacity";
+            this.lblTorCapacity.Size = new System.Drawing.Size(103, 27);
+            this.lblTorCapacity.TabIndex = 115;
+            this.lblTorCapacity.Text = "no data";
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label47.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label47.ForeColor = System.Drawing.Color.Silver;
+            this.label47.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label47.Location = new System.Drawing.Point(116, 3);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(126, 15);
+            this.label47.TabIndex = 114;
+            this.label47.Text = "Clearnet capacity";
+            // 
+            // lblClearnetCapacity
+            // 
+            this.lblClearnetCapacity.AutoSize = true;
+            this.lblClearnetCapacity.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblClearnetCapacity.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblClearnetCapacity.Location = new System.Drawing.Point(115, 18);
+            this.lblClearnetCapacity.Name = "lblClearnetCapacity";
+            this.lblClearnetCapacity.Size = new System.Drawing.Size(103, 27);
+            this.lblClearnetCapacity.TabIndex = 113;
+            this.lblClearnetCapacity.Text = "no data";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label38.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label38.ForeColor = System.Drawing.Color.Silver;
+            this.label38.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label38.Location = new System.Drawing.Point(3, 3);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(105, 15);
+            this.label38.TabIndex = 92;
+            this.label38.Text = "Total capacity";
+            // 
+            // lblTotalCapacity
+            // 
+            this.lblTotalCapacity.AutoSize = true;
+            this.lblTotalCapacity.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblTotalCapacity.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalCapacity.Location = new System.Drawing.Point(2, 18);
+            this.lblTotalCapacity.Name = "lblTotalCapacity";
+            this.lblTotalCapacity.Size = new System.Drawing.Size(103, 27);
+            this.lblTotalCapacity.TabIndex = 91;
+            this.lblTotalCapacity.Text = "no data";
             // 
             // Statamoto
             // 
