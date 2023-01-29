@@ -52,6 +52,8 @@
             // 
             this.btnExitSplash.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
             this.btnExitSplash.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnExitSplash.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(72)))), ((int)(((byte)(9)))));
+            this.btnExitSplash.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(36)))), ((int)(((byte)(4)))));
             this.btnExitSplash.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExitSplash.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExitSplash.ForeColor = System.Drawing.Color.Gray;
@@ -59,10 +61,9 @@
             this.btnExitSplash.Name = "btnExitSplash";
             this.btnExitSplash.Size = new System.Drawing.Size(66, 30);
             this.btnExitSplash.TabIndex = 1;
+            this.btnExitSplash.TabStop = false;
             this.btnExitSplash.Text = "close";
             this.btnExitSplash.UseVisualStyleBackColor = false;
-            this.btnExitSplash.MouseLeave += new System.EventHandler(this.button_MouseLeave);
-            this.btnExitSplash.MouseHover += new System.EventHandler(this.button_MouseHover);
             // 
             // label2
             // 
@@ -75,7 +76,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(120, 18);
             this.label2.TabIndex = 9;
-            this.label2.Text = "Statamoto v1.1";
+            this.label2.Text = "Statamoto v1.2";
             // 
             // linkLabel1
             // 

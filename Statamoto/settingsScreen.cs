@@ -22,6 +22,8 @@ namespace Statamoto
 
         public bool BlockchairComJSONEnabled { get; set; }
 
+        public bool MempoolSpaceLightningJSONEnabled { get; set; }
+
         public int APIGroup1RefreshInMinsSelection { get; set; } = 1;
 
         public int APIGroup2RefreshInHoursSelection { get; set; } = 24;
@@ -56,13 +58,11 @@ namespace Statamoto
               {
                   lblBitcoinExplorerEndpoints.ForeColor= Color.Red;
                   lblBitcoinExplorerEndpoints.Text = "❌";
-                  //BitcoinExplorerEndpointsEnabled = false;
               }
               else
               {
                   lblBitcoinExplorerEndpoints.ForeColor = Color.Green;
                   lblBitcoinExplorerEndpoints.Text = "✔️";
-                  //BitcoinExplorerEndpointsEnabled = true;
               }
          }
 
@@ -72,13 +72,11 @@ namespace Statamoto
             {
                 lblBlockchainInfoEndpoints.ForeColor = Color.Red;
                 lblBlockchainInfoEndpoints.Text = "❌";
-                //BlockchainInfoEndpointsEnabled = false;
             }
             else
             {
                 lblBlockchainInfoEndpoints.ForeColor = Color.Green;
                 lblBlockchainInfoEndpoints.Text = "✔️";
-                //BlockchainInfoEndpointsEnabled = true;
             }
         }
 
@@ -88,13 +86,11 @@ namespace Statamoto
             {
                 lblBlockchainExplorerJSON.ForeColor = Color.Red;
                 lblBlockchainExplorerJSON.Text = "❌";
-                //BitcoinExplorerOrgJSONEnabled = false;
             }
             else
             {
                 lblBlockchainExplorerJSON.ForeColor = Color.Green;
                 lblBlockchainExplorerJSON.Text = "✔️";
-                //BitcoinExplorerOrgJSONEnabled = true;
             }
         }
 
@@ -104,13 +100,11 @@ namespace Statamoto
             {
                 lblBlockchainInfoJSON.ForeColor = Color.Red;
                 lblBlockchainInfoJSON.Text = "❌";
-                //BlockchainInfoJSONEnabled = false;
             }
             else
             {
                 lblBlockchainInfoJSON.ForeColor = Color.Green;
                 lblBlockchainInfoJSON.Text = "✔️";
-                //BlockchainInfoJSONEnabled = true;
             }
         }
 
@@ -120,13 +114,11 @@ namespace Statamoto
             {
                 lblCoingeckoComJSON.ForeColor = Color.Red;
                 lblCoingeckoComJSON.Text = "❌";
-                //CoingeckoComJSONEnabled = false;
             }
             else
             {
                 lblCoingeckoComJSON.ForeColor = Color.Green;
                 lblCoingeckoComJSON.Text = "✔️";
-                //CoingeckoComJSONEnabled = true;
             }
         }
 
@@ -136,13 +128,25 @@ namespace Statamoto
             {
                 lblBlockchairComJSON.ForeColor = Color.Red;
                 lblBlockchairComJSON.Text = "❌";
-                //BlockchairComJSONEnabled = false;
             }
             else
             {
                 lblBlockchairComJSON.ForeColor = Color.Green;
                 lblBlockchairComJSON.Text = "✔️";
-                //BlockchairComJSONEnabled = true;
+            }
+        }
+
+        private void lblMempoolLightningJSON_Click(object sender, EventArgs e)
+        {
+            if (lblMempoolLightningJSON.Text == "✔️")
+            {
+                lblMempoolLightningJSON.ForeColor = Color.Red;
+                lblMempoolLightningJSON.Text = "❌";
+            }
+            else
+            {
+                lblMempoolLightningJSON.ForeColor = Color.Green;
+                lblMempoolLightningJSON.Text = "✔️";
             }
         }
 
@@ -196,7 +200,15 @@ namespace Statamoto
             {
                 BlockchairComJSONEnabled = false;
             }
-           // APIGroup1RefreshInMinsSelection = (int)numericUpDownAPIGroup1.Value;
+            if (lblMempoolLightningJSON.Text == "✔️")
+            {
+                MempoolSpaceLightningJSONEnabled = true;
+            }
+            else
+            {
+                MempoolSpaceLightningJSONEnabled = false;
+            }
+            // APIGroup1RefreshInMinsSelection = (int)numericUpDownAPIGroup1.Value;
         }
 
         private void button_MouseHover(object sender, EventArgs e)
@@ -222,5 +234,7 @@ namespace Statamoto
         {
             APIGroup2RefreshInHoursSelection = (int)numericUpDownAPIGroup2.Value;
         }
+
+
     }
 }

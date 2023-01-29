@@ -45,6 +45,8 @@
             this.numericUpDownAPIGroup1 = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblMempoolLightningJSON = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.numericUpDownAPIGroup2 = new System.Windows.Forms.NumericUpDown();
@@ -58,18 +60,19 @@
             // 
             this.btnExitSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
             this.btnExitSettings.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnExitSettings.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(72)))), ((int)(((byte)(9)))));
+            this.btnExitSettings.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(36)))), ((int)(((byte)(4)))));
             this.btnExitSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExitSettings.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExitSettings.ForeColor = System.Drawing.Color.Gray;
-            this.btnExitSettings.Location = new System.Drawing.Point(283, 303);
+            this.btnExitSettings.Location = new System.Drawing.Point(283, 342);
             this.btnExitSettings.Name = "btnExitSettings";
             this.btnExitSettings.Size = new System.Drawing.Size(66, 30);
             this.btnExitSettings.TabIndex = 2;
+            this.btnExitSettings.TabStop = false;
             this.btnExitSettings.Text = "close";
             this.btnExitSettings.UseVisualStyleBackColor = false;
             this.btnExitSettings.Click += new System.EventHandler(this.btnExitSettings_Click);
-            this.btnExitSettings.MouseLeave += new System.EventHandler(this.button_MouseLeave);
-            this.btnExitSettings.MouseHover += new System.EventHandler(this.button_MouseHover);
             // 
             // lblWhatever
             // 
@@ -232,7 +235,7 @@
             this.numericUpDownAPIGroup1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.numericUpDownAPIGroup1.Font = new System.Drawing.Font("Consolas", 9F);
             this.numericUpDownAPIGroup1.ForeColor = System.Drawing.Color.Silver;
-            this.numericUpDownAPIGroup1.Location = new System.Drawing.Point(18, 132);
+            this.numericUpDownAPIGroup1.Location = new System.Drawing.Point(18, 157);
             this.numericUpDownAPIGroup1.Minimum = new decimal(new int[] {
             1,
             0,
@@ -241,6 +244,7 @@
             this.numericUpDownAPIGroup1.Name = "numericUpDownAPIGroup1";
             this.numericUpDownAPIGroup1.Size = new System.Drawing.Size(60, 21);
             this.numericUpDownAPIGroup1.TabIndex = 18;
+            this.numericUpDownAPIGroup1.TabStop = false;
             this.numericUpDownAPIGroup1.Value = new decimal(new int[] {
             1,
             0,
@@ -253,7 +257,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Consolas", 9F);
             this.label2.ForeColor = System.Drawing.Color.Silver;
-            this.label2.Location = new System.Drawing.Point(87, 132);
+            this.label2.Location = new System.Drawing.Point(87, 158);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(168, 18);
             this.label2.TabIndex = 19;
@@ -262,6 +266,8 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.lblMempoolLightningJSON);
+            this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.numericUpDownAPIGroup1);
@@ -277,8 +283,32 @@
             this.panel1.ForeColor = System.Drawing.Color.DarkGray;
             this.panel1.Location = new System.Drawing.Point(30, 49);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(319, 165);
+            this.panel1.Size = new System.Drawing.Size(319, 204);
             this.panel1.TabIndex = 20;
+            // 
+            // lblMempoolLightningJSON
+            // 
+            this.lblMempoolLightningJSON.AutoSize = true;
+            this.lblMempoolLightningJSON.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblMempoolLightningJSON.Font = new System.Drawing.Font("Consolas", 9F);
+            this.lblMempoolLightningJSON.ForeColor = System.Drawing.Color.Green;
+            this.lblMempoolLightningJSON.Location = new System.Drawing.Point(18, 132);
+            this.lblMempoolLightningJSON.Name = "lblMempoolLightningJSON";
+            this.lblMempoolLightningJSON.Size = new System.Drawing.Size(23, 18);
+            this.lblMempoolLightningJSON.TabIndex = 21;
+            this.lblMempoolLightningJSON.Text = "✔️";
+            this.lblMempoolLightningJSON.Click += new System.EventHandler(this.lblMempoolLightningJSON_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Consolas", 9F);
+            this.label9.ForeColor = System.Drawing.Color.Silver;
+            this.label9.Location = new System.Drawing.Point(46, 133);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(159, 18);
+            this.label9.TabIndex = 20;
+            this.label9.Text = "mempool.space⚡JSON";
             // 
             // panel2
             // 
@@ -288,7 +318,7 @@
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.numericUpDownAPIGroup2);
             this.panel2.ForeColor = System.Drawing.Color.DarkGray;
-            this.panel2.Location = new System.Drawing.Point(30, 220);
+            this.panel2.Location = new System.Drawing.Point(30, 259);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(319, 68);
             this.panel2.TabIndex = 21;
@@ -324,6 +354,7 @@
             this.numericUpDownAPIGroup2.Name = "numericUpDownAPIGroup2";
             this.numericUpDownAPIGroup2.Size = new System.Drawing.Size(60, 21);
             this.numericUpDownAPIGroup2.TabIndex = 22;
+            this.numericUpDownAPIGroup2.TabStop = false;
             this.numericUpDownAPIGroup2.Value = new decimal(new int[] {
             24,
             0,
@@ -337,7 +368,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.CancelButton = this.btnExitSettings;
-            this.ClientSize = new System.Drawing.Size(378, 353);
+            this.ClientSize = new System.Drawing.Size(378, 422);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnExitSettings);
             this.Controls.Add(this.panel1);
@@ -382,5 +413,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown numericUpDownAPIGroup2;
+        private System.Windows.Forms.Label lblMempoolLightningJSON;
+        private System.Windows.Forms.Label label9;
     }
 }

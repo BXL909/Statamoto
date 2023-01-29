@@ -6,10 +6,10 @@
 ──███──────███─  1.0 initial release
 ──███────▄███▀─  1.1 Used threading on API calls for speed and UI responsiveness. Added 4 new fields (number of hodling addresses, Blockchain size, 24 hour number of blocks mined, Number of discoverable nodes)
 ──█████████▀───      Added settings screen. Added ability to disable individual API calls. Added options to change API call refresh frequency. Added a 'last updated' timer.
-──███████████▄─  
+──███████████▄─  1.2 Hover behaviour on buttons much more responsive.
 ──███─────▀████  To do:
 ──███───────███  Add Lightning data
-──███─────▄████  
+──███─────▄████  Sats are converted to BTC too often - move the conversion to its own method
 ──████████████─
 ████████████▀──
 ────██──██─────
@@ -32,6 +32,7 @@ using System.Runtime.InteropServices;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.LinkLabel;
 
 namespace Statamoto
 {
@@ -51,6 +52,7 @@ namespace Statamoto
         private bool RunBlockchainInfoJSONAPI = true;
         private bool RunCoingeckoComJSONAPI = true;
         private bool RunBlockchairComJSONAPI = true;
+        private bool RunMempoolSpaceLightningAPI = true;
         private int APIGroup1RefreshFrequency = 1; // mins. Default value 1. Initial value only
         private int APIGroup2RefreshFrequency = 24; // hours. Default value 2. Initial value only
         private int intDisplaySecondsElapsedSinceUpdate = 0; // used to count seconds since the data was last refreshed, for display only.
@@ -63,6 +65,7 @@ namespace Statamoto
 
         public Statamoto()
         {
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             InitializeComponent();
         }
 
@@ -562,7 +565,199 @@ namespace Statamoto
                     }
                 });
 
-                await Task.WhenAll(task1, task2, task3, task4, task5);
+                Task task6 = Task.Run(() => //call mempool.space lightning JSON
+                {
+                    try
+                    {
+                        if (RunMempoolSpaceLightningAPI)
+                        {
+                            var result6 = MempoolSpaceLightningJSONRefresh();
+                            // move returned data to the labels on the form
+                            lblChannelCount.Invoke((MethodInvoker)delegate
+                            {
+                                lblChannelCount.Text = result6.channelCount;
+                            });
+                            lblNodeCount.Invoke((MethodInvoker)delegate
+                            {
+                                lblNodeCount.Text = result6.nodeCount;
+                            });
+                            lblTotalCapacity.Invoke((MethodInvoker)delegate
+                            {
+                                lblTotalCapacity.Text = result6.totalCapacity;
+                            });
+                            lblTorNodes.Invoke((MethodInvoker)delegate
+                            {
+                                lblTorNodes.Text = result6.torNodes;
+                            });
+                            lblClearnetNodes.Invoke((MethodInvoker)delegate
+                            {
+                                lblClearnetNodes.Text = result6.clearnetNodes;
+                            });
+                            lblAverageCapacity.Invoke((MethodInvoker)delegate
+                            {
+                                lblAverageCapacity.Text = result6.avgCapacity;
+                            });
+                            lblAverageFeeRate.Invoke((MethodInvoker)delegate
+                            {
+                                lblAverageFeeRate.Text = result6.avgFeeRate;
+                            });
+                            lblUnannouncedNodes.Invoke((MethodInvoker)delegate
+                            {
+                                lblUnannouncedNodes.Text = result6.unannouncedNodes;
+                            });
+                            lblAverageBaseFeeMtokens.Invoke((MethodInvoker)delegate
+                            {
+                                lblAverageBaseFeeMtokens.Text = result6.avgBaseeFeeMtokens;
+                            });
+                            lblMedCapacity.Invoke((MethodInvoker)delegate
+                            {
+                                lblMedCapacity.Text = result6.medCapacity;
+                            });
+                            lblMedFeeRate.Invoke((MethodInvoker)delegate
+                            {
+                                lblMedFeeRate.Text = result6.medFeeRate;
+                            });
+                            lblMedBaseFeeTokens.Invoke((MethodInvoker)delegate
+                            {
+                                lblMedBaseFeeTokens.Text = result6.medBaseeFeeMtokens;
+                            });
+                            lblClearnetTorNodes.Invoke((MethodInvoker)delegate
+                            {
+                                lblClearnetTorNodes.Text = result6.clearnetTorNodes;
+                            });
+                        }
+                        else
+                        {
+                            lblChannelCount.Invoke((MethodInvoker)delegate
+                            {
+                                lblChannelCount.Text = "Disabled";
+                            });
+                            lblNodeCount.Invoke((MethodInvoker)delegate
+                            {
+                                lblNodeCount.Text = "Disabled";
+                            });
+                            lblTotalCapacity.Invoke((MethodInvoker)delegate
+                            {
+                                lblTotalCapacity.Text = "Disabled";
+                            });
+                            lblTorNodes.Invoke((MethodInvoker)delegate
+                            {
+                                lblTorNodes.Text = "Disabled";
+                            });
+                            lblClearnetNodes.Invoke((MethodInvoker)delegate
+                            {
+                                lblClearnetNodes.Text = "Disabled";
+                            });
+                            lblAverageCapacity.Invoke((MethodInvoker)delegate
+                            {
+                                lblAverageCapacity.Text = "Disabled";
+                            });
+                            lblAverageFeeRate.Invoke((MethodInvoker)delegate
+                            {
+                                lblAverageFeeRate.Text = "Disabled";
+                            });
+                            lblUnannouncedNodes.Invoke((MethodInvoker)delegate
+                            {
+                                lblUnannouncedNodes.Text = "Disabled";
+                            });
+                            lblAverageBaseFeeMtokens.Invoke((MethodInvoker)delegate
+                            {
+                                lblAverageBaseFeeMtokens.Text = "Disabled";
+                            });
+                            lblMedCapacity.Invoke((MethodInvoker)delegate
+                            {
+                                lblMedCapacity.Text = "Disabled";
+                            });
+                            lblMedFeeRate.Invoke((MethodInvoker)delegate
+                            {
+                                lblMedFeeRate.Text = "Disabled";
+                            });
+                            lblMedBaseFeeTokens.Invoke((MethodInvoker)delegate
+                            {
+                                lblMedBaseFeeTokens.Text = "Disabled";
+                            });
+                            lblClearnetTorNodes.Invoke((MethodInvoker)delegate
+                            {
+                                lblClearnetTorNodes.Text = "Disabled";
+                            });
+                        }
+                        if (RunMempoolSpaceLightningAPI)
+                        {
+                            var result6 = MempoolSpaceCapacityBreakdownJSONRefresh();
+                            lblClearnetCapacity.Invoke((MethodInvoker)delegate
+                            {
+                                lblClearnetCapacity.Text = result6.clearnetCapacity;
+                            });
+                            lblTorCapacity.Invoke((MethodInvoker)delegate
+                            {
+                                lblTorCapacity.Text = result6.torCapacity;
+                            });
+                            lblUnknownCapacity.Invoke((MethodInvoker)delegate
+                            {
+                                lblUnknownCapacity.Text = result6.unknownCapacity;
+                            });
+                        }
+                        else
+                        {
+                            lblClearnetCapacity.Invoke((MethodInvoker)delegate
+                            {
+                                lblClearnetCapacity.Text = "Disabled";
+                            });
+                            lblTorCapacity.Invoke((MethodInvoker)delegate
+                            {
+                                lblTorCapacity.Text = "Disabled";
+                            });
+                            lblUnknownCapacity.Invoke((MethodInvoker)delegate
+                            {
+                                lblUnknownCapacity.Text = "Disabled";
+                            });
+                        }
+                        if (RunMempoolSpaceLightningAPI) 
+                        {
+                            var result6 = MempoolSpaceLiquidityRankingJSONRefresh();
+                            for (int i = 0; i < 10; i++)
+                            {
+                                Label aliasLabel = (Label)this.Controls.Find("aliasLabel" + (i + 1), true)[0];
+                                aliasLabel.Text = result6.aliases[i];
+                                Label capacityLabel = (Label)this.Controls.Find("capacityLabel" + (i + 1), true)[0];
+                                capacityLabel.Text = result6.capacities[i];
+                            }
+                            var result7 = MempoolSpaceConnectivityRankingJSONRefresh();
+                            for (int i = 0; i < 10; i++)
+                            {
+                                Label aliasLabel = (Label)this.Controls.Find("aliasConnLabel" + (i + 1), true)[0];
+                                aliasLabel.Text = result7.aliases[i];
+                                Label channelLabel = (Label)this.Controls.Find("channelLabel" + (i + 1), true)[0];
+                                channelLabel.Text = result7.channels[i];
+                            }
+                        }
+                        // set successful lights and messages on the form
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
+                        });
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.Text = "🟢"; // circle/light
+                        });
+                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
+                        });
+                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
+                    }
+                    catch (Exception ex)
+                    {
+                        errorOccurred = true;
+                        lblErrorMessage.Invoke((MethodInvoker)delegate
+                        {
+                            lblErrorMessage.Text = ex.Message; // move returned error to the error message label on the form
+                        });
+                    }
+                });
+
+
+                await Task.WhenAll(task1, task2, task3, task4, task5, task6);
 
                 // If any errors occurred with any of the API calls, a decent error message has already been displayed. Now display the red light and generic error.
                 if (errorOccurred)
@@ -663,20 +858,104 @@ namespace Statamoto
             btnMoveWindow.BackColor = System.Drawing.ColorTranslator.FromHtml("#1D1D1D");
         }
 
-        // Mousehover button effects for nav buttons
-        private void button_MouseHover(object sender, EventArgs e)
+        private void btnBitcoinDashboard_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Button button = (System.Windows.Forms.Button)sender;
-            button.BackColor = Color.Gray;
-            button.ForeColor = System.Drawing.ColorTranslator.FromHtml("#1D1D1D");
+            this.DoubleBuffered = true;
+            this.SuspendLayout();
+            panelLightningDashboard.Visible = false;
+            panelBitcoinDashboard.Visible = true;
+            this.ResumeLayout();
         }
 
-        // Mouseleave button effects for nav buttons
-        private void button_MouseLeave(object sender, EventArgs e)
+        private void btnLightningDashboard_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Button button = (System.Windows.Forms.Button)sender;
-            button.BackColor = System.Drawing.ColorTranslator.FromHtml("#1D1D1D");
-            button.ForeColor = Color.Gray;
+            this.DoubleBuffered = true;
+            this.SuspendLayout();
+            panelBitcoinDashboard.Visible = false;
+            panelLightningDashboard.Visible = true;
+            this.ResumeLayout();
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            settingsScreen.CreateInstance();
+            settingsScreen.Instance.ShowDialog();
+            // read all fields from the settings screen and set variables for use on the main form
+            if (settingsScreen.Instance.BitcoinExplorerEndpointsEnabled)
+            {
+                RunBitcoinExplorerEndpointAPI = true;
+            }
+            else
+            {
+                RunBitcoinExplorerEndpointAPI = false;
+            }
+            if (settingsScreen.Instance.BlockchainInfoEndpointsEnabled)
+            {
+                RunBlockchainInfoEndpointAPI = true;
+            }
+            else
+            {
+                RunBlockchainInfoEndpointAPI = false;
+            }
+            if (settingsScreen.Instance.BitcoinExplorerOrgJSONEnabled)
+            {
+                RunBitcoinExplorerOrgJSONAPI = true;
+            }
+            else
+            {
+                RunBitcoinExplorerOrgJSONAPI = false;
+            }
+            if (settingsScreen.Instance.BlockchainInfoJSONEnabled)
+            {
+                RunBlockchainInfoJSONAPI = true;
+            }
+            else
+            {
+                RunBlockchainInfoJSONAPI = false;
+            }
+            if (settingsScreen.Instance.CoingeckoComJSONEnabled)
+            {
+                RunCoingeckoComJSONAPI = true;
+            }
+            else
+            {
+                RunCoingeckoComJSONAPI = false;
+            }
+            if (settingsScreen.Instance.BlockchairComJSONEnabled)
+            {
+                RunBlockchairComJSONAPI = true;
+            }
+            else
+            {
+                RunBlockchairComJSONAPI = false;
+            }
+            if (settingsScreen.Instance.MempoolSpaceLightningJSONEnabled)
+            {
+                RunMempoolSpaceLightningAPI = true;
+            }
+            else
+            {
+                RunMempoolSpaceLightningAPI = false;
+            }
+
+            if (APIGroup1DisplayTimerIntervalSecsConstant != (settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60)) // if user has changed refresh frequency
+            {
+                APIGroup1DisplayTimerIntervalSecsConstant = settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60;
+                intAPIGroup1TimerIntervalMillisecsConstant = ((settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60) * 1000);
+                intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant;
+                timerAPIGroup1.Stop();
+                timerAPIGroup1.Interval = intAPIGroup1TimerIntervalMillisecsConstant;
+                timerAPIGroup1.Start();
+            }
+
+            if (intAPIGroup2TimerIntervalMillisecsConstant != (((settingsScreen.Instance.APIGroup2RefreshInHoursSelection * 60) * 60) * 1000))
+            {
+                intAPIGroup2TimerIntervalMillisecsConstant = (((settingsScreen.Instance.APIGroup2RefreshInHoursSelection * 60) * 60) * 1000);
+                timerAPIGroup2.Stop();
+                timerAPIGroup2.Interval = intAPIGroup2TimerIntervalMillisecsConstant;
+                timerAPIGroup2.Start();
+            }
+
         }
 
         //-----------------------END FORM NAVIGATION CONTROLS--------------------------
@@ -727,6 +1006,107 @@ namespace Statamoto
         //----------------END COUNTDOWN, ERROR MESSAGES AND STATUS LIGHTS--------------
         //====================================================================================================================
         //------------------------------------API CALLS----------------------------
+
+        private (List<string> aliases, List<string> capacities) MempoolSpaceLiquidityRankingJSONRefresh()
+        {
+            using (WebClient client = new WebClient())
+            {
+                var response = client.DownloadString("https://mempool.space/api/v1/lightning/nodes/rankings/liquidity");
+                var data = JArray.Parse(response);
+
+                List<string> aliases = new List<string>();
+                List<string> capacities = new List<string>();
+                for (int i = 0; i < 10; i++)
+                {
+                    aliases.Add((string)data[i]["alias"]);
+                    string capacity = (string)data[i]["capacity"];
+                    double dblCapacity = Convert.ToDouble(capacity);
+                    dblCapacity = dblCapacity / 100000000; // convert sats to bitcoin
+                    dblCapacity = Math.Round(dblCapacity, 2); // round to 2 decimal places
+                    capacity = Convert.ToString(dblCapacity);
+                    capacities.Add(capacity);
+                }
+
+                return (aliases, capacities);
+            }
+        }
+
+        private (List<string> aliases, List<string> channels) MempoolSpaceConnectivityRankingJSONRefresh()
+        {
+            using (WebClient client = new WebClient())
+            {
+                var response = client.DownloadString("https://mempool.space/api/v1/lightning/nodes/rankings/connectivity");
+                var data = JArray.Parse(response);
+
+                List<string> aliases = new List<string>();
+                List<string> channels = new List<string>();
+                for (int i = 0; i < 10; i++)
+                {
+                    aliases.Add((string)data[i]["alias"]);
+                    channels.Add((string)data[i]["channels"]);
+                }
+
+                return (aliases, channels);
+            }
+        }
+
+        private (string clearnetCapacity, string torCapacity, string unknownCapacity) MempoolSpaceCapacityBreakdownJSONRefresh()
+        {
+            using (WebClient client = new WebClient())
+            {
+                var response = client.DownloadString("https://mempool.space/api/v1/lightning/nodes/isp-ranking");
+                var data = JObject.Parse(response);
+                string clearnetCapacity = (string)data["clearnetCapacity"];
+                double dblClearnetCapacity = Convert.ToDouble(clearnetCapacity);
+                dblClearnetCapacity = dblClearnetCapacity / 100000000; // convert sats to bitcoin
+                dblClearnetCapacity = Math.Round(dblClearnetCapacity, 2); // round to 2 decimal places
+                clearnetCapacity = Convert.ToString(dblClearnetCapacity);
+                string torCapacity = (string)data["torCapacity"];
+                double dblTorCapacity = Convert.ToDouble(torCapacity);
+                dblTorCapacity = dblTorCapacity / 100000000; // convert sats to bitcoin
+                dblTorCapacity = Math.Round(dblTorCapacity, 2); // round to 2 decimal places
+                torCapacity = Convert.ToString(dblTorCapacity);
+                string unknownCapacity = (string)data["unknownCapacity"];
+                double dblUnknownCapacity = Convert.ToDouble(unknownCapacity);
+                dblUnknownCapacity = dblUnknownCapacity / 100000000; // convert sats to bitcoin
+                dblUnknownCapacity = Math.Round(dblUnknownCapacity, 2); // round to 2 decimal places
+                unknownCapacity = Convert.ToString(dblUnknownCapacity);
+                return (clearnetCapacity, torCapacity, unknownCapacity);
+            }
+        }
+
+        private (string channelCount, string nodeCount, string totalCapacity, string torNodes, string clearnetNodes, string unannouncedNodes, string avgCapacity, string avgFeeRate, string avgBaseeFeeMtokens, string medCapacity, string medFeeRate, string medBaseeFeeMtokens, string clearnetTorNodes) MempoolSpaceLightningJSONRefresh()
+        {
+            using (WebClient client = new WebClient())
+            {
+                var response = client.DownloadString("https://mempool.space/api/v1/lightning/statistics/latest");
+                var data = JObject.Parse(response);
+                var channelCount = (string)data["latest"]["channel_count"];
+                var nodeCount = (string)data["latest"]["node_count"];
+
+                string totalCapacity = (string)data["latest"]["total_capacity"];
+                double dblTotalCapacity = Convert.ToDouble(totalCapacity);
+                dblTotalCapacity = dblTotalCapacity / 100000000; // convert sats to bitcoin
+                dblTotalCapacity = Math.Round(dblTotalCapacity, 2); // round to 2 decimal places
+                totalCapacity = Convert.ToString(dblTotalCapacity);
+
+                var torNodes = (string)data["latest"]["tor_nodes"];
+                var clearnetNodes = (string)data["latest"]["clearnet_nodes"];
+                var unannouncedNodes = (string)data["latest"]["unannounced_nodes"];
+                var avgCapacity = (string)data["latest"]["avg_capacity"];
+                var avgFeeRate = (string)data["latest"]["avg_fee_rate"];
+                var avgBaseeFeeMtokens = (string)data["latest"]["avg_base_fee_mtokens"];
+                var medCapacity = (string)data["latest"]["med_capacity"];
+                var medFeeRate = (string)data["latest"]["med_fee_rate"];
+                var medBaseeFeeMtokens = (string)data["latest"]["med_basee_fee_mtokens"];
+                if (medBaseeFeeMtokens == null) 
+                {
+                    medBaseeFeeMtokens = "0";
+                }
+                var clearnetTorNodes = (string)data["latest"]["clearnet_tor_nodes"];
+                return (channelCount, nodeCount, totalCapacity, torNodes, clearnetNodes, unannouncedNodes, avgCapacity, avgFeeRate, avgBaseeFeeMtokens, medCapacity, medFeeRate, medBaseeFeeMtokens, clearnetTorNodes);
+            }
+        }
 
         private (string priceUSD, string moscowTime, string marketCapUSD, string difficultyAdjEst, string txInMempool) bitcoinExplorerOrgEndpointsRefresh()
         {
@@ -870,87 +1250,42 @@ namespace Statamoto
 
         //----------------------END ON-SCREEN CLOCK----------------------------
         //====================================================================================================================
-        //---------------------- BORDER ROUND WINDOW---------------------------
+        //---------------------- BORDER AROUND WINDOW---------------------------
 
         private void Form1_Paint(object sender, PaintEventArgs e) // place a 1px border around the form
         {
             ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Gray, ButtonBorderStyle.Solid);
         }
 
-        //---------------------END BORDER ROUND WINDOW--------------------------
+        //---------------------END BORDER AROUND WINDOW--------------------------
+        //====================================================================================================================
+        //---------------------- CONNECTING LINES BETWEEN FIELDS---------------------------
 
-        private void btnSettings_Click(object sender, EventArgs e)
+        private void panelLightningDashboard_Paint(object sender, PaintEventArgs e)
         {
-            settingsScreen.CreateInstance();
-            settingsScreen.Instance.ShowDialog();
-            // read all fields from the settings screen and set variables for use on the main form
-            if (settingsScreen.Instance.BitcoinExplorerEndpointsEnabled)
+            using (Pen pen = new Pen(Color.FromArgb(106, 72, 9), 1))
             {
-                RunBitcoinExplorerEndpointAPI = true;
+                // Capacity connecting lines
+                e.Graphics.DrawLine(pen, lblTotalCapacity.Right, lblTotalCapacity.Top + (lblTotalCapacity.Height / 2), lblClearnetCapacity.Left, lblClearnetCapacity.Top + (lblClearnetCapacity.Height / 2));
+                e.Graphics.DrawLine(pen, (lblTotalCapacity.Right + lblClearnetCapacity.Left) / 2, lblTotalCapacity.Top + (lblTotalCapacity.Height / 2), (lblTotalCapacity.Right + lblClearnetCapacity.Left) / 2, lblUnknownCapacity.Top + (lblUnknownCapacity.Height / 2));
+                e.Graphics.DrawLine(pen, (lblTotalCapacity.Right + lblClearnetCapacity.Left) / 2, lblTorCapacity.Top + (lblTorCapacity.Height / 2), lblTorCapacity.Left, lblTorCapacity.Top + (lblTorCapacity.Height / 2));
+                e.Graphics.DrawLine(pen, (lblTotalCapacity.Right + lblClearnetCapacity.Left) / 2, lblUnknownCapacity.Top + (lblUnknownCapacity.Height / 2), lblUnknownCapacity.Left, lblUnknownCapacity.Top + (lblUnknownCapacity.Height / 2));
+                // Node connecting lines
+                e.Graphics.DrawLine(pen, lblNodeCount.Right, lblNodeCount.Top + (lblNodeCount.Height / 2), lblTorNodes.Left, lblTorNodes.Top + (lblTorNodes.Height / 2));
+                e.Graphics.DrawLine(pen, (lblNodeCount.Right + lblTorNodes.Left) / 2, lblTorNodes.Top + (lblTorNodes.Height / 2), (lblNodeCount.Right + lblTorNodes.Left) / 2, lblUnannouncedNodes.Top + (lblUnannouncedNodes.Height / 2));
+                e.Graphics.DrawLine(pen, (lblNodeCount.Right + lblTorNodes.Left) / 2, lblClearnetNodes.Top + (lblClearnetNodes.Height / 2), lblClearnetNodes.Left, lblClearnetNodes.Top + (lblClearnetNodes.Height / 2));
+                e.Graphics.DrawLine(pen, (lblNodeCount.Right + lblTorNodes.Left) / 2, lblClearnetTorNodes.Top + (lblClearnetTorNodes.Height / 2), lblClearnetTorNodes.Left, lblClearnetTorNodes.Top + (lblClearnetTorNodes.Height / 2));
+                e.Graphics.DrawLine(pen, (lblNodeCount.Right + lblTorNodes.Left) / 2, lblUnannouncedNodes.Top + (lblUnannouncedNodes.Height / 2), lblUnannouncedNodes.Left, lblUnannouncedNodes.Top + (lblUnannouncedNodes.Height / 2));
+                // Channel connecting lines
+                e.Graphics.DrawLine(pen, lblChannelCount.Right, lblChannelCount.Top + (lblChannelCount.Height / 2), lblAverageCapacity.Left, lblAverageCapacity.Top + (lblAverageCapacity.Height / 2));
+                e.Graphics.DrawLine(pen, (lblChannelCount.Right + lblAverageCapacity.Left) / 2, lblChannelCount.Top + (lblChannelCount.Height / 2), (lblChannelCount.Right + lblAverageCapacity.Left) / 2, lblMedBaseFeeTokens.Top + (lblMedBaseFeeTokens.Height / 2));
+                e.Graphics.DrawLine(pen, (lblChannelCount.Right + lblAverageCapacity.Left) / 2, lblAverageFeeRate.Top + (lblAverageFeeRate.Height / 2), lblAverageFeeRate.Left, lblAverageFeeRate.Top + (lblAverageFeeRate.Height / 2));
+                e.Graphics.DrawLine(pen, (lblChannelCount.Right + lblAverageCapacity.Left) / 2, lblAverageBaseFeeMtokens.Top + (lblAverageBaseFeeMtokens.Height / 2), lblAverageBaseFeeMtokens.Left, lblAverageBaseFeeMtokens.Top + (lblAverageBaseFeeMtokens.Height / 2));
+                e.Graphics.DrawLine(pen, (lblChannelCount.Right + lblAverageCapacity.Left) / 2, lblMedCapacity.Top + (lblMedCapacity.Height / 2), lblMedCapacity.Left, lblMedCapacity.Top + (lblMedCapacity.Height / 2));
+                e.Graphics.DrawLine(pen, (lblChannelCount.Right + lblAverageCapacity.Left) / 2, lblMedFeeRate.Top + (lblMedFeeRate.Height / 2), lblMedFeeRate.Left, lblMedFeeRate.Top + (lblMedFeeRate.Height / 2));
+                e.Graphics.DrawLine(pen, (lblChannelCount.Right + lblAverageCapacity.Left) / 2, lblMedBaseFeeTokens.Top + (lblMedBaseFeeTokens.Height / 2), lblMedBaseFeeTokens.Left, lblMedBaseFeeTokens.Top + (lblMedBaseFeeTokens.Height / 2));
             }
-            else
-            {
-                RunBitcoinExplorerEndpointAPI = false;
-            }
-            if (settingsScreen.Instance.BlockchainInfoEndpointsEnabled)
-            {
-                RunBlockchainInfoEndpointAPI = true;
-            }
-            else
-            {
-                RunBlockchainInfoEndpointAPI = false;
-            }
-            if (settingsScreen.Instance.BitcoinExplorerOrgJSONEnabled)
-            {
-                RunBitcoinExplorerOrgJSONAPI = true;
-            }
-            else
-            {
-                RunBitcoinExplorerOrgJSONAPI = false;
-            }
-            if (settingsScreen.Instance.BlockchainInfoJSONEnabled)
-            {
-                RunBlockchainInfoJSONAPI = true;
-            }
-            else
-            {
-                RunBlockchainInfoJSONAPI = false;
-            }
-            if (settingsScreen.Instance.CoingeckoComJSONEnabled)
-            {
-                RunCoingeckoComJSONAPI = true;
-            }
-            else
-            {
-                RunCoingeckoComJSONAPI = false;
-            }
-            if (settingsScreen.Instance.BlockchairComJSONEnabled)
-            {
-                RunBlockchairComJSONAPI = true;
-            }
-            else
-            {
-                RunBlockchairComJSONAPI = false;
-            }
-
-            if (APIGroup1DisplayTimerIntervalSecsConstant != (settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60)) // if user has changed refresh frequency
-            {
-                APIGroup1DisplayTimerIntervalSecsConstant = settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60;
-                intAPIGroup1TimerIntervalMillisecsConstant = ((settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60) * 1000);
-                intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant;
-                timerAPIGroup1.Stop();    
-                timerAPIGroup1.Interval = intAPIGroup1TimerIntervalMillisecsConstant;
-                timerAPIGroup1.Start();
-            }
-
-            if (intAPIGroup2TimerIntervalMillisecsConstant != (((settingsScreen.Instance.APIGroup2RefreshInHoursSelection *60) * 60) * 1000))
-            {
-                intAPIGroup2TimerIntervalMillisecsConstant = (((settingsScreen.Instance.APIGroup2RefreshInHoursSelection * 60) * 60) * 1000);
-                timerAPIGroup2.Stop();
-                timerAPIGroup2.Interval = intAPIGroup2TimerIntervalMillisecsConstant;
-                timerAPIGroup2.Start();
-            }
-            
         }
+        //---------------------- END CONNECTING LINES BETWEEN FIELDS---------------------------
     }
 }
