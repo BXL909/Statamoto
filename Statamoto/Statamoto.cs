@@ -8,10 +8,10 @@
 ──█████████▀───      Added settings screen. Added ability to disable individual API calls. Added options to change API call refresh frequency. Added a 'last updated' timer.
 ──███████████▄─  1.2 Hover behaviour on buttons much more responsive.
 ──███─────▀████  To do:
-──███───────███  Add Lightning data
+──███───────███  
 ──███─────▄████  Sats are converted to BTC too often - move the conversion to its own method
-──████████████─
-████████████▀──
+──████████████─  
+████████████▀──  check that each API call is resetting the 'last updated' counter
 ────██──██─────
 */
 
@@ -33,6 +33,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.LinkLabel;
+using System.Globalization;
 
 namespace Statamoto
 {
@@ -56,6 +57,7 @@ namespace Statamoto
         private int APIGroup1RefreshFrequency = 1; // mins. Default value 1. Initial value only
         private int APIGroup2RefreshFrequency = 24; // hours. Default value 2. Initial value only
         private int intDisplaySecondsElapsedSinceUpdate = 0; // used to count seconds since the data was last refreshed, for display only.
+        private bool ObtainedHalveningSecondsRemainingYet = false; // used to check whether we know halvening seconds before we start trying to subtract from them
 
         [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]  // needed for the code that moves the form as not using a standard control
         private extern static void ReleaseCapture();
@@ -104,6 +106,16 @@ namespace Statamoto
             else
             {
                 lblElapsedSinceUpdate.Text = "Last updated " + intDisplaySecondsElapsedSinceUpdate.ToString() + " seconds ago";
+            }
+            if (ObtainedHalveningSecondsRemainingYet) // only want to do this if we've already retrieved seconds remaining until halvening
+            {
+                string secondsString = lblHalveningSecondsRemaining.Text;
+                int SecondsToHalving = int.Parse(secondsString);
+                if (SecondsToHalving > 0)
+                {
+                    SecondsToHalving = SecondsToHalving - 1; // one second closer to the halvening!
+                    lblHalveningSecondsRemaining.Text = SecondsToHalving.ToString();
+                }
             }
         }
 
@@ -344,11 +356,7 @@ namespace Statamoto
                             });
                             lblNextBlockMinFee.Invoke((MethodInvoker)delegate
                             {
-                                lblNextBlockMinFee.Text = result3.nextBlockMinFee;
-                            });
-                            lblNextBlockMaxFee.Invoke((MethodInvoker)delegate
-                            {
-                                lblNextBlockMaxFee.Text = result3.nextBlockMaxFee;
+                                lblNextBlockMinFee.Text = result3.nextBlockMinFee + " / " + result3.nextBlockMaxFee;
                             });
                             lblNextBlockTotalFees.Invoke((MethodInvoker)delegate
                             {
@@ -380,10 +388,6 @@ namespace Statamoto
                             lblNextBlockMinFee.Invoke((MethodInvoker)delegate
                             {
                                 lblNextBlockMinFee.Text = "disabled";
-                            });
-                            lblNextBlockMaxFee.Invoke((MethodInvoker)delegate
-                            {
-                                lblNextBlockMaxFee.Text = "disabled";
                             });
                             lblNextBlockTotalFees.Invoke((MethodInvoker)delegate
                             {
@@ -756,7 +760,6 @@ namespace Statamoto
                     }
                 });
 
-
                 await Task.WhenAll(task1, task2, task3, task4, task5, task6);
 
                 // If any errors occurred with any of the API calls, a decent error message has already been displayed. Now display the red light and generic error.
@@ -783,53 +786,187 @@ namespace Statamoto
             }
         }
 
-        private void updateAPIGroup2DataFields()
+        public async void updateAPIGroup2DataFields()
         {
-            try
+            using (WebClient client = new WebClient())
             {
-                if (RunBlockchairComJSONAPI)
+                bool errorOccurred = false;
+                Task task7 = Task.Run(() =>  // call blockchair.com endpoints and populate the fields on the form
                 {
-                    var client = new HttpClient();
-                    string json6 = client.GetStringAsync("https://api.blockchair.com/bitcoin/stats").Result;
-                    dynamic data6 = JsonConvert.DeserializeObject(json6);
-                    int hodling_addresses = data6.data.hodling_addresses;
-                    if (hodling_addresses > 0) // this api sometimes doesn't populate this field with anything but 0
+                    try
                     {
-                        lblHodlingAddresses.Text = hodling_addresses.ToString();
+                        if (RunBlockchairComJSONAPI)
+                        {
+                            var result7 = blockchairComJSONRefresh();
+                            int hodling_addresses = int.Parse(result7.hodling_addresses);
+                            if (hodling_addresses > 0) // this api sometimes doesn't populate this field with anything but 0
+                            {
+                                lblHodlingAddresses.Invoke((MethodInvoker)delegate
+                                {
+                                    lblHodlingAddresses.Text = result7.hodling_addresses;
+                                });
+                            }
+                            else
+                            {
+                                lblHodlingAddresses.Invoke((MethodInvoker)delegate
+                                {
+                                    lblHodlingAddresses.Text = "no data";
+                                });
+                            }
+                            lblBlocksIn24Hours.Invoke((MethodInvoker)delegate
+                            {
+                                lblBlocksIn24Hours.Text = result7.blocks_24h;
+                            });
+                            lblNodes.Invoke((MethodInvoker)delegate
+                            {
+                                lblNodes.Text = result7.nodes;
+                            });
+                            dynamic blockchainSize = result7.blockchain_size;
+                            double blockchainSizeGB = Math.Round(Convert.ToDouble(blockchainSize) / 1073741824.0, 2);
+                            lblBlockchainSize.Invoke((MethodInvoker)delegate
+                            {
+                                lblBlockchainSize.Text = blockchainSizeGB.ToString();
+                            });
+                        }
+                        else
+                        {
+                            lblHodlingAddresses.Invoke((MethodInvoker)delegate
+                            {
+                                lblHodlingAddresses.Text = "disabled";
+                            });
+                            lblBlocksIn24Hours.Invoke((MethodInvoker)delegate
+                            {
+                                lblBlocksIn24Hours.Text = "disabled";
+                            });
+                            lblNodes.Invoke((MethodInvoker)delegate
+                            {
+                                lblNodes.Text = "disabled";
+                            });
+                            lblBlockchainSize.Invoke((MethodInvoker)delegate
+                            {
+                                lblBlockchainSize.Text = "disabled";
+                            });
+                        }
+                        // set successful lights and messages on the form
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
+                        });
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.Text = "🟢"; // circle/light
+                        });
+                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
+                        });
+                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        lblHodlingAddresses.Text = "no data";
+                        errorOccurred = true;
+                        lblErrorMessage.Invoke((MethodInvoker)delegate
+                        {
+                            lblErrorMessage.Text = ex.Message; // move returned error to the error message label on the form
+                        });
                     }
-                    int blocksIn24Hours = data6.data.blocks_24h;
-                    lblBlocksIn24Hours.Text = blocksIn24Hours.ToString();
-                    int numberOfNodes = data6.data.nodes;
-                    lblNodes.Text = numberOfNodes.ToString();
-                    dynamic blockchainSize = data6.data.blockchain_size;
-                    double blockchainSizeGB = Math.Round(Convert.ToDouble(blockchainSize) / 1073741824.0, 2);
-                    lblBlockchainSize.Text = blockchainSizeGB.ToString();
-                }
-                else
+                });
+                
+                Task task8 = Task.Run(() =>  // call blockchair.com endpoints and populate the fields on the form
                 {
-                    lblHodlingAddresses.Text = "disabled";
-                    lblBlocksIn24Hours.Text = "disabled";
-                    lblNodes.Text = "disabled";
-                    lblBlockchainSize.Text = "disabled";
+                    try
+                    {
+                        if (RunBlockchairComJSONAPI)
+                        {
+                            var result8 = blockchairComHalvingJSONRefresh();
+                            lblHalveningBlock.Invoke((MethodInvoker)delegate
+                            {
+                                lblHalveningBlock.Text = result8.halveningBlock + "/" + result8.blocksLeft;
+                            });
+                            string halvening_time = result8.halveningTime;
+                            DateTime halveningDateTime = DateTime.ParseExact(halvening_time, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+                            string halveningDate = halveningDateTime.Date.ToString("yyyy-MM-dd");
+
+                            lblEstimatedHalvingDate.Invoke((MethodInvoker)delegate
+                            {
+                                lblEstimatedHalvingDate.Text = halveningDate + "/";
+                            });
+                            lblHalveningSecondsRemaining.Invoke((MethodInvoker)delegate
+                            {
+                                lblHalveningSecondsRemaining.Location = new Point(lblEstimatedHalvingDate.Location.X + lblEstimatedHalvingDate.Width - 8, lblEstimatedHalvingDate.Location.Y);
+                                lblHalveningSecondsRemaining.Text = result8.seconds_left;
+                                ObtainedHalveningSecondsRemainingYet = true; // signifies that we can now start deducting from this
+                            });
+                        }
+                        else
+                        {
+                            lblHalveningBlock.Invoke((MethodInvoker)delegate
+                            {
+                                lblHalveningBlock.Text = "disabled";
+                            });
+                            lblEstimatedHalvingDate.Invoke((MethodInvoker)delegate
+                            {
+                                lblEstimatedHalvingDate.Text = "disabled";
+                            });
+                            lblHalveningSecondsRemaining.Invoke((MethodInvoker)delegate
+                            {
+                                lblHalveningSecondsRemaining.Text = "disabled";
+                            });
+                        }
+                        // set successful lights and messages on the form
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
+                        });
+                        lblStatusLight.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusLight.Text = "🟢"; // circle/light
+                        });
+                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
+                        {
+                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
+                        });
+                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
+                    }
+                    catch (Exception ex)
+                    {
+                        errorOccurred = true;
+                        lblErrorMessage.Invoke((MethodInvoker)delegate
+                        {
+                            lblErrorMessage.Text = ex.Message; // move returned error to the error message label on the form
+                        });
+                    }
+                });
+                
+                await Task.WhenAll(task7, task8);
+
+                // If any errors occurred with any of the API calls, a decent error message has already been displayed. Now display the red light and generic error.
+                if (errorOccurred)
+                {
+                    intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant;
+                    lblAlert.Invoke((MethodInvoker)delegate
+                    {
+                        lblAlert.Text = "⚠️";
+                    });
+                    lblStatusLight.Invoke((MethodInvoker)delegate
+                    {
+                        lblStatusLight.ForeColor = Color.Red;
+                    });
+                    lblStatusLight.Invoke((MethodInvoker)delegate
+                    {
+                        lblStatusLight.Text = "🔴"; // red light
+                    });
+                    lblStatusMessPart1.Invoke((MethodInvoker)delegate
+                    {
+                        lblStatusMessPart1.Text = "One or more fields failed to update. Trying again in ";
+                    });
                 }
-            }
-            catch (Exception ex)
-            {
-                lblAlert.Text = "⚠️";
-                lblErrorMessage.Text = ex.Message;
-                lblStatusLight.ForeColor = Color.Red;
-                lblStatusLight.Text = "🔴"; // red light
-                lblStatusMessPart1.Text = "One or more fields failed to update. Trying again in ";
             }
         }
 
-        //--------------------------END UPDATE FORM FIELDS----------------------------
-        //====================================================================================================================        
-        //-------------------------- FORM NAVIGATION CONTROLS--------------------------
+            //--------------------------END UPDATE FORM FIELDS----------------------------
+            //====================================================================================================================        
+            //-------------------------- FORM NAVIGATION CONTROLS--------------------------
 
         private void btnSplash_Click(object sender, EventArgs e)
         {
@@ -1232,6 +1369,35 @@ namespace Statamoto
                 var twentyFourHourHigh = (string)btcData["high_24h"]; // highest value of btc in usd over last 24 hours
                 var twentyFourHourLow = (string)btcData["low_24h"]; // lowest value of btc in usd over last 24 hours
                 return (ath, athDate, athDifference, twentyFourHourHigh, twentyFourHourLow);
+            }
+        }
+
+        private (string halveningBlock, string halveningReward, string halveningTime, string blocksLeft, string seconds_left) blockchairComHalvingJSONRefresh()
+        {
+            using (WebClient client = new WebClient())
+            {
+                var response = client.DownloadString("https://api.blockchair.com/tools/halvening");
+                var data = JObject.Parse(response);
+                var halveningBlock = (string)data["data"]["bitcoin"]["halvening_block"];
+                var halveningReward = (string)data["data"]["bitcoin"]["halvening_reward"];
+                var halveningTime = (string)data["data"]["bitcoin"]["halvening_time"];
+                var blocksLeft = (string)data["data"]["bitcoin"]["blocks_left"];
+                var seconds_left = (string)data["data"]["bitcoin"]["seconds_left"];
+                return (halveningBlock, halveningReward, halveningTime, blocksLeft, seconds_left);
+            }
+        }
+
+        private (string hodling_addresses, string blocks_24h, string nodes, string blockchain_size) blockchairComJSONRefresh()
+        {
+            using (WebClient client = new WebClient())
+            {
+                var response = client.DownloadString("https://api.blockchair.com/bitcoin/stats");
+                var data = JObject.Parse(response);
+                var hodling_addresses = (string)data["data"]["hodling_addresses"];
+                var blocks_24h = (string)data["data"]["blocks_24h"];
+                var nodes = (string)data["data"]["nodes"];
+                var blockchain_size = (string)data["data"]["blockchain_size"];
+                return (hodling_addresses, blocks_24h, nodes, blockchain_size);
             }
         }
 

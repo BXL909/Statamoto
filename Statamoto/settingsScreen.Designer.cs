@@ -368,7 +368,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.CancelButton = this.btnExitSettings;
-            this.ClientSize = new System.Drawing.Size(378, 422);
+            this.ClientSize = new System.Drawing.Size(379, 392);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnExitSettings);
             this.Controls.Add(this.panel1);
