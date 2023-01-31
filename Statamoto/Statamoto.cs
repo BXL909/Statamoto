@@ -6,12 +6,12 @@
 ──███──────███─  1.0 initial release
 ──███────▄███▀─  1.1 Used threading on API calls for speed and UI responsiveness. Added 4 new fields (number of hodling addresses, Blockchain size, 24 hour number of blocks mined, Number of discoverable nodes)
 ──█████████▀───      Added settings screen. Added ability to disable individual API calls. Added options to change API call refresh frequency. Added a 'last updated' timer.
-──███████████▄─  1.2 Hover behaviour on buttons much more responsive.
+──███████████▄─  1.2 Added Lightning stats, node rankings, etc. Hover behaviour on buttons much more responsive as is the UI in general. More data fields added. Threading bugs fixed. Various UI improvements.
 ──███─────▀████  To do:
-──███───────███  
-──███─────▄████  Sats are converted to BTC too often - move the conversion to its own method
+──███───────███  move more common code into own methods (sats conversions, timer resets, etc)
+──███─────▄████  
 ──████████████─  
-████████████▀──  check that each API call is resetting the 'last updated' counter
+████████████▀──  
 ────██──██─────
 */
 
@@ -205,6 +205,7 @@ namespace Statamoto
                             lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
                         });
                         intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
+                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
                     }
                     catch (Exception ex)
                     {
@@ -315,6 +316,7 @@ namespace Statamoto
                             lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
                         });
                         intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
+                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
                     }
                     catch (Exception ex)
                     {
@@ -409,6 +411,7 @@ namespace Statamoto
                             lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
                         });
                         intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
+                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
                     }
                     catch (Exception ex)
                     {
@@ -471,6 +474,7 @@ namespace Statamoto
                             lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
                         });
                         intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
+                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
                     }
                     catch (Exception ex)
                     {
@@ -557,7 +561,7 @@ namespace Statamoto
                             lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
                         });
                         intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
-                        intDisplaySecondsElapsedSinceUpdate = 0;
+                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
                     }
                     catch (Exception ex)
                     {
@@ -761,6 +765,7 @@ namespace Statamoto
                             lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
                         });
                         intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
+                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
                     }
                     catch (Exception ex)
                     {
@@ -873,6 +878,7 @@ namespace Statamoto
                             lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
                         });
                         intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
+                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
                     }
                     catch (Exception ex)
                     {
@@ -939,6 +945,7 @@ namespace Statamoto
                             lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
                         });
                         intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
+                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
                     }
                     catch (Exception ex)
                     {
@@ -1104,7 +1111,6 @@ namespace Statamoto
                 timerAPIGroup2.Interval = intAPIGroup2TimerIntervalMillisecsConstant;
                 timerAPIGroup2.Start();
             }
-
         }
 
         //-----------------------END FORM NAVIGATION CONTROLS--------------------------
