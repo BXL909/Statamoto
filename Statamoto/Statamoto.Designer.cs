@@ -55,10 +55,8 @@
             this.label16 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label33 = new System.Windows.Forms.Label();
-            this.lblBlockchainSize = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
             this.lblNodes = new System.Windows.Forms.Label();
-            this.lblAvgTimeBetweenBlocks = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.lblNextBlockTotalFees = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
@@ -72,6 +70,9 @@
             this.lblDifficultyAdjEst = new System.Windows.Forms.Label();
             this.lblEstimatedHalvingDate = new System.Windows.Forms.Label();
             this.lblHalveningSecondsRemaining = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.lblBlockchainSize = new System.Windows.Forms.Label();
+            this.lblAvgTimeBetweenBlocks = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.btnSplash = new System.Windows.Forms.Button();
             this.lblTransactions = new System.Windows.Forms.Label();
@@ -85,7 +86,6 @@
             this.btnBitcoinDashboard = new System.Windows.Forms.Button();
             this.btnLightningDashboard = new System.Windows.Forms.Button();
             this.panelBitcoinDashboard = new System.Windows.Forms.Panel();
-            this.label19 = new System.Windows.Forms.Label();
             this.label57 = new System.Windows.Forms.Label();
             this.lblHalveningBlock = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
@@ -495,17 +495,6 @@
             this.label33.Text = "Blockchain size (GB)";
             this.toolTip1.SetToolTip(this.label33, "(estimated)");
             // 
-            // lblBlockchainSize
-            // 
-            this.lblBlockchainSize.AutoSize = true;
-            this.lblBlockchainSize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblBlockchainSize.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBlockchainSize.Location = new System.Drawing.Point(263, 18);
-            this.lblBlockchainSize.Name = "lblBlockchainSize";
-            this.lblBlockchainSize.Size = new System.Drawing.Size(103, 27);
-            this.lblBlockchainSize.TabIndex = 134;
-            this.lblBlockchainSize.Text = "no data";
-            // 
             // label32
             // 
             this.label32.AutoSize = true;
@@ -531,17 +520,6 @@
             this.lblNodes.TabIndex = 132;
             this.lblNodes.Text = "no data";
             this.toolTip1.SetToolTip(this.lblNodes, "(estimated)");
-            // 
-            // lblAvgTimeBetweenBlocks
-            // 
-            this.lblAvgTimeBetweenBlocks.AutoSize = true;
-            this.lblAvgTimeBetweenBlocks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblAvgTimeBetweenBlocks.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAvgTimeBetweenBlocks.Location = new System.Drawing.Point(263, 139);
-            this.lblAvgTimeBetweenBlocks.Name = "lblAvgTimeBetweenBlocks";
-            this.lblAvgTimeBetweenBlocks.Size = new System.Drawing.Size(103, 27);
-            this.lblAvgTimeBetweenBlocks.TabIndex = 127;
-            this.lblAvgTimeBetweenBlocks.Text = "no data";
             // 
             // label27
             // 
@@ -710,6 +688,42 @@
             this.lblHalveningSecondsRemaining.TabIndex = 140;
             this.lblHalveningSecondsRemaining.Text = "no data";
             this.toolTip1.SetToolTip(this.lblHalveningSecondsRemaining, "(estimated)");
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.label19.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.ForeColor = System.Drawing.Color.Silver;
+            this.label19.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label19.Location = new System.Drawing.Point(553, 3);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(217, 15);
+            this.label19.TabIndex = 138;
+            this.label19.Text = "Halving date / secs remaining*";
+            this.toolTip1.SetToolTip(this.label19, "(estimated)");
+            // 
+            // lblBlockchainSize
+            // 
+            this.lblBlockchainSize.AutoSize = true;
+            this.lblBlockchainSize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblBlockchainSize.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBlockchainSize.Location = new System.Drawing.Point(263, 18);
+            this.lblBlockchainSize.Name = "lblBlockchainSize";
+            this.lblBlockchainSize.Size = new System.Drawing.Size(103, 27);
+            this.lblBlockchainSize.TabIndex = 134;
+            this.lblBlockchainSize.Text = "no data";
+            // 
+            // lblAvgTimeBetweenBlocks
+            // 
+            this.lblAvgTimeBetweenBlocks.AutoSize = true;
+            this.lblAvgTimeBetweenBlocks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblAvgTimeBetweenBlocks.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAvgTimeBetweenBlocks.Location = new System.Drawing.Point(263, 139);
+            this.lblAvgTimeBetweenBlocks.Name = "lblAvgTimeBetweenBlocks";
+            this.lblAvgTimeBetweenBlocks.Size = new System.Drawing.Size(103, 27);
+            this.lblAvgTimeBetweenBlocks.TabIndex = 127;
+            this.lblAvgTimeBetweenBlocks.Text = "no data";
             // 
             // label22
             // 
@@ -940,20 +954,6 @@
             this.panelBitcoinDashboard.Name = "panelBitcoinDashboard";
             this.panelBitcoinDashboard.Size = new System.Drawing.Size(773, 371);
             this.panelBitcoinDashboard.TabIndex = 87;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label19.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.ForeColor = System.Drawing.Color.Silver;
-            this.label19.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label19.Location = new System.Drawing.Point(553, 3);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(217, 15);
-            this.label19.TabIndex = 138;
-            this.label19.Text = "Halving date / secs remaining*";
-            this.toolTip1.SetToolTip(this.label19, "(estimated)");
             // 
             // label57
             // 
@@ -1782,7 +1782,7 @@
             this.label54.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label54.ForeColor = System.Drawing.Color.Silver;
             this.label54.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label54.Location = new System.Drawing.Point(550, 188);
+            this.label54.Location = new System.Drawing.Point(551, 188);
             this.label54.Name = "label54";
             this.label54.Size = new System.Drawing.Size(182, 15);
             this.label54.TabIndex = 165;
@@ -1795,7 +1795,7 @@
             this.label55.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label55.ForeColor = System.Drawing.Color.Silver;
             this.label55.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label55.Location = new System.Drawing.Point(681, 203);
+            this.label55.Location = new System.Drawing.Point(682, 203);
             this.label55.Name = "label55";
             this.label55.Size = new System.Drawing.Size(63, 15);
             this.label55.TabIndex = 164;
@@ -1808,7 +1808,7 @@
             this.label56.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label56.ForeColor = System.Drawing.Color.Silver;
             this.label56.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label56.Location = new System.Drawing.Point(550, 203);
+            this.label56.Location = new System.Drawing.Point(551, 203);
             this.label56.Name = "label56";
             this.label56.Size = new System.Drawing.Size(42, 15);
             this.label56.TabIndex = 163;
@@ -1821,7 +1821,7 @@
             this.channelLabel9.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.channelLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.channelLabel9.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel9.Location = new System.Drawing.Point(681, 338);
+            this.channelLabel9.Location = new System.Drawing.Point(682, 338);
             this.channelLabel9.Name = "channelLabel9";
             this.channelLabel9.Size = new System.Drawing.Size(56, 15);
             this.channelLabel9.TabIndex = 162;
@@ -1834,7 +1834,7 @@
             this.channelLabel10.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.channelLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.channelLabel10.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel10.Location = new System.Drawing.Point(681, 353);
+            this.channelLabel10.Location = new System.Drawing.Point(682, 353);
             this.channelLabel10.Name = "channelLabel10";
             this.channelLabel10.Size = new System.Drawing.Size(56, 15);
             this.channelLabel10.TabIndex = 161;
@@ -1847,7 +1847,7 @@
             this.aliasConnLabel10.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasConnLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasConnLabel10.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel10.Location = new System.Drawing.Point(550, 353);
+            this.aliasConnLabel10.Location = new System.Drawing.Point(551, 353);
             this.aliasConnLabel10.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasConnLabel10.Name = "aliasConnLabel10";
             this.aliasConnLabel10.Size = new System.Drawing.Size(56, 15);
@@ -1861,7 +1861,7 @@
             this.aliasConnLabel9.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasConnLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasConnLabel9.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel9.Location = new System.Drawing.Point(550, 338);
+            this.aliasConnLabel9.Location = new System.Drawing.Point(551, 338);
             this.aliasConnLabel9.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasConnLabel9.Name = "aliasConnLabel9";
             this.aliasConnLabel9.Size = new System.Drawing.Size(56, 15);
@@ -1875,7 +1875,7 @@
             this.channelLabel7.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.channelLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.channelLabel7.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel7.Location = new System.Drawing.Point(681, 308);
+            this.channelLabel7.Location = new System.Drawing.Point(682, 308);
             this.channelLabel7.Name = "channelLabel7";
             this.channelLabel7.Size = new System.Drawing.Size(56, 15);
             this.channelLabel7.TabIndex = 158;
@@ -1888,7 +1888,7 @@
             this.channelLabel8.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.channelLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.channelLabel8.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel8.Location = new System.Drawing.Point(681, 323);
+            this.channelLabel8.Location = new System.Drawing.Point(682, 323);
             this.channelLabel8.Name = "channelLabel8";
             this.channelLabel8.Size = new System.Drawing.Size(56, 15);
             this.channelLabel8.TabIndex = 157;
@@ -1901,7 +1901,7 @@
             this.aliasConnLabel8.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasConnLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasConnLabel8.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel8.Location = new System.Drawing.Point(550, 323);
+            this.aliasConnLabel8.Location = new System.Drawing.Point(551, 323);
             this.aliasConnLabel8.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasConnLabel8.Name = "aliasConnLabel8";
             this.aliasConnLabel8.Size = new System.Drawing.Size(56, 15);
@@ -1915,7 +1915,7 @@
             this.aliasConnLabel7.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasConnLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasConnLabel7.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel7.Location = new System.Drawing.Point(550, 308);
+            this.aliasConnLabel7.Location = new System.Drawing.Point(551, 308);
             this.aliasConnLabel7.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasConnLabel7.Name = "aliasConnLabel7";
             this.aliasConnLabel7.Size = new System.Drawing.Size(56, 15);
@@ -1929,7 +1929,7 @@
             this.channelLabel5.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.channelLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.channelLabel5.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel5.Location = new System.Drawing.Point(681, 278);
+            this.channelLabel5.Location = new System.Drawing.Point(682, 278);
             this.channelLabel5.Name = "channelLabel5";
             this.channelLabel5.Size = new System.Drawing.Size(56, 15);
             this.channelLabel5.TabIndex = 154;
@@ -1942,7 +1942,7 @@
             this.channelLabel6.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.channelLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.channelLabel6.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel6.Location = new System.Drawing.Point(681, 293);
+            this.channelLabel6.Location = new System.Drawing.Point(682, 293);
             this.channelLabel6.Name = "channelLabel6";
             this.channelLabel6.Size = new System.Drawing.Size(56, 15);
             this.channelLabel6.TabIndex = 153;
@@ -1955,7 +1955,7 @@
             this.aliasConnLabel6.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasConnLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasConnLabel6.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel6.Location = new System.Drawing.Point(550, 293);
+            this.aliasConnLabel6.Location = new System.Drawing.Point(551, 293);
             this.aliasConnLabel6.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasConnLabel6.Name = "aliasConnLabel6";
             this.aliasConnLabel6.Size = new System.Drawing.Size(56, 15);
@@ -1969,7 +1969,7 @@
             this.aliasConnLabel5.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasConnLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasConnLabel5.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel5.Location = new System.Drawing.Point(550, 278);
+            this.aliasConnLabel5.Location = new System.Drawing.Point(551, 278);
             this.aliasConnLabel5.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasConnLabel5.Name = "aliasConnLabel5";
             this.aliasConnLabel5.Size = new System.Drawing.Size(56, 15);
@@ -1983,7 +1983,7 @@
             this.channelLabel3.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.channelLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.channelLabel3.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel3.Location = new System.Drawing.Point(681, 248);
+            this.channelLabel3.Location = new System.Drawing.Point(682, 248);
             this.channelLabel3.Name = "channelLabel3";
             this.channelLabel3.Size = new System.Drawing.Size(56, 15);
             this.channelLabel3.TabIndex = 150;
@@ -1996,7 +1996,7 @@
             this.channelLabel4.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.channelLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.channelLabel4.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel4.Location = new System.Drawing.Point(681, 263);
+            this.channelLabel4.Location = new System.Drawing.Point(682, 263);
             this.channelLabel4.Name = "channelLabel4";
             this.channelLabel4.Size = new System.Drawing.Size(56, 15);
             this.channelLabel4.TabIndex = 149;
@@ -2009,7 +2009,7 @@
             this.aliasConnLabel4.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasConnLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasConnLabel4.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel4.Location = new System.Drawing.Point(550, 263);
+            this.aliasConnLabel4.Location = new System.Drawing.Point(551, 263);
             this.aliasConnLabel4.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasConnLabel4.Name = "aliasConnLabel4";
             this.aliasConnLabel4.Size = new System.Drawing.Size(56, 15);
@@ -2023,7 +2023,7 @@
             this.aliasConnLabel3.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasConnLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasConnLabel3.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel3.Location = new System.Drawing.Point(550, 248);
+            this.aliasConnLabel3.Location = new System.Drawing.Point(551, 248);
             this.aliasConnLabel3.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasConnLabel3.Name = "aliasConnLabel3";
             this.aliasConnLabel3.Size = new System.Drawing.Size(56, 15);
@@ -2037,7 +2037,7 @@
             this.channelLabel1.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.channelLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.channelLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel1.Location = new System.Drawing.Point(681, 218);
+            this.channelLabel1.Location = new System.Drawing.Point(682, 218);
             this.channelLabel1.Name = "channelLabel1";
             this.channelLabel1.Size = new System.Drawing.Size(56, 15);
             this.channelLabel1.TabIndex = 146;
@@ -2050,7 +2050,7 @@
             this.channelLabel2.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.channelLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.channelLabel2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.channelLabel2.Location = new System.Drawing.Point(681, 233);
+            this.channelLabel2.Location = new System.Drawing.Point(682, 233);
             this.channelLabel2.Name = "channelLabel2";
             this.channelLabel2.Size = new System.Drawing.Size(56, 15);
             this.channelLabel2.TabIndex = 145;
@@ -2063,7 +2063,7 @@
             this.aliasConnLabel2.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasConnLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasConnLabel2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel2.Location = new System.Drawing.Point(550, 233);
+            this.aliasConnLabel2.Location = new System.Drawing.Point(551, 233);
             this.aliasConnLabel2.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasConnLabel2.Name = "aliasConnLabel2";
             this.aliasConnLabel2.Size = new System.Drawing.Size(56, 15);
@@ -2077,7 +2077,7 @@
             this.aliasConnLabel1.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasConnLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasConnLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasConnLabel1.Location = new System.Drawing.Point(550, 218);
+            this.aliasConnLabel1.Location = new System.Drawing.Point(551, 218);
             this.aliasConnLabel1.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasConnLabel1.Name = "aliasConnLabel1";
             this.aliasConnLabel1.Size = new System.Drawing.Size(56, 15);
@@ -2091,7 +2091,7 @@
             this.label53.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label53.ForeColor = System.Drawing.Color.Silver;
             this.label53.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label53.Location = new System.Drawing.Point(550, 3);
+            this.label53.Location = new System.Drawing.Point(551, 3);
             this.label53.Name = "label53";
             this.label53.Size = new System.Drawing.Size(168, 15);
             this.label53.TabIndex = 142;
@@ -2104,7 +2104,7 @@
             this.label52.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label52.ForeColor = System.Drawing.Color.Silver;
             this.label52.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label52.Location = new System.Drawing.Point(681, 18);
+            this.label52.Location = new System.Drawing.Point(682, 18);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(63, 15);
             this.label52.TabIndex = 141;
@@ -2117,7 +2117,7 @@
             this.label51.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label51.ForeColor = System.Drawing.Color.Silver;
             this.label51.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label51.Location = new System.Drawing.Point(550, 18);
+            this.label51.Location = new System.Drawing.Point(551, 18);
             this.label51.Name = "label51";
             this.label51.Size = new System.Drawing.Size(42, 15);
             this.label51.TabIndex = 140;
@@ -2130,7 +2130,7 @@
             this.capacityLabel9.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capacityLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.capacityLabel9.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel9.Location = new System.Drawing.Point(681, 153);
+            this.capacityLabel9.Location = new System.Drawing.Point(682, 153);
             this.capacityLabel9.Name = "capacityLabel9";
             this.capacityLabel9.Size = new System.Drawing.Size(56, 15);
             this.capacityLabel9.TabIndex = 139;
@@ -2143,7 +2143,7 @@
             this.capacityLabel10.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capacityLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.capacityLabel10.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel10.Location = new System.Drawing.Point(681, 168);
+            this.capacityLabel10.Location = new System.Drawing.Point(682, 168);
             this.capacityLabel10.Name = "capacityLabel10";
             this.capacityLabel10.Size = new System.Drawing.Size(56, 15);
             this.capacityLabel10.TabIndex = 138;
@@ -2156,7 +2156,7 @@
             this.aliasLabel10.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasLabel10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasLabel10.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel10.Location = new System.Drawing.Point(550, 168);
+            this.aliasLabel10.Location = new System.Drawing.Point(551, 168);
             this.aliasLabel10.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasLabel10.Name = "aliasLabel10";
             this.aliasLabel10.Size = new System.Drawing.Size(56, 15);
@@ -2170,7 +2170,7 @@
             this.aliasLabel9.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasLabel9.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasLabel9.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel9.Location = new System.Drawing.Point(550, 153);
+            this.aliasLabel9.Location = new System.Drawing.Point(551, 153);
             this.aliasLabel9.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasLabel9.Name = "aliasLabel9";
             this.aliasLabel9.Size = new System.Drawing.Size(56, 15);
@@ -2184,7 +2184,7 @@
             this.capacityLabel7.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capacityLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.capacityLabel7.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel7.Location = new System.Drawing.Point(681, 123);
+            this.capacityLabel7.Location = new System.Drawing.Point(682, 123);
             this.capacityLabel7.Name = "capacityLabel7";
             this.capacityLabel7.Size = new System.Drawing.Size(56, 15);
             this.capacityLabel7.TabIndex = 135;
@@ -2197,7 +2197,7 @@
             this.capacityLabel8.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capacityLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.capacityLabel8.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel8.Location = new System.Drawing.Point(681, 138);
+            this.capacityLabel8.Location = new System.Drawing.Point(682, 138);
             this.capacityLabel8.Name = "capacityLabel8";
             this.capacityLabel8.Size = new System.Drawing.Size(56, 15);
             this.capacityLabel8.TabIndex = 134;
@@ -2210,7 +2210,7 @@
             this.aliasLabel8.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasLabel8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasLabel8.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel8.Location = new System.Drawing.Point(550, 138);
+            this.aliasLabel8.Location = new System.Drawing.Point(551, 138);
             this.aliasLabel8.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasLabel8.Name = "aliasLabel8";
             this.aliasLabel8.Size = new System.Drawing.Size(56, 15);
@@ -2224,7 +2224,7 @@
             this.aliasLabel7.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasLabel7.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel7.Location = new System.Drawing.Point(550, 123);
+            this.aliasLabel7.Location = new System.Drawing.Point(551, 123);
             this.aliasLabel7.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasLabel7.Name = "aliasLabel7";
             this.aliasLabel7.Size = new System.Drawing.Size(56, 15);
@@ -2238,7 +2238,7 @@
             this.capacityLabel5.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capacityLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.capacityLabel5.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel5.Location = new System.Drawing.Point(681, 93);
+            this.capacityLabel5.Location = new System.Drawing.Point(682, 93);
             this.capacityLabel5.Name = "capacityLabel5";
             this.capacityLabel5.Size = new System.Drawing.Size(56, 15);
             this.capacityLabel5.TabIndex = 131;
@@ -2251,7 +2251,7 @@
             this.capacityLabel6.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capacityLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.capacityLabel6.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel6.Location = new System.Drawing.Point(681, 108);
+            this.capacityLabel6.Location = new System.Drawing.Point(682, 108);
             this.capacityLabel6.Name = "capacityLabel6";
             this.capacityLabel6.Size = new System.Drawing.Size(56, 15);
             this.capacityLabel6.TabIndex = 130;
@@ -2264,7 +2264,7 @@
             this.aliasLabel6.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasLabel6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasLabel6.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel6.Location = new System.Drawing.Point(550, 108);
+            this.aliasLabel6.Location = new System.Drawing.Point(551, 108);
             this.aliasLabel6.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasLabel6.Name = "aliasLabel6";
             this.aliasLabel6.Size = new System.Drawing.Size(56, 15);
@@ -2278,7 +2278,7 @@
             this.aliasLabel5.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasLabel5.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel5.Location = new System.Drawing.Point(550, 93);
+            this.aliasLabel5.Location = new System.Drawing.Point(551, 93);
             this.aliasLabel5.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasLabel5.Name = "aliasLabel5";
             this.aliasLabel5.Size = new System.Drawing.Size(56, 15);
@@ -2292,7 +2292,7 @@
             this.capacityLabel3.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capacityLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.capacityLabel3.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel3.Location = new System.Drawing.Point(681, 63);
+            this.capacityLabel3.Location = new System.Drawing.Point(682, 63);
             this.capacityLabel3.Name = "capacityLabel3";
             this.capacityLabel3.Size = new System.Drawing.Size(56, 15);
             this.capacityLabel3.TabIndex = 127;
@@ -2305,7 +2305,7 @@
             this.capacityLabel4.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capacityLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.capacityLabel4.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel4.Location = new System.Drawing.Point(681, 78);
+            this.capacityLabel4.Location = new System.Drawing.Point(682, 78);
             this.capacityLabel4.Name = "capacityLabel4";
             this.capacityLabel4.Size = new System.Drawing.Size(56, 15);
             this.capacityLabel4.TabIndex = 126;
@@ -2318,7 +2318,7 @@
             this.aliasLabel4.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasLabel4.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel4.Location = new System.Drawing.Point(550, 78);
+            this.aliasLabel4.Location = new System.Drawing.Point(551, 78);
             this.aliasLabel4.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasLabel4.Name = "aliasLabel4";
             this.aliasLabel4.Size = new System.Drawing.Size(56, 15);
@@ -2332,7 +2332,7 @@
             this.aliasLabel3.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasLabel3.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel3.Location = new System.Drawing.Point(550, 63);
+            this.aliasLabel3.Location = new System.Drawing.Point(551, 63);
             this.aliasLabel3.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasLabel3.Name = "aliasLabel3";
             this.aliasLabel3.Size = new System.Drawing.Size(56, 15);
@@ -2346,7 +2346,7 @@
             this.capacityLabel1.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capacityLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.capacityLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel1.Location = new System.Drawing.Point(681, 33);
+            this.capacityLabel1.Location = new System.Drawing.Point(682, 33);
             this.capacityLabel1.Name = "capacityLabel1";
             this.capacityLabel1.Size = new System.Drawing.Size(56, 15);
             this.capacityLabel1.TabIndex = 123;
@@ -2359,7 +2359,7 @@
             this.capacityLabel2.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capacityLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.capacityLabel2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.capacityLabel2.Location = new System.Drawing.Point(681, 48);
+            this.capacityLabel2.Location = new System.Drawing.Point(682, 48);
             this.capacityLabel2.Name = "capacityLabel2";
             this.capacityLabel2.Size = new System.Drawing.Size(56, 15);
             this.capacityLabel2.TabIndex = 122;
@@ -2372,7 +2372,7 @@
             this.aliasLabel2.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasLabel2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel2.Location = new System.Drawing.Point(550, 48);
+            this.aliasLabel2.Location = new System.Drawing.Point(551, 48);
             this.aliasLabel2.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasLabel2.Name = "aliasLabel2";
             this.aliasLabel2.Size = new System.Drawing.Size(56, 15);
@@ -2386,7 +2386,7 @@
             this.aliasLabel1.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aliasLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.aliasLabel1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.aliasLabel1.Location = new System.Drawing.Point(550, 33);
+            this.aliasLabel1.Location = new System.Drawing.Point(551, 33);
             this.aliasLabel1.MaximumSize = new System.Drawing.Size(125, 15);
             this.aliasLabel1.Name = "aliasLabel1";
             this.aliasLabel1.Size = new System.Drawing.Size(56, 15);

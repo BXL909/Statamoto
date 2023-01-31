@@ -722,17 +722,29 @@ namespace Statamoto
                             for (int i = 0; i < 10; i++)
                             {
                                 Label aliasLabel = (Label)this.Controls.Find("aliasLabel" + (i + 1), true)[0];
-                                aliasLabel.Text = result6.aliases[i];
+                                aliasLabel.Invoke((MethodInvoker)delegate
+                                {
+                                    aliasLabel.Text = result6.aliases[i];
+                                });
                                 Label capacityLabel = (Label)this.Controls.Find("capacityLabel" + (i + 1), true)[0];
-                                capacityLabel.Text = result6.capacities[i];
+                                capacityLabel.Invoke((MethodInvoker)delegate
+                                {
+                                    capacityLabel.Text = result6.capacities[i];
+                                });
                             }
                             var result7 = MempoolSpaceConnectivityRankingJSONRefresh();
                             for (int i = 0; i < 10; i++)
                             {
                                 Label aliasLabel = (Label)this.Controls.Find("aliasConnLabel" + (i + 1), true)[0];
-                                aliasLabel.Text = result7.aliases[i];
+                                aliasLabel.Invoke((MethodInvoker)delegate
+                                {
+                                    aliasLabel.Text = result7.aliases[i];
+                                });
                                 Label channelLabel = (Label)this.Controls.Find("channelLabel" + (i + 1), true)[0];
-                                channelLabel.Text = result7.channels[i];
+                                channelLabel.Invoke((MethodInvoker)delegate
+                                {
+                                    channelLabel.Text = result7.channels[i];
+                                });
                             }
                         }
                         // set successful lights and messages on the form
@@ -1143,7 +1155,51 @@ namespace Statamoto
         //----------------END COUNTDOWN, ERROR MESSAGES AND STATUS LIGHTS--------------
         //====================================================================================================================
         //------------------------------------API CALLS----------------------------
+        //------BitcoinExplorer and BlockchainInfo endpoints 
+        private (string priceUSD, string moscowTime, string marketCapUSD, string difficultyAdjEst, string txInMempool) bitcoinExplorerOrgEndpointsRefresh()
+        {
+            using (WebClient client = new WebClient())
+            {
+                string priceUSD = client.DownloadString("https://bitcoinexplorer.org/api/price/usd"); // 1 bitcoin = ? usd
+                string moscowTime = client.DownloadString("https://bitcoinexplorer.org/api/price/usd/sats"); // 1 usd = ? sats
+                string marketCapUSD = client.DownloadString("https://bitcoinexplorer.org/api/price/usd/marketcap"); // bitcoin market cap in usd
+                string difficultyAdjEst = client.DownloadString("https://bitcoinexplorer.org/api/mining/diff-adj-estimate") + "%"; // difficulty adjustment as a percentage
+                string txInMempool = client.DownloadString("https://bitcoinexplorer.org/api/mempool/count"); // total number of transactions in the mempool
+                return (priceUSD, moscowTime, marketCapUSD, difficultyAdjEst, txInMempool);
+            }
+        }
 
+        private (string avgNoTransactions, string blockNumber, string blockReward, string estHashrate, string avgTimeBetweenBlocks, string btcInCirc, string hashesToSolve, string twentyFourHourTransCount, string twentyFourHourBTCSent) blockchainInfoEndpointsRefresh()
+        {
+            using (WebClient client = new WebClient())
+            {
+                string avgNoTransactions = client.DownloadString("https://blockchain.info/q/avgtxnumber"); // average number of transactions in last 100 blocks (to about 6 decimal places!)
+                double dblAvgNoTransactions = Convert.ToDouble(avgNoTransactions);
+                dblAvgNoTransactions = Math.Round(dblAvgNoTransactions); // so lets get it down to an integer
+                string avgNoTransactionsText = Convert.ToString(dblAvgNoTransactions);
+                string blockNumber = client.DownloadString("https://blockchain.info/q/getblockcount"); // most recent block number
+                string blockReward = client.DownloadString("https://blockchain.info/q/bcperblock"); // current block reward
+                string estHashrate = client.DownloadString("https://blockchain.info/q/hashrate"); // hashrate estimate
+                string secondsBetweenBlocks = client.DownloadString("https://blockchain.info/q/interval"); // average time between blocks in seconds
+                double dblSecondsBetweenBlocks = Convert.ToDouble(secondsBetweenBlocks);
+                TimeSpan time = TimeSpan.FromSeconds(dblSecondsBetweenBlocks);
+                string timeString = string.Format("{0:%m}m {0:%s}s", time);
+                string avgTimeBetweenBlocks = timeString;
+                string totalBTC = client.DownloadString("https://blockchain.info/q/totalbc"); // total sats in circulation
+                double dblTotalBTC = Convert.ToDouble(totalBTC);
+                dblTotalBTC = dblTotalBTC / 100000000; // convert sats to bitcoin
+                string btcInCirc = Convert.ToString(dblTotalBTC);
+                string hashesToSolve = client.DownloadString("https://blockchain.info/q/hashestowin"); // avg number of hashes to win a block
+                string twentyFourHourTransCount = client.DownloadString("https://blockchain.info/q/24hrtransactioncount"); // number of transactions in last 24 hours
+                string twentyFourHourBTCSent = client.DownloadString("https://blockchain.info/q/24hrbtcsent"); // number of sats sent in 24 hours
+                double dbl24HrBTCSent = Convert.ToDouble(twentyFourHourBTCSent);
+                dbl24HrBTCSent = dbl24HrBTCSent / 100000000; // convert sats to bitcoin
+                twentyFourHourBTCSent = Convert.ToString(dbl24HrBTCSent);
+                return (avgNoTransactionsText, blockNumber, blockReward, estHashrate, avgTimeBetweenBlocks, btcInCirc, hashesToSolve, twentyFourHourTransCount, twentyFourHourBTCSent);
+            }
+        }
+
+        //-----Mempool Lighting JSON
         private (List<string> aliases, List<string> capacities) MempoolSpaceLiquidityRankingJSONRefresh()
         {
             using (WebClient client = new WebClient())
@@ -1245,49 +1301,7 @@ namespace Statamoto
             }
         }
 
-        private (string priceUSD, string moscowTime, string marketCapUSD, string difficultyAdjEst, string txInMempool) bitcoinExplorerOrgEndpointsRefresh()
-        {
-            using (WebClient client = new WebClient())
-            {
-                string priceUSD = client.DownloadString("https://bitcoinexplorer.org/api/price/usd"); // 1 bitcoin = ? usd
-                string moscowTime = client.DownloadString("https://bitcoinexplorer.org/api/price/usd/sats"); // 1 usd = ? sats
-                string marketCapUSD = client.DownloadString("https://bitcoinexplorer.org/api/price/usd/marketcap"); // bitcoin market cap in usd
-                string difficultyAdjEst = client.DownloadString("https://bitcoinexplorer.org/api/mining/diff-adj-estimate") + "%"; // difficulty adjustment as a percentage
-                string txInMempool = client.DownloadString("https://bitcoinexplorer.org/api/mempool/count"); // total number of transactions in the mempool
-                return (priceUSD, moscowTime, marketCapUSD, difficultyAdjEst, txInMempool);
-            }
-        }
-
-        private (string avgNoTransactions, string blockNumber, string blockReward, string estHashrate, string avgTimeBetweenBlocks, string btcInCirc, string hashesToSolve, string twentyFourHourTransCount, string twentyFourHourBTCSent) blockchainInfoEndpointsRefresh()
-        {
-            using (WebClient client = new WebClient())
-            {
-                string avgNoTransactions = client.DownloadString("https://blockchain.info/q/avgtxnumber"); // average number of transactions in last 100 blocks (to about 6 decimal places!)
-                double dblAvgNoTransactions = Convert.ToDouble(avgNoTransactions);
-                dblAvgNoTransactions = Math.Round(dblAvgNoTransactions); // so lets get it down to an integer
-                string avgNoTransactionsText = Convert.ToString(dblAvgNoTransactions);
-                string blockNumber = client.DownloadString("https://blockchain.info/q/getblockcount"); // most recent block number
-                string blockReward = client.DownloadString("https://blockchain.info/q/bcperblock"); // current block reward
-                string estHashrate = client.DownloadString("https://blockchain.info/q/hashrate"); // hashrate estimate
-                string secondsBetweenBlocks = client.DownloadString("https://blockchain.info/q/interval"); // average time between blocks in seconds
-                double dblSecondsBetweenBlocks = Convert.ToDouble(secondsBetweenBlocks);
-                TimeSpan time = TimeSpan.FromSeconds(dblSecondsBetweenBlocks);
-                string timeString = string.Format("{0:%m}m {0:%s}s", time);
-                string avgTimeBetweenBlocks = timeString;
-                string totalBTC = client.DownloadString("https://blockchain.info/q/totalbc"); // total sats in circulation
-                double dblTotalBTC = Convert.ToDouble(totalBTC);
-                dblTotalBTC = dblTotalBTC / 100000000; // convert sats to bitcoin
-                string btcInCirc = Convert.ToString(dblTotalBTC);
-                string hashesToSolve = client.DownloadString("https://blockchain.info/q/hashestowin"); // avg number of hashes to win a block
-                string twentyFourHourTransCount = client.DownloadString("https://blockchain.info/q/24hrtransactioncount"); // number of transactions in last 24 hours
-                string twentyFourHourBTCSent = client.DownloadString("https://blockchain.info/q/24hrbtcsent"); // number of sats sent in 24 hours
-                double dbl24HrBTCSent = Convert.ToDouble(twentyFourHourBTCSent);
-                dbl24HrBTCSent = dbl24HrBTCSent / 100000000; // convert sats to bitcoin
-                twentyFourHourBTCSent = Convert.ToString(dbl24HrBTCSent);
-                return (avgNoTransactionsText, blockNumber, blockReward, estHashrate, avgTimeBetweenBlocks, btcInCirc, hashesToSolve, twentyFourHourTransCount, twentyFourHourBTCSent);
-            }
-        }
-
+        //-----BitcoinExplorer JSON
         private (string nextBlockFee, string thirtyMinFee, string sixtyMinFee, string oneDayFee, string txInNextBlock, string nextBlockMinFee, string nextBlockMaxFee, string nextBlockTotalFees) bitcoinExplorerOrgJSONRefresh()
         {
             // fees
@@ -1319,6 +1333,7 @@ namespace Statamoto
             return (nextBlockFee, thirtyMinFee, sixtyMinFee, oneDayFee, txInNextBlock, nextBlockMinFee, nextBlockMaxFee, nextBlockTotalFees);
         }
 
+        //-----BlockchainInfo JSON
         private (string n_tx, string size, string nextretarget) blockchainInfoJSONRefresh()
         {
             using (WebClient client = new WebClient())
@@ -1349,6 +1364,7 @@ namespace Statamoto
             }
         }
 
+        //-----CoinGecko JSON
         private (string ath, string athDate, string athDifference, string twentyFourHourHigh, string twentyFourHourLow) coingeckoComJSONRefresh()
         {
             using (WebClient client = new WebClient())
@@ -1372,6 +1388,7 @@ namespace Statamoto
             }
         }
 
+        //-----Blockchair JSON
         private (string halveningBlock, string halveningReward, string halveningTime, string blocksLeft, string seconds_left) blockchairComHalvingJSONRefresh()
         {
             using (WebClient client = new WebClient())
