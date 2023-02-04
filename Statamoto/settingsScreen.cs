@@ -40,6 +40,7 @@ namespace Statamoto
         public settingsScreen()
         {
             InitializeComponent();
+            comboAPISelectorForQueries.SelectedIndex = 1;
         }
 
         private void btnExitSettings_Click(object sender, EventArgs e)

@@ -8,7 +8,7 @@
 ──█████████▀───      Added settings screen. Added ability to disable individual API calls. Added options to change API call refresh frequency. Added a 'last updated' timer.
 ──███████████▄─  1.2 Added Lightning stats, node rankings, etc. Hover behaviour on buttons much more responsive as is the UI in general. More data fields added. Threading bugs fixed. Various UI improvements.
 ──███─────▀████  To do:
-──███───────███  move more common code into own methods (sats conversions, timer resets, etc)
+──███───────███  Make the API combobox actually do something!
 ──███─────▄████  
 ──████████████─  
 ████████████▀──  
@@ -34,6 +34,21 @@ using Newtonsoft.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.LinkLabel;
 using System.Globalization;
+using NBitcoin;
+using NBitcoin.Crypto;
+using NBitcoin.DataEncoders;
+using NBitcoin.BouncyCastle.Math;
+using QBitNinja.Client;
+using QBitNinja.Client.Models;
+using NBitcoin.RPC;
+using NBitcoin.Payment;
+using QRCoder;
+
+
+
+
+
+
 
 namespace Statamoto
 {
@@ -58,6 +73,10 @@ namespace Statamoto
         private int APIGroup2RefreshFrequency = 24; // hours. Default value 2. Initial value only
         private int intDisplaySecondsElapsedSinceUpdate = 0; // used to count seconds since the data was last refreshed, for display only.
         private bool ObtainedHalveningSecondsRemainingYet = false; // used to check whether we know halvening seconds before we start trying to subtract from them
+
+        // RPCClient client = new RPCClient(new System.Uri("https://blockstream.info/api/"), Network.Main);
+        
+
 
         [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]  // needed for the code that moves the form as not using a standard control
         private extern static void ReleaseCapture();
@@ -133,7 +152,7 @@ namespace Statamoto
         //-------------------------END CLOCK TICKS-----------------------------
         //====================================================================================================================
         //-------------------------UPDATE FORM FIELDS---------------------------
-
+        
         public async void updateAPIGroup1DataFields()
         {
             using (WebClient client = new WebClient())
@@ -141,12 +160,12 @@ namespace Statamoto
                 bool errorOccurred = false;
                 Task task1 = Task.Run(() =>  // call bitcoinexplorer.org endpoints and populate the fields on the form
                 {
-                    try
+                try
+                {
+                    if (RunBitcoinExplorerEndpointAPI)
                     {
-                        if (RunBitcoinExplorerEndpointAPI)
-                        {
-                            var result = bitcoinExplorerOrgEndpointsRefresh();
-                            // move returned data to the labels on the form
+                        var result = bitcoinExplorerOrgEndpointsRefresh();
+                        // move returned data to the labels on the form
                             lblPriceUSD.Invoke((MethodInvoker)delegate
                             {
                                 lblPriceUSD.Text = result.priceUSD;
@@ -191,21 +210,7 @@ namespace Statamoto
                                 lblTXInMempool.Text = "disabled";
                             });
                         }
-                        // set successful lights and messages on the form
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
-                        });
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.Text = "🟢"; // circle/light
-                        });
-                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
-                        });
-                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
-                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
+                        SetLightsMessagesAndResetTimers();
                     }
                     catch (Exception ex)
                     {
@@ -301,22 +306,7 @@ namespace Statamoto
                                 lbl24HourBTCSent.Text = "disabled";
                             });
                         }
-
-                        // set successful lights and messages on the form
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
-                        });
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.Text = "🟢"; // circle/light
-                        });
-                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
-                        });
-                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
-                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
+                        SetLightsMessagesAndResetTimers();
                     }
                     catch (Exception ex)
                     {
@@ -397,21 +387,7 @@ namespace Statamoto
                             });
 
                         }
-                        // set successful lights and messages on the form
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
-                        });
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.Text = "🟢"; // circle/light
-                        });
-                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
-                        });
-                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
-                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
+                        SetLightsMessagesAndResetTimers();
                     }
                     catch (Exception ex)
                     {
@@ -460,21 +436,7 @@ namespace Statamoto
                             });
 
                         }
-                        // set successful lights and messages on the form
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
-                        });
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.Text = "🟢"; // circle/light
-                        });
-                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
-                        });
-                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
-                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
+                        SetLightsMessagesAndResetTimers();
                     }
                     catch (Exception ex)
                     {
@@ -546,22 +508,7 @@ namespace Statamoto
                                 lbl24HrLow.Text = "disabled";
                             });
                         }
-
-                        // set successful lights and messages on the form
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
-                        });
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.Text = "🟢"; // circle/light
-                        });
-                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
-                        });
-                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
-                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
+                        SetLightsMessagesAndResetTimers();
                     }
                     catch (Exception ex)
                     {
@@ -751,21 +698,7 @@ namespace Statamoto
                                 });
                             }
                         }
-                        // set successful lights and messages on the form
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
-                        });
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.Text = "🟢"; // circle/light
-                        });
-                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
-                        });
-                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
-                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
+                        SetLightsMessagesAndResetTimers();
                     }
                     catch (Exception ex)
                     {
@@ -864,21 +797,7 @@ namespace Statamoto
                                 lblBlockchainSize.Text = "disabled";
                             });
                         }
-                        // set successful lights and messages on the form
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
-                        });
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.Text = "🟢"; // circle/light
-                        });
-                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
-                        });
-                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
-                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
+                        SetLightsMessagesAndResetTimers();
                     }
                     catch (Exception ex)
                     {
@@ -931,21 +850,7 @@ namespace Statamoto
                                 lblHalveningSecondsRemaining.Text = "disabled";
                             });
                         }
-                        // set successful lights and messages on the form
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
-                        });
-                        lblStatusLight.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusLight.Text = "🟢"; // circle/light
-                        });
-                        lblStatusMessPart1.Invoke((MethodInvoker)delegate
-                        {
-                            lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
-                        });
-                        intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
-                        intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
+                        SetLightsMessagesAndResetTimers();
                     }
                     catch (Exception ex)
                     {
@@ -985,7 +890,7 @@ namespace Statamoto
 
             //--------------------------END UPDATE FORM FIELDS----------------------------
             //====================================================================================================================        
-            //-------------------------- FORM NAVIGATION CONTROLS--------------------------
+            //-------------------------- FORM NAVIGATION/BUTTON CONTROLS--------------------------
 
         private void btnSplash_Click(object sender, EventArgs e)
         {
@@ -1019,6 +924,7 @@ namespace Statamoto
             this.DoubleBuffered = true;
             this.SuspendLayout();
             panelLightningDashboard.Visible = false;
+            panelTesting.Visible = false;
             panelBitcoinDashboard.Visible = true;
             this.ResumeLayout();
         }
@@ -1028,8 +934,16 @@ namespace Statamoto
             this.DoubleBuffered = true;
             this.SuspendLayout();
             panelBitcoinDashboard.Visible = false;
+            panelTesting.Visible = false;
             panelLightningDashboard.Visible = true;
             this.ResumeLayout();
+        }
+
+        private void btnTesting_Click(object sender, EventArgs e)
+        {
+            panelBitcoinDashboard.Visible = false;
+            panelLightningDashboard.Visible = false;
+            panelTesting.Visible = true;
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
@@ -1113,7 +1027,7 @@ namespace Statamoto
             }
         }
 
-        //-----------------------END FORM NAVIGATION CONTROLS--------------------------
+        //-----------------------END FORM NAVIGATION/BUTTON CONTROLS--------------------------
         //====================================================================================================================
         //--------------------COUNTDOWN, ERROR MESSAGES AND STATUS LIGHTS--------------
 
@@ -1156,6 +1070,25 @@ namespace Statamoto
         {
             lblAlert.Text = ""; // clear any error message
             lblErrorMessage.Text = ""; // clear any error message
+        }
+
+        private void SetLightsMessagesAndResetTimers()
+        {
+            // set successful lights and messages on the form
+            lblStatusLight.Invoke((MethodInvoker)delegate
+            {
+                lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
+            });
+            lblStatusLight.Invoke((MethodInvoker)delegate
+            {
+                lblStatusLight.Text = "🟢"; // circle/light
+            });
+            lblStatusMessPart1.Invoke((MethodInvoker)delegate
+            {
+                lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
+            });
+            intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
+            intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
         }
 
         //----------------END COUNTDOWN, ERROR MESSAGES AND STATUS LIGHTS--------------
@@ -1450,7 +1383,7 @@ namespace Statamoto
         //====================================================================================================================
         //---------------------- CONNECTING LINES BETWEEN FIELDS---------------------------
 
-        private void panelLightningDashboard_Paint(object sender, PaintEventArgs e)
+        private void PanelLightningDashboard_Paint(object sender, PaintEventArgs e)
         {
             using (Pen pen = new Pen(Color.FromArgb(106, 72, 9), 1))
             {
@@ -1476,5 +1409,177 @@ namespace Statamoto
             }
         }
         //---------------------- END CONNECTING LINES BETWEEN FIELDS---------------------------
+        //====================================================================================================================
+        //---------------------- DETERMINE BITCOIN ADDRESS TYPE---------------------------
+
+        private string DetermineAddressType(string address)
+        {
+            try
+            {
+                BitcoinAddress bitcoinAddress = BitcoinAddress.Create(address, Network.Main);
+                if (bitcoinAddress is BitcoinPubKeyAddress)
+                {
+                    return "P2PKH (legacy)"; // Legacy P2PKH
+                }
+                else if (bitcoinAddress is BitcoinScriptAddress)
+                {
+                    return "P2SH"; // (pay-to-script-hash) Multisig P2SH
+                }
+                else if (bitcoinAddress is BitcoinWitPubKeyAddress)
+                {
+                    return "P2WPKH (segwit)"; // P2WPKH
+                }
+                else if (bitcoinAddress is BitcoinWitScriptAddress)
+                {
+                    return "P2WSH"; // (pay-to- witness-script-hash) P2WSH 
+                }
+                else if (address.StartsWith("bc1p") && (address.Length > 41 || address.Length < 73))
+                {
+                    for (int i = 4; i < address.Length - 4; i++)
+                    {
+                        char c = address[i];
+                        if (((c >= '0' && c <= '9') || (c >= 'q' && c <= 'z')))
+                        {
+                            return "P2TT (taproot)";
+                        }
+                    }
+                }
+                return "unknown";
+            }
+            catch (FormatException)
+            {
+                return "Invalid address format";
+            }
+        }
+
+        //---------------------- END DETERMINE BITCOIN ADDRESS TYPE---------------------------
+        //====================================================================================================================
+        //--------------- VALIDATE BITCOIN ADDRESS AND GENERATE QR-------------
+
+        private void TboxSubmittedAddress_TextChanged(object sender, EventArgs e) // validate the address update the address type label
+        {
+            string addressString = tboxSubmittedAddress.Text; 
+            string addressType = DetermineAddressType(addressString);
+            if (addressType == "P2PKH (legacy)" || addressType == "P2SH" || addressType == "P2WPKH (segwit)" || addressType == "P2WSH" || addressType == "P2TT (taproot)" || addressType == "unknown") 
+            {
+                lblAddressType.Text = addressType + " address type";
+                QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                QRCodeData qrCodeData = qrGenerator.CreateQrCode(addressString, QRCodeGenerator.ECCLevel.Q);
+                QRCode qrCode = new QRCode(qrCodeData);
+                var qrCodeImage = qrCode.GetGraphic(20, Color.FromArgb(255, 192, 192, 192), Color.Black, false);
+                qrCodeImage.MakeTransparent(Color.Black);
+                //var qrCodeImage = qrCode.GetGraphic(20);
+                QRCodePicturebox.Image = qrCodeImage;
+                //string addressString = tboxSubmittedAddress.Text;
+               // string addressType = DetermineAddressType(addressString);
+                lblAddressType.Text = addressType + " fetching balance";
+                GetAddressBalance(addressString);
+                lblAddressType.Text = addressType + " address type";
+            }
+            else
+            {
+                lblAddressType.Text = "Invalid address format";
+                QRCodePicturebox.Image = null;
+            }
+        }
+
+        //---------------------- END VALIDATE BITCOIN ADDRESS AND GENERATE QR---------------------------
+        //====================================================================================================================
+        //------------------------------------------ GET ADDRESS BALANCE--------------------------------
+
+        private async void GetAddressBalance(string addressString) // P2SH address - tested
+        {
+            // var nodeUrl = "https://blockstream.info/api/";
+            var nodeUrl = "https://mempool.space/api/";
+            var request = "address/" + addressString;
+            //var client = new HttpClient { BaseAddress = new Uri(nodeUrl) };
+            //var response = await client.GetAsync("address/3JXP37UzVKyWZ1AmGVwpnceVUyCAkHNHRr");
+            var url = nodeUrl + request;
+            var client = new HttpClient();
+            var response = await client.GetAsync($"https://blockstream.info/api/address/{addressString}");
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Failed to retrieve data.");
+                return;
+            }
+            var jsonData = await response.Content.ReadAsStringAsync();
+            //var addressData = JsonConvert.DeserializeObject<dynamic>(jsonData);
+            var addressData = JObject.Parse(jsonData);
+            lblConfirmedTransactionCount.Text = Convert.ToString(addressData["chain_stats"]["tx_count"]);
+            lblConfirmedReceived.Text = Convert.ToString(addressData["chain_stats"]["funded_txo_sum"]);
+            lblConfirmedReceivedOutputs.Location = new Point(lblConfirmedReceived.Location.X + lblConfirmedReceived.Width, lblConfirmedReceivedOutputs.Location.Y);
+            lblConfirmedReceivedOutputs.Text = "(" + addressData["chain_stats"]["funded_txo_count"] + " outputs)";
+            lblConfirmedSpent.Text = Convert.ToString(addressData["chain_stats"]["spent_txo_sum"]);
+            lblConfirmedSpentOutputs.Location = new Point(lblConfirmedSpent.Location.X + lblConfirmedSpent.Width -5, lblConfirmedSpentOutputs.Location.Y);
+            lblConfirmedSpentOutputs.Text = " (" + addressData["chain_stats"]["spent_txo_count"] + " outputs)";
+            var fundedTx = Convert.ToDouble(addressData["chain_stats"]["funded_txo_count"]);
+            var spentTx = Convert.ToDouble(addressData["chain_stats"]["spent_txo_count"]);
+            var confirmedReceived = Convert.ToDouble(addressData["chain_stats"]["funded_txo_sum"]);
+            var confirmedSpent = Convert.ToDouble(addressData["chain_stats"]["spent_txo_sum"]);
+            var confirmedUnspent = confirmedReceived - confirmedSpent;
+            var unSpentTxOutputs = fundedTx - spentTx;
+            lblConfirmedUnspent.Text = Convert.ToString(confirmedUnspent);
+            lblConfirmedUnspentOutputs.Location = new Point(lblConfirmedUnspent.Location.X + lblConfirmedUnspent.Width, lblConfirmedUnspentOutputs.Location.Y);
+            lblConfirmedUnspentOutputs.Text = "(" + Convert.ToString(unSpentTxOutputs) + " outputs)";
+        }
+
+        //---------------------- END GET ADDRESS BALANCE---------------------------
+        //====================================================================================================================
+        
+
     }
 }
+
+
+
+
+
+
+
+
+
+/* private async void GetP2PKHLegacyAddressBalance(string addressString) // Legacy/P2PKH address - tested
+ {
+     BitcoinPubKeyAddress address = new BitcoinPubKeyAddress(addressString, Network.Main);
+     var client = new QBitNinjaClient(Network.Main);
+     var balance = await client.GetBalance(address, unspentOnly: true);
+     decimal totalBalance = balance.Operations.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
+     MessageBox.Show("Balance: " + totalBalance);
+ }
+
+   private async void GetP2SHAddressBalance(string addressString) // P2SH address - tested
+   {
+       BitcoinScriptAddress address = new BitcoinScriptAddress(addressString, Network.Main);
+       var client = new QBitNinjaClient(Network.Main);
+     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+     var balance = await client.GetBalance(address, unspentOnly: true);
+       decimal totalBalance = balance.Operations.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
+       MessageBox.Show("Balance: " + totalBalance);
+   }
+
+private async void GetP2WPKHSegwitAddressBalance(string addressString)  // Segwit/P2WPKH address - tested
+{
+    BitcoinWitPubKeyAddress address = new BitcoinWitPubKeyAddress(addressString, Network.Main);
+    var client = new QBitNinjaClient(Network.Main);
+    var balance = await client.GetBalance(address, unspentOnly: true);
+    decimal totalBalance = balance.Operations.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
+    MessageBox.Show("Balance: " + totalBalance);
+}
+
+private async void GetP2WSHAddressBalance(string addressString)
+{
+    BitcoinWitScriptAddress address = new BitcoinWitScriptAddress(addressString, Network.Main);
+    var client = new QBitNinjaClient(Network.Main);
+    var balance = await client.GetBalance(address, unspentOnly: true);
+    decimal totalBalance = balance.Operations.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
+    MessageBox.Show("Balance: " + totalBalance);
+}
+
+/*private async void GetTaprootAddressBalance(string addressString) // Taproot(P2TR) - not yet working!
+{
+    var taprootAddress = TaprootAddress.Create(addressString, Network.Main);
+    var client = new QBitNinjaClient(Network.Main);
+    var balance = await client.GetBalance(taprootAddress, unspentOnly: true);
+    decimal totalBalance = balance.Operations.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
+    MessageBox.Show("Balance: " + totalBalance);
+}*/

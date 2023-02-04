@@ -39,7 +39,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.lblCoingeckoComJSON = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.lblBlockchairComJSON = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.numericUpDownAPIGroup1 = new System.Windows.Forms.NumericUpDown();
@@ -50,10 +49,17 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.numericUpDownAPIGroup2 = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.comboAPISelectorForQueries = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAPIGroup1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAPIGroup2)).BeginInit();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnExitSettings
@@ -65,7 +71,7 @@
             this.btnExitSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExitSettings.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExitSettings.ForeColor = System.Drawing.Color.Gray;
-            this.btnExitSettings.Location = new System.Drawing.Point(283, 342);
+            this.btnExitSettings.Location = new System.Drawing.Point(299, 512);
             this.btnExitSettings.Name = "btnExitSettings";
             this.btnExitSettings.Size = new System.Drawing.Size(66, 30);
             this.btnExitSettings.TabIndex = 2;
@@ -194,17 +200,6 @@
             this.label10.TabIndex = 13;
             this.label10.Text = "coingecko.com JSON";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Consolas", 9F);
-            this.label1.ForeColor = System.Drawing.Color.Silver;
-            this.label1.Location = new System.Drawing.Point(27, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(184, 18);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "Configure data sources";
-            // 
             // lblBlockchairComJSON
             // 
             this.lblBlockchairComJSON.AutoSize = true;
@@ -281,7 +276,7 @@
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.lblBlockchainInfoJSON);
             this.panel1.ForeColor = System.Drawing.Color.DarkGray;
-            this.panel1.Location = new System.Drawing.Point(30, 49);
+            this.panel1.Location = new System.Drawing.Point(18, 80);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(319, 204);
             this.panel1.TabIndex = 20;
@@ -318,7 +313,7 @@
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.numericUpDownAPIGroup2);
             this.panel2.ForeColor = System.Drawing.Color.DarkGray;
-            this.panel2.Location = new System.Drawing.Point(30, 259);
+            this.panel2.Location = new System.Drawing.Point(18, 290);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(319, 68);
             this.panel2.TabIndex = 21;
@@ -362,17 +357,76 @@
             0});
             this.numericUpDownAPIGroup2.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Silver;
+            this.label1.Location = new System.Drawing.Point(18, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(319, 62);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "Enable/disable data sources for the Bitcoin/Lightning stats and change their refr" +
+    "esh frequencies";
+            // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.label1);
+            this.panel3.Controls.Add(this.panel1);
+            this.panel3.Controls.Add(this.panel2);
+            this.panel3.Location = new System.Drawing.Point(12, 12);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(353, 371);
+            this.panel3.TabIndex = 23;
+            // 
+            // panel4
+            // 
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.comboAPISelectorForQueries);
+            this.panel4.Controls.Add(this.label7);
+            this.panel4.Location = new System.Drawing.Point(12, 389);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(353, 106);
+            this.panel4.TabIndex = 24;
+            // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.Silver;
+            this.label7.Location = new System.Drawing.Point(18, 15);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(319, 44);
+            this.label7.TabIndex = 22;
+            this.label7.Text = "Select API to use for specific blockchain queries";
+            // 
+            // comboAPISelectorForQueries
+            // 
+            this.comboAPISelectorForQueries.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.comboAPISelectorForQueries.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboAPISelectorForQueries.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboAPISelectorForQueries.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboAPISelectorForQueries.ForeColor = System.Drawing.Color.Silver;
+            this.comboAPISelectorForQueries.FormattingEnabled = true;
+            this.comboAPISelectorForQueries.ImeMode = System.Windows.Forms.ImeMode.HangulFull;
+            this.comboAPISelectorForQueries.Items.AddRange(new object[] {
+            "blockstream.info",
+            "mempool.space"});
+            this.comboAPISelectorForQueries.Location = new System.Drawing.Point(18, 63);
+            this.comboAPISelectorForQueries.Name = "comboAPISelectorForQueries";
+            this.comboAPISelectorForQueries.Size = new System.Drawing.Size(319, 26);
+            this.comboAPISelectorForQueries.TabIndex = 23;
+            this.comboAPISelectorForQueries.TabStop = false;
+            // 
             // settingsScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.CancelButton = this.btnExitSettings;
-            this.ClientSize = new System.Drawing.Size(379, 392);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(377, 558);
+            this.Controls.Add(this.panel4);
+            this.Controls.Add(this.panel3);
             this.Controls.Add(this.btnExitSettings);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.panel2);
             this.Font = new System.Drawing.Font("Consolas", 7.8F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "settingsScreen";
@@ -386,8 +440,9 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAPIGroup2)).EndInit();
+            this.panel3.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -404,7 +459,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label lblCoingeckoComJSON;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblBlockchairComJSON;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUpDownAPIGroup1;
@@ -415,5 +469,10 @@
         private System.Windows.Forms.NumericUpDown numericUpDownAPIGroup2;
         private System.Windows.Forms.Label lblMempoolLightningJSON;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.ComboBox comboAPISelectorForQueries;
+        private System.Windows.Forms.Label label7;
     }
 }
