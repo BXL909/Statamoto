@@ -204,6 +204,12 @@
             this.label38 = new System.Windows.Forms.Label();
             this.lblTotalCapacity = new System.Windows.Forms.Label();
             this.panelTesting = new System.Windows.Forms.Panel();
+            this.lblNodeStatusLight = new System.Windows.Forms.Label();
+            this.lblGenesisAddress = new System.Windows.Forms.Label();
+            this.lblConfirmedUnspentOutputs = new System.Windows.Forms.Label();
+            this.lblActiveNode = new System.Windows.Forms.Label();
+            this.lblConfirmedSpentOutputs = new System.Windows.Forms.Label();
+            this.lblConfirmedReceivedOutputs = new System.Windows.Forms.Label();
             this.QRCodePicturebox = new System.Windows.Forms.PictureBox();
             this.label61 = new System.Windows.Forms.Label();
             this.lblConfirmedUnspent = new System.Windows.Forms.Label();
@@ -217,9 +223,6 @@
             this.lblAddressType = new System.Windows.Forms.Label();
             this.tboxSubmittedAddress = new System.Windows.Forms.TextBox();
             this.btnTesting = new System.Windows.Forms.Button();
-            this.lblConfirmedReceivedOutputs = new System.Windows.Forms.Label();
-            this.lblConfirmedSpentOutputs = new System.Windows.Forms.Label();
-            this.lblConfirmedUnspentOutputs = new System.Windows.Forms.Label();
             this.panelBitcoinDashboard.SuspendLayout();
             this.panelLightningDashboard.SuspendLayout();
             this.panelTesting.SuspendLayout();
@@ -277,7 +280,7 @@
             // timer1Sec
             // 
             this.timer1Sec.Interval = 1000;
-            this.timer1Sec.Tick += new System.EventHandler(this.timer1Sec_Tick);
+            this.timer1Sec.Tick += new System.EventHandler(this.Timer1Sec_Tick);
             // 
             // btnExit
             // 
@@ -297,7 +300,7 @@
             this.btnExit.Text = "x";
             this.btnExit.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnExit.UseVisualStyleBackColor = false;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
             // lblBlockNumber
             // 
@@ -314,7 +317,7 @@
             // timerAPIGroup1
             // 
             this.timerAPIGroup1.Interval = 60000;
-            this.timerAPIGroup1.Tick += new System.EventHandler(this.timerAPIGroup1_Tick);
+            this.timerAPIGroup1.Tick += new System.EventHandler(this.TimerAPIGroup1_Tick);
             // 
             // label1
             // 
@@ -345,7 +348,7 @@
             this.btnMinimise.Text = "-";
             this.btnMinimise.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnMinimise.UseVisualStyleBackColor = false;
-            this.btnMinimise.Click += new System.EventHandler(this.btnMinimise_Click);
+            this.btnMinimise.Click += new System.EventHandler(this.BtnMinimise_Click);
             // 
             // btnMoveWindow
             // 
@@ -356,23 +359,23 @@
             this.btnMoveWindow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMoveWindow.Font = new System.Drawing.Font("Consolas", 7.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMoveWindow.ForeColor = System.Drawing.Color.Transparent;
-            this.btnMoveWindow.Location = new System.Drawing.Point(58, 0);
+            this.btnMoveWindow.Location = new System.Drawing.Point(-9, -3);
             this.btnMoveWindow.Name = "btnMoveWindow";
-            this.btnMoveWindow.Size = new System.Drawing.Size(382, 42);
+            this.btnMoveWindow.Size = new System.Drawing.Size(824, 626);
             this.btnMoveWindow.TabIndex = 33;
             this.btnMoveWindow.TabStop = false;
             this.btnMoveWindow.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnMoveWindow.UseVisualStyleBackColor = false;
-            this.btnMoveWindow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnMoveWindow_MouseDown);
-            this.btnMoveWindow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnMoveWindow_MouseUp);
+            this.btnMoveWindow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnMoveWindow_MouseDown);
+            this.btnMoveWindow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnMoveWindow_MouseUp);
             // 
             // lblStatusMessPart1
             // 
             this.lblStatusMessPart1.AutoSize = true;
-            this.lblStatusMessPart1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblStatusMessPart1.BackColor = System.Drawing.Color.Transparent;
             this.lblStatusMessPart1.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatusMessPart1.ForeColor = System.Drawing.Color.Gray;
-            this.lblStatusMessPart1.Location = new System.Drawing.Point(31, 583);
+            this.lblStatusMessPart1.Location = new System.Drawing.Point(20, 588);
             this.lblStatusMessPart1.Name = "lblStatusMessPart1";
             this.lblStatusMessPart1.Size = new System.Drawing.Size(294, 15);
             this.lblStatusMessPart1.TabIndex = 36;
@@ -384,7 +387,7 @@
             this.lblStatusLight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblStatusLight.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatusLight.ForeColor = System.Drawing.Color.Silver;
-            this.lblStatusLight.Location = new System.Drawing.Point(9, 583);
+            this.lblStatusLight.Location = new System.Drawing.Point(3, 588);
             this.lblStatusLight.Name = "lblStatusLight";
             this.lblStatusLight.Size = new System.Drawing.Size(23, 18);
             this.lblStatusLight.TabIndex = 37;
@@ -396,7 +399,7 @@
             this.lblSecsCountdown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblSecsCountdown.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSecsCountdown.ForeColor = System.Drawing.Color.Gray;
-            this.lblSecsCountdown.Location = new System.Drawing.Point(261, 583);
+            this.lblSecsCountdown.Location = new System.Drawing.Point(261, 588);
             this.lblSecsCountdown.Name = "lblSecsCountdown";
             this.lblSecsCountdown.Size = new System.Drawing.Size(0, 15);
             this.lblSecsCountdown.TabIndex = 39;
@@ -773,7 +776,7 @@
             this.btnSplash.Text = "?";
             this.btnSplash.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnSplash.UseVisualStyleBackColor = false;
-            this.btnSplash.Click += new System.EventHandler(this.btnSplash_Click);
+            this.btnSplash.Click += new System.EventHandler(this.BtnSplash_Click);
             // 
             // lblTransactions
             // 
@@ -838,7 +841,7 @@
             // timerAPIGroup2
             // 
             this.timerAPIGroup2.Interval = 86400000;
-            this.timerAPIGroup2.Tick += new System.EventHandler(this.timerAPIGroup2_Tick);
+            this.timerAPIGroup2.Tick += new System.EventHandler(this.TimerAPIGroup2_Tick);
             // 
             // btnSettings
             // 
@@ -856,15 +859,15 @@
             this.btnSettings.Text = "🔧";
             this.btnSettings.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnSettings.UseVisualStyleBackColor = false;
-            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            this.btnSettings.Click += new System.EventHandler(this.BtnSettings_Click);
             // 
             // lblElapsedSinceUpdate
             // 
             this.lblElapsedSinceUpdate.AutoSize = true;
-            this.lblElapsedSinceUpdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblElapsedSinceUpdate.BackColor = System.Drawing.Color.Transparent;
             this.lblElapsedSinceUpdate.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblElapsedSinceUpdate.ForeColor = System.Drawing.Color.Gray;
-            this.lblElapsedSinceUpdate.Location = new System.Drawing.Point(612, 583);
+            this.lblElapsedSinceUpdate.Location = new System.Drawing.Point(612, 588);
             this.lblElapsedSinceUpdate.Name = "lblElapsedSinceUpdate";
             this.lblElapsedSinceUpdate.Size = new System.Drawing.Size(203, 15);
             this.lblElapsedSinceUpdate.TabIndex = 84;
@@ -888,7 +891,7 @@
             this.btnBitcoinDashboard.Text = "BITCOIN STATS";
             this.btnBitcoinDashboard.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnBitcoinDashboard.UseVisualStyleBackColor = false;
-            this.btnBitcoinDashboard.Click += new System.EventHandler(this.btnBitcoinDashboard_Click);
+            this.btnBitcoinDashboard.Click += new System.EventHandler(this.BtnBitcoinDashboard_Click);
             // 
             // btnLightningDashboard
             // 
@@ -908,7 +911,7 @@
             this.btnLightningDashboard.Text = "LIGHTNING STATS";
             this.btnLightningDashboard.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnLightningDashboard.UseVisualStyleBackColor = false;
-            this.btnLightningDashboard.Click += new System.EventHandler(this.btnLightningDashboard_Click);
+            this.btnLightningDashboard.Click += new System.EventHandler(this.BtnLightningDashboard_Click);
             // 
             // panelBitcoinDashboard
             // 
@@ -2524,9 +2527,12 @@
             // panelTesting
             // 
             this.panelTesting.BackColor = System.Drawing.Color.Transparent;
+            this.panelTesting.Controls.Add(this.lblNodeStatusLight);
+            this.panelTesting.Controls.Add(this.lblGenesisAddress);
             this.panelTesting.Controls.Add(this.lblConfirmedUnspentOutputs);
             this.panelTesting.Controls.Add(this.lblConfirmedSpentOutputs);
             this.panelTesting.Controls.Add(this.lblConfirmedReceivedOutputs);
+            this.panelTesting.Controls.Add(this.lblActiveNode);
             this.panelTesting.Controls.Add(this.QRCodePicturebox);
             this.panelTesting.Controls.Add(this.label61);
             this.panelTesting.Controls.Add(this.lblConfirmedUnspent);
@@ -2545,10 +2551,77 @@
             this.panelTesting.TabIndex = 90;
             this.panelTesting.Visible = false;
             // 
+            // lblNodeStatusLight
+            // 
+            this.lblNodeStatusLight.AutoSize = true;
+            this.lblNodeStatusLight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblNodeStatusLight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblNodeStatusLight.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNodeStatusLight.ForeColor = System.Drawing.Color.Silver;
+            this.lblNodeStatusLight.Location = new System.Drawing.Point(666, 0);
+            this.lblNodeStatusLight.Name = "lblNodeStatusLight";
+            this.lblNodeStatusLight.Size = new System.Drawing.Size(23, 18);
+            this.lblNodeStatusLight.TabIndex = 92;
+            this.lblNodeStatusLight.Text = "🟢";
+            // 
+            // lblGenesisAddress
+            // 
+            this.lblGenesisAddress.AutoSize = true;
+            this.lblGenesisAddress.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGenesisAddress.ForeColor = System.Drawing.Color.DimGray;
+            this.lblGenesisAddress.Location = new System.Drawing.Point(-1, 48);
+            this.lblGenesisAddress.Name = "lblGenesisAddress";
+            this.lblGenesisAddress.Size = new System.Drawing.Size(441, 15);
+            this.lblGenesisAddress.TabIndex = 136;
+            this.lblGenesisAddress.Text = "(This is Satoshi\'s Genesis address. Enter any bitcoin address)";
+            // 
+            // lblConfirmedUnspentOutputs
+            // 
+            this.lblConfirmedUnspentOutputs.AutoSize = true;
+            this.lblConfirmedUnspentOutputs.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblConfirmedUnspentOutputs.Location = new System.Drawing.Point(106, 225);
+            this.lblConfirmedUnspentOutputs.Name = "lblConfirmedUnspentOutputs";
+            this.lblConfirmedUnspentOutputs.Size = new System.Drawing.Size(80, 18);
+            this.lblConfirmedUnspentOutputs.TabIndex = 135;
+            this.lblConfirmedUnspentOutputs.Text = "(no data)";
+            // 
+            // lblActiveNode
+            // 
+            this.lblActiveNode.AutoSize = true;
+            this.lblActiveNode.BackColor = System.Drawing.Color.Transparent;
+            this.lblActiveNode.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblActiveNode.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblActiveNode.ForeColor = System.Drawing.Color.Gray;
+            this.lblActiveNode.Location = new System.Drawing.Point(689, 0);
+            this.lblActiveNode.Name = "lblActiveNode";
+            this.lblActiveNode.Size = new System.Drawing.Size(84, 15);
+            this.lblActiveNode.TabIndex = 137;
+            this.lblActiveNode.Text = "Node status";
+            // 
+            // lblConfirmedSpentOutputs
+            // 
+            this.lblConfirmedSpentOutputs.AutoSize = true;
+            this.lblConfirmedSpentOutputs.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblConfirmedSpentOutputs.Location = new System.Drawing.Point(106, 351);
+            this.lblConfirmedSpentOutputs.Name = "lblConfirmedSpentOutputs";
+            this.lblConfirmedSpentOutputs.Size = new System.Drawing.Size(80, 18);
+            this.lblConfirmedSpentOutputs.TabIndex = 134;
+            this.lblConfirmedSpentOutputs.Text = "(no data)";
+            // 
+            // lblConfirmedReceivedOutputs
+            // 
+            this.lblConfirmedReceivedOutputs.AutoSize = true;
+            this.lblConfirmedReceivedOutputs.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblConfirmedReceivedOutputs.Location = new System.Drawing.Point(106, 309);
+            this.lblConfirmedReceivedOutputs.Name = "lblConfirmedReceivedOutputs";
+            this.lblConfirmedReceivedOutputs.Size = new System.Drawing.Size(80, 18);
+            this.lblConfirmedReceivedOutputs.TabIndex = 133;
+            this.lblConfirmedReceivedOutputs.Text = "(no data)";
+            // 
             // QRCodePicturebox
             // 
             this.QRCodePicturebox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.QRCodePicturebox.Location = new System.Drawing.Point(287, 101);
+            this.QRCodePicturebox.Location = new System.Drawing.Point(2, 78);
             this.QRCodePicturebox.Name = "QRCodePicturebox";
             this.QRCodePicturebox.Size = new System.Drawing.Size(114, 114);
             this.QRCodePicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -2562,7 +2635,7 @@
             this.label61.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label61.ForeColor = System.Drawing.Color.Silver;
             this.label61.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label61.Location = new System.Drawing.Point(1, 198);
+            this.label61.Location = new System.Drawing.Point(0, 203);
             this.label61.Name = "label61";
             this.label61.Size = new System.Drawing.Size(196, 15);
             this.label61.TabIndex = 130;
@@ -2573,7 +2646,7 @@
             this.lblConfirmedUnspent.AutoSize = true;
             this.lblConfirmedUnspent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblConfirmedUnspent.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConfirmedUnspent.Location = new System.Drawing.Point(-1, 213);
+            this.lblConfirmedUnspent.Location = new System.Drawing.Point(-2, 218);
             this.lblConfirmedUnspent.Name = "lblConfirmedUnspent";
             this.lblConfirmedUnspent.Size = new System.Drawing.Size(103, 27);
             this.lblConfirmedUnspent.TabIndex = 129;
@@ -2586,7 +2659,7 @@
             this.label63.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label63.ForeColor = System.Drawing.Color.Silver;
             this.label63.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label63.Location = new System.Drawing.Point(1, 156);
+            this.label63.Location = new System.Drawing.Point(0, 329);
             this.label63.Name = "label63";
             this.label63.Size = new System.Drawing.Size(112, 15);
             this.label63.TabIndex = 128;
@@ -2597,7 +2670,7 @@
             this.lblConfirmedSpent.AutoSize = true;
             this.lblConfirmedSpent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblConfirmedSpent.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConfirmedSpent.Location = new System.Drawing.Point(-1, 171);
+            this.lblConfirmedSpent.Location = new System.Drawing.Point(-2, 344);
             this.lblConfirmedSpent.Name = "lblConfirmedSpent";
             this.lblConfirmedSpent.Size = new System.Drawing.Size(103, 27);
             this.lblConfirmedSpent.TabIndex = 127;
@@ -2610,7 +2683,7 @@
             this.label67.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label67.ForeColor = System.Drawing.Color.Silver;
             this.label67.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label67.Location = new System.Drawing.Point(1, 114);
+            this.label67.Location = new System.Drawing.Point(0, 287);
             this.label67.Name = "label67";
             this.label67.Size = new System.Drawing.Size(133, 15);
             this.label67.TabIndex = 126;
@@ -2621,7 +2694,7 @@
             this.lblConfirmedReceived.AutoSize = true;
             this.lblConfirmedReceived.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblConfirmedReceived.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConfirmedReceived.Location = new System.Drawing.Point(-1, 129);
+            this.lblConfirmedReceived.Location = new System.Drawing.Point(-2, 302);
             this.lblConfirmedReceived.Name = "lblConfirmedReceived";
             this.lblConfirmedReceived.Size = new System.Drawing.Size(103, 27);
             this.lblConfirmedReceived.TabIndex = 125;
@@ -2634,7 +2707,7 @@
             this.label59.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label59.ForeColor = System.Drawing.Color.Silver;
             this.label59.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.label59.Location = new System.Drawing.Point(1, 72);
+            this.label59.Location = new System.Drawing.Point(0, 245);
             this.label59.Name = "label59";
             this.label59.Size = new System.Drawing.Size(196, 15);
             this.label59.TabIndex = 118;
@@ -2645,7 +2718,7 @@
             this.lblConfirmedTransactionCount.AutoSize = true;
             this.lblConfirmedTransactionCount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblConfirmedTransactionCount.Font = new System.Drawing.Font("Consolas", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConfirmedTransactionCount.Location = new System.Drawing.Point(-1, 87);
+            this.lblConfirmedTransactionCount.Location = new System.Drawing.Point(-2, 260);
             this.lblConfirmedTransactionCount.Name = "lblConfirmedTransactionCount";
             this.lblConfirmedTransactionCount.Size = new System.Drawing.Size(103, 27);
             this.lblConfirmedTransactionCount.TabIndex = 117;
@@ -2700,40 +2773,10 @@
             this.btnTesting.Size = new System.Drawing.Size(119, 22);
             this.btnTesting.TabIndex = 91;
             this.btnTesting.TabStop = false;
-            this.btnTesting.Text = "TESTING";
+            this.btnTesting.Text = "ADDRESS";
             this.btnTesting.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnTesting.UseVisualStyleBackColor = false;
-            this.btnTesting.Click += new System.EventHandler(this.btnTesting_Click);
-            // 
-            // lblConfirmedReceivedOutputs
-            // 
-            this.lblConfirmedReceivedOutputs.AutoSize = true;
-            this.lblConfirmedReceivedOutputs.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConfirmedReceivedOutputs.Location = new System.Drawing.Point(107, 136);
-            this.lblConfirmedReceivedOutputs.Name = "lblConfirmedReceivedOutputs";
-            this.lblConfirmedReceivedOutputs.Size = new System.Drawing.Size(80, 18);
-            this.lblConfirmedReceivedOutputs.TabIndex = 133;
-            this.lblConfirmedReceivedOutputs.Text = "(no data)";
-            // 
-            // lblConfirmedSpentOutputs
-            // 
-            this.lblConfirmedSpentOutputs.AutoSize = true;
-            this.lblConfirmedSpentOutputs.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConfirmedSpentOutputs.Location = new System.Drawing.Point(107, 178);
-            this.lblConfirmedSpentOutputs.Name = "lblConfirmedSpentOutputs";
-            this.lblConfirmedSpentOutputs.Size = new System.Drawing.Size(80, 18);
-            this.lblConfirmedSpentOutputs.TabIndex = 134;
-            this.lblConfirmedSpentOutputs.Text = "(no data)";
-            // 
-            // lblConfirmedUnspentOutputs
-            // 
-            this.lblConfirmedUnspentOutputs.AutoSize = true;
-            this.lblConfirmedUnspentOutputs.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConfirmedUnspentOutputs.Location = new System.Drawing.Point(107, 220);
-            this.lblConfirmedUnspentOutputs.Name = "lblConfirmedUnspentOutputs";
-            this.lblConfirmedUnspentOutputs.Size = new System.Drawing.Size(80, 18);
-            this.lblConfirmedUnspentOutputs.TabIndex = 135;
-            this.lblConfirmedUnspentOutputs.Text = "(no data)";
+            this.btnTesting.Click += new System.EventHandler(this.BtnTesting_Click);
             // 
             // Statamoto
             // 
@@ -2770,7 +2813,6 @@
             this.Controls.Add(this.lblSecsCountdown);
             this.Controls.Add(this.lblStatusLight);
             this.Controls.Add(this.lblStatusMessPart1);
-            this.Controls.Add(this.btnMoveWindow);
             this.Controls.Add(this.btnMinimise);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblBlockNumber);
@@ -2779,6 +2821,7 @@
             this.Controls.Add(this.lblDate);
             this.Controls.Add(this.lblSeconds);
             this.Controls.Add(this.lblTime);
+            this.Controls.Add(this.btnMoveWindow);
             this.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -2992,6 +3035,9 @@
         private System.Windows.Forms.Label lblConfirmedUnspentOutputs;
         private System.Windows.Forms.Label lblConfirmedSpentOutputs;
         private System.Windows.Forms.Label lblConfirmedReceivedOutputs;
+        private System.Windows.Forms.Label lblGenesisAddress;
+        private System.Windows.Forms.Label lblActiveNode;
+        private System.Windows.Forms.Label lblNodeStatusLight;
     }
 }
 

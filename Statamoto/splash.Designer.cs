@@ -76,7 +76,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(120, 18);
             this.label2.TabIndex = 9;
-            this.label2.Text = "Statamoto v1.2";
+            this.label2.Text = "Statamoto v1.3";
             // 
             // linkLabel1
             // 
@@ -91,7 +91,7 @@
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "bxl909.github.io";
             this.linkLabel1.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel1_LinkClicked);
             // 
             // linkLabel2
             // 
@@ -106,7 +106,7 @@
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "btcdir.org";
             this.linkLabel2.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel2_LinkClicked);
             // 
             // splash
             // 
@@ -125,7 +125,7 @@
             this.Name = "splash";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "splash";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.splash_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Splash_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

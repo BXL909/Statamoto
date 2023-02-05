@@ -7,13 +7,18 @@
 ──███────▄███▀─  1.1 Used threading on API calls for speed and UI responsiveness. Added 4 new fields (number of hodling addresses, Blockchain size, 24 hour number of blocks mined, Number of discoverable nodes)
 ──█████████▀───      Added settings screen. Added ability to disable individual API calls. Added options to change API call refresh frequency. Added a 'last updated' timer.
 ──███████████▄─  1.2 Added Lightning stats, node rankings, etc. Hover behaviour on buttons much more responsive as is the UI in general. More data fields added. Threading bugs fixed. Various UI improvements.
-──███─────▀████  To do:
-──███───────███  Make the API combobox actually do something!
+──███─────▀████  1.3 Added address lookup for all address types via choice of API.
+──███───────███  
 ──███─────▄████  
 ──████████████─  
 ████████████▀──  
 ────██──██─────
 */
+
+/* Stuff to do:
+ * 
+ * 
+ */
 
 using System;
 using System.Collections.Generic;
@@ -44,12 +49,6 @@ using NBitcoin.RPC;
 using NBitcoin.Payment;
 using QRCoder;
 
-
-
-
-
-
-
 namespace Statamoto
 {
     public partial class Statamoto : Form
@@ -69,14 +68,12 @@ namespace Statamoto
         private bool RunCoingeckoComJSONAPI = true;
         private bool RunBlockchairComJSONAPI = true;
         private bool RunMempoolSpaceLightningAPI = true;
+        private string NodeURL = "https://mempool.space/api/";
         private int APIGroup1RefreshFrequency = 1; // mins. Default value 1. Initial value only
         private int APIGroup2RefreshFrequency = 24; // hours. Default value 2. Initial value only
         private int intDisplaySecondsElapsedSinceUpdate = 0; // used to count seconds since the data was last refreshed, for display only.
         private bool ObtainedHalveningSecondsRemainingYet = false; // used to check whether we know halvening seconds before we start trying to subtract from them
-
-        // RPCClient client = new RPCClient(new System.Uri("https://blockstream.info/api/"), Network.Main);
         
-
 
         [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]  // needed for the code that moves the form as not using a standard control
         private extern static void ReleaseCapture();
@@ -92,16 +89,18 @@ namespace Statamoto
 
         private void Form1_Load(object sender, EventArgs e) // on form loading
         {
-            updateAPIGroup1DataFields(); // setting them now avoids waiting a whole minute for the first refresh
-            updateAPIGroup2DataFields(); // set the initial data for the daily updates to avoid waiting a whole day for the first data
-            startTheClocksTicking(); // start all the timers
+            UpdateAPIGroup1DataFields(); // setting them now avoids waiting a whole minute for the first refresh
+            UpdateAPIGroup2DataFields(); // set the initial data for the daily updates to avoid waiting a whole day for the first data
+            StartTheClocksTicking(); // start all the timers
+            tboxSubmittedAddress.Text = "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa";
+            CheckBlockchainExplorerApiStatus();
         }
 
         //--------------------------END INITIALISE--------------------------
         //====================================================================================================================
         // -------------------------CLOCK TICKS-----------------------------
 
-        private void startTheClocksTicking()
+        private void StartTheClocksTicking()
         {
             intDisplayCountdownToRefresh = (APIGroup1RefreshFrequency * 60); //turn minutes into seconds. This is the number used to display remaning time until refresh
             APIGroup1DisplayTimerIntervalSecsConstant = (APIGroup1RefreshFrequency * 60); //turn minutes into seconds. This is kept constant and used to reset the timer to this number
@@ -113,10 +112,10 @@ namespace Statamoto
             timerAPIGroup1.Start(); // timer used to refresh most btc data
             timerAPIGroup2.Start(); // start timer for less frequent api calls
         }
-        private void timer1Sec_Tick(object sender, EventArgs e) // update the calendar time and date
+        private void Timer1Sec_Tick(object sender, EventArgs e) // update the calendar time and date
         {
-            updateOnScreenClock();
-            updateOnScreenCountdownAndFlashLights();
+            UpdateOnScreenClock();
+            UpdateOnScreenCountdownAndFlashLights();
             intDisplaySecondsElapsedSinceUpdate ++; // increment displayed time elapsed since last update
             if (intDisplaySecondsElapsedSinceUpdate == 1)
             {
@@ -138,22 +137,22 @@ namespace Statamoto
             }
         }
 
-        private void timerAPIGroup1_Tick(object sender, EventArgs e) // call the function to update the btc fields
+        private void TimerAPIGroup1_Tick(object sender, EventArgs e) // call the function to update the btc fields
         {
-            clearAlertAndErrorMessage(); // wipe anything that may be showing in the error area (it should be empty anyway)
-            updateAPIGroup1DataFields(); // fetch data and populate fields
+            ClearAlertAndErrorMessage(); // wipe anything that may be showing in the error area (it should be empty anyway)
+            UpdateAPIGroup1DataFields(); // fetch data and populate fields
         }
 
-        private void timerAPIGroup2_Tick(object sender, EventArgs e)
+        private void TimerAPIGroup2_Tick(object sender, EventArgs e)
         {
-            updateAPIGroup2DataFields(); // fetch data and populate fields
+            UpdateAPIGroup2DataFields(); // fetch data and populate fields
         }
 
         //-------------------------END CLOCK TICKS-----------------------------
         //====================================================================================================================
         //-------------------------UPDATE FORM FIELDS---------------------------
         
-        public async void updateAPIGroup1DataFields()
+        public async void UpdateAPIGroup1DataFields()
         {
             using (WebClient client = new WebClient())
             {
@@ -164,7 +163,7 @@ namespace Statamoto
                 {
                     if (RunBitcoinExplorerEndpointAPI)
                     {
-                        var result = bitcoinExplorerOrgEndpointsRefresh();
+                        var result = BitcoinExplorerOrgEndpointsRefresh();
                         // move returned data to the labels on the form
                             lblPriceUSD.Invoke((MethodInvoker)delegate
                             {
@@ -228,7 +227,7 @@ namespace Statamoto
                     {
                         if (RunBlockchainInfoEndpointAPI)
                         {
-                            var result2 = blockchainInfoEndpointsRefresh();
+                            var result2 = BlockchainInfoEndpointsRefresh();
                             // move returned data to the labels on the form
                             lblAvgNoTransactions.Invoke((MethodInvoker)delegate
                             {
@@ -324,7 +323,7 @@ namespace Statamoto
                     {
                         if (RunBitcoinExplorerOrgJSONAPI)
                         {
-                            var result3 = bitcoinExplorerOrgJSONRefresh();
+                            var result3 = BitcoinExplorerOrgJSONRefresh();
                             // move returned data to the labels on the form
                             lblfeesNextBlock.Invoke((MethodInvoker)delegate
                             {
@@ -405,7 +404,7 @@ namespace Statamoto
                     {
                         if (RunBlockchainInfoJSONAPI)
                         {
-                            var result4 = blockchainInfoJSONRefresh();
+                            var result4 = BlockchainInfoJSONRefresh();
                             // move returned data to the labels on the form
                             lblTransactions.Invoke((MethodInvoker)delegate
                             {
@@ -454,7 +453,7 @@ namespace Statamoto
                     {
                         if (RunCoingeckoComJSONAPI)
                         {
-                            var result5 = coingeckoComJSONRefresh();
+                            var result5 = CoingeckoComJSONRefresh();
                             // move returned data to the labels on the form
                             lblATH.Invoke((MethodInvoker)delegate
                             {
@@ -736,7 +735,7 @@ namespace Statamoto
             }
         }
 
-        public async void updateAPIGroup2DataFields()
+        public async void UpdateAPIGroup2DataFields()
         {
             using (WebClient client = new WebClient())
             {
@@ -747,7 +746,7 @@ namespace Statamoto
                     {
                         if (RunBlockchairComJSONAPI)
                         {
-                            var result7 = blockchairComJSONRefresh();
+                            var result7 = BlockchairComJSONRefresh();
                             int hodling_addresses = int.Parse(result7.hodling_addresses);
                             if (hodling_addresses > 0) // this api sometimes doesn't populate this field with anything but 0
                             {
@@ -815,7 +814,7 @@ namespace Statamoto
                     {
                         if (RunBlockchairComJSONAPI)
                         {
-                            var result8 = blockchairComHalvingJSONRefresh();
+                            var result8 = BlockchairComHalvingJSONRefresh();
                             lblHalveningBlock.Invoke((MethodInvoker)delegate
                             {
                                 lblHalveningBlock.Text = result8.halveningBlock + "/" + result8.blocksLeft;
@@ -892,34 +891,34 @@ namespace Statamoto
             //====================================================================================================================        
             //-------------------------- FORM NAVIGATION/BUTTON CONTROLS--------------------------
 
-        private void btnSplash_Click(object sender, EventArgs e)
+        private void BtnSplash_Click(object sender, EventArgs e)
         {
             splash splash = new splash(); // invoke the about/splash screen
             splash.ShowDialog();
         }
 
-        private void btnExit_Click(object sender, EventArgs e) // exit
+        private void BtnExit_Click(object sender, EventArgs e) // exit
         {
             this.Close();
         }
 
-        private void btnMinimise_Click(object sender, EventArgs e) // minimise the form
+        private void BtnMinimise_Click(object sender, EventArgs e) // minimise the form
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void btnMoveWindow_MouseDown(object sender, MouseEventArgs e) // move the form when the move control is used
+        private void BtnMoveWindow_MouseDown(object sender, MouseEventArgs e) // move the form when the move control is used
         {
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
 
-        private void btnMoveWindow_MouseUp(object sender, MouseEventArgs e) // reset colour of the move form control
+        private void BtnMoveWindow_MouseUp(object sender, MouseEventArgs e) // reset colour of the move form control
         {
             btnMoveWindow.BackColor = System.Drawing.ColorTranslator.FromHtml("#1D1D1D");
         }
 
-        private void btnBitcoinDashboard_Click(object sender, EventArgs e)
+        private void BtnBitcoinDashboard_Click(object sender, EventArgs e)
         {
             this.DoubleBuffered = true;
             this.SuspendLayout();
@@ -929,7 +928,7 @@ namespace Statamoto
             this.ResumeLayout();
         }
 
-        private void btnLightningDashboard_Click(object sender, EventArgs e)
+        private void BtnLightningDashboard_Click(object sender, EventArgs e)
         {
             this.DoubleBuffered = true;
             this.SuspendLayout();
@@ -939,14 +938,14 @@ namespace Statamoto
             this.ResumeLayout();
         }
 
-        private void btnTesting_Click(object sender, EventArgs e)
+        private void BtnTesting_Click(object sender, EventArgs e)
         {
             panelBitcoinDashboard.Visible = false;
             panelLightningDashboard.Visible = false;
             panelTesting.Visible = true;
         }
 
-        private void btnSettings_Click(object sender, EventArgs e)
+        private void BtnSettings_Click(object sender, EventArgs e)
         {
             settingsScreen.CreateInstance();
             settingsScreen.Instance.ShowDialog();
@@ -1007,6 +1006,8 @@ namespace Statamoto
             {
                 RunMempoolSpaceLightningAPI = false;
             }
+            NodeURL = settingsScreen.Instance.NodeURL;
+            CheckBlockchainExplorerApiStatus();
 
             if (APIGroup1DisplayTimerIntervalSecsConstant != (settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60)) // if user has changed refresh frequency
             {
@@ -1031,7 +1032,7 @@ namespace Statamoto
         //====================================================================================================================
         //--------------------COUNTDOWN, ERROR MESSAGES AND STATUS LIGHTS--------------
 
-        private void updateOnScreenCountdownAndFlashLights()
+        private void UpdateOnScreenCountdownAndFlashLights()
         {
             lblSecsCountdown.Text = Convert.ToString(intDisplayCountdownToRefresh); // update the countdown on the form
             intDisplayCountdownToRefresh--; // reduce the countdown of the 1 minute timer by 1 second
@@ -1042,11 +1043,11 @@ namespace Statamoto
             lblSecsCountdown.Location = new Point(lblStatusMessPart1.Location.X + lblStatusMessPart1.Width - 8, lblSecsCountdown.Location.Y); // place the countdown according to the width of the status message
             if (intDisplayCountdownToRefresh < (APIGroup1DisplayTimerIntervalSecsConstant - 1)) // if more than a second has expired since the data from the blocktimer was refreshed...
             {
-                changeStatusLightAndClearErrorMessage();
+                ChangeStatusLightAndClearErrorMessage();
             }
         }
 
-        private void changeStatusLightAndClearErrorMessage()
+        private void ChangeStatusLightAndClearErrorMessage()
         {
             if (lblStatusLight.ForeColor != Color.DarkRed && lblStatusLight.ForeColor != Color.Green) // check whether a data refresh has just occured to see if a status light flash needs dimming
             {
@@ -1066,7 +1067,7 @@ namespace Statamoto
             }
         }
 
-        private void clearAlertAndErrorMessage()
+        private void ClearAlertAndErrorMessage()
         {
             lblAlert.Text = ""; // clear any error message
             lblErrorMessage.Text = ""; // clear any error message
@@ -1094,8 +1095,9 @@ namespace Statamoto
         //----------------END COUNTDOWN, ERROR MESSAGES AND STATUS LIGHTS--------------
         //====================================================================================================================
         //------------------------------------API CALLS----------------------------
+
         //------BitcoinExplorer and BlockchainInfo endpoints 
-        private (string priceUSD, string moscowTime, string marketCapUSD, string difficultyAdjEst, string txInMempool) bitcoinExplorerOrgEndpointsRefresh()
+        private (string priceUSD, string moscowTime, string marketCapUSD, string difficultyAdjEst, string txInMempool) BitcoinExplorerOrgEndpointsRefresh()
         {
             using (WebClient client = new WebClient())
             {
@@ -1108,7 +1110,7 @@ namespace Statamoto
             }
         }
 
-        private (string avgNoTransactions, string blockNumber, string blockReward, string estHashrate, string avgTimeBetweenBlocks, string btcInCirc, string hashesToSolve, string twentyFourHourTransCount, string twentyFourHourBTCSent) blockchainInfoEndpointsRefresh()
+        private (string avgNoTransactions, string blockNumber, string blockReward, string estHashrate, string avgTimeBetweenBlocks, string btcInCirc, string hashesToSolve, string twentyFourHourTransCount, string twentyFourHourBTCSent) BlockchainInfoEndpointsRefresh()
         {
             using (WebClient client = new WebClient())
             {
@@ -1125,15 +1127,11 @@ namespace Statamoto
                 string timeString = string.Format("{0:%m}m {0:%s}s", time);
                 string avgTimeBetweenBlocks = timeString;
                 string totalBTC = client.DownloadString("https://blockchain.info/q/totalbc"); // total sats in circulation
-                double dblTotalBTC = Convert.ToDouble(totalBTC);
-                dblTotalBTC = dblTotalBTC / 100000000; // convert sats to bitcoin
-                string btcInCirc = Convert.ToString(dblTotalBTC);
+                string btcInCirc = ConvertSatsToBitcoin(totalBTC).ToString();
                 string hashesToSolve = client.DownloadString("https://blockchain.info/q/hashestowin"); // avg number of hashes to win a block
                 string twentyFourHourTransCount = client.DownloadString("https://blockchain.info/q/24hrtransactioncount"); // number of transactions in last 24 hours
                 string twentyFourHourBTCSent = client.DownloadString("https://blockchain.info/q/24hrbtcsent"); // number of sats sent in 24 hours
-                double dbl24HrBTCSent = Convert.ToDouble(twentyFourHourBTCSent);
-                dbl24HrBTCSent = dbl24HrBTCSent / 100000000; // convert sats to bitcoin
-                twentyFourHourBTCSent = Convert.ToString(dbl24HrBTCSent);
+                twentyFourHourBTCSent = ConvertSatsToBitcoin(twentyFourHourBTCSent).ToString();
                 return (avgNoTransactionsText, blockNumber, blockReward, estHashrate, avgTimeBetweenBlocks, btcInCirc, hashesToSolve, twentyFourHourTransCount, twentyFourHourBTCSent);
             }
         }
@@ -1152,8 +1150,8 @@ namespace Statamoto
                 {
                     aliases.Add((string)data[i]["alias"]);
                     string capacity = (string)data[i]["capacity"];
+                    capacity = ConvertSatsToBitcoin(capacity).ToString();
                     double dblCapacity = Convert.ToDouble(capacity);
-                    dblCapacity = dblCapacity / 100000000; // convert sats to bitcoin
                     dblCapacity = Math.Round(dblCapacity, 2); // round to 2 decimal places
                     capacity = Convert.ToString(dblCapacity);
                     capacities.Add(capacity);
@@ -1188,21 +1186,21 @@ namespace Statamoto
             {
                 var response = client.DownloadString("https://mempool.space/api/v1/lightning/nodes/isp-ranking");
                 var data = JObject.Parse(response);
-                string clearnetCapacity = (string)data["clearnetCapacity"];
+                string clearnetCapacityString = Convert.ToString(data["clearnetCapacity"]);
+                string clearnetCapacity = ConvertSatsToBitcoin(clearnetCapacityString).ToString();
                 double dblClearnetCapacity = Convert.ToDouble(clearnetCapacity);
-                dblClearnetCapacity = dblClearnetCapacity / 100000000; // convert sats to bitcoin
                 dblClearnetCapacity = Math.Round(dblClearnetCapacity, 2); // round to 2 decimal places
                 clearnetCapacity = Convert.ToString(dblClearnetCapacity);
-                string torCapacity = (string)data["torCapacity"];
+                string torCapacityString = Convert.ToString(data["torCapacity"]);
+                string torCapacity = ConvertSatsToBitcoin(torCapacityString).ToString();
                 double dblTorCapacity = Convert.ToDouble(torCapacity);
-                dblTorCapacity = dblTorCapacity / 100000000; // convert sats to bitcoin
-                dblTorCapacity = Math.Round(dblTorCapacity, 2); // round to 2 decimal places
-                torCapacity = Convert.ToString(dblTorCapacity);
-                string unknownCapacity = (string)data["unknownCapacity"];
+                dblTorCapacity = Math.Round(dblTorCapacity, 2);
+                torCapacity= Convert.ToString(dblTorCapacity);
+                string unknownCapacityString = Convert.ToString(data["unknownCapacity"]);
+                string unknownCapacity = ConvertSatsToBitcoin(unknownCapacityString).ToString();
                 double dblUnknownCapacity = Convert.ToDouble(unknownCapacity);
-                dblUnknownCapacity = dblUnknownCapacity / 100000000; // convert sats to bitcoin
-                dblUnknownCapacity = Math.Round(dblUnknownCapacity, 2); // round to 2 decimal places
-                unknownCapacity = Convert.ToString(dblUnknownCapacity);
+                dblUnknownCapacity = Math.Round(dblUnknownCapacity, 2);
+                unknownCapacity= Convert.ToString(dblUnknownCapacity);
                 return (clearnetCapacity, torCapacity, unknownCapacity);
             }
         }
@@ -1215,13 +1213,11 @@ namespace Statamoto
                 var data = JObject.Parse(response);
                 var channelCount = (string)data["latest"]["channel_count"];
                 var nodeCount = (string)data["latest"]["node_count"];
-
-                string totalCapacity = (string)data["latest"]["total_capacity"];
+                string totalCapacityString = Convert.ToString(data["latest"]["total_capacity"]);
+                string totalCapacity = ConvertSatsToBitcoin(totalCapacityString).ToString();
                 double dblTotalCapacity = Convert.ToDouble(totalCapacity);
-                dblTotalCapacity = dblTotalCapacity / 100000000; // convert sats to bitcoin
-                dblTotalCapacity = Math.Round(dblTotalCapacity, 2); // round to 2 decimal places
+                dblTotalCapacity = Math.Round(dblTotalCapacity, 2);
                 totalCapacity = Convert.ToString(dblTotalCapacity);
-
                 var torNodes = (string)data["latest"]["tor_nodes"];
                 var clearnetNodes = (string)data["latest"]["clearnet_nodes"];
                 var unannouncedNodes = (string)data["latest"]["unannounced_nodes"];
@@ -1241,7 +1237,7 @@ namespace Statamoto
         }
 
         //-----BitcoinExplorer JSON
-        private (string nextBlockFee, string thirtyMinFee, string sixtyMinFee, string oneDayFee, string txInNextBlock, string nextBlockMinFee, string nextBlockMaxFee, string nextBlockTotalFees) bitcoinExplorerOrgJSONRefresh()
+        private (string nextBlockFee, string thirtyMinFee, string sixtyMinFee, string oneDayFee, string txInNextBlock, string nextBlockMinFee, string nextBlockMaxFee, string nextBlockTotalFees) BitcoinExplorerOrgJSONRefresh()
         {
             // fees
             var client = new HttpClient();
@@ -1273,7 +1269,7 @@ namespace Statamoto
         }
 
         //-----BlockchainInfo JSON
-        private (string n_tx, string size, string nextretarget) blockchainInfoJSONRefresh()
+        private (string n_tx, string size, string nextretarget) BlockchainInfoJSONRefresh()
         {
             using (WebClient client = new WebClient())
             {
@@ -1304,7 +1300,7 @@ namespace Statamoto
         }
 
         //-----CoinGecko JSON
-        private (string ath, string athDate, string athDifference, string twentyFourHourHigh, string twentyFourHourLow) coingeckoComJSONRefresh()
+        private (string ath, string athDate, string athDifference, string twentyFourHourHigh, string twentyFourHourLow) CoingeckoComJSONRefresh()
         {
             using (WebClient client = new WebClient())
             {
@@ -1328,7 +1324,7 @@ namespace Statamoto
         }
 
         //-----Blockchair JSON
-        private (string halveningBlock, string halveningReward, string halveningTime, string blocksLeft, string seconds_left) blockchairComHalvingJSONRefresh()
+        private (string halveningBlock, string halveningReward, string halveningTime, string blocksLeft, string seconds_left) BlockchairComHalvingJSONRefresh()
         {
             using (WebClient client = new WebClient())
             {
@@ -1343,7 +1339,7 @@ namespace Statamoto
             }
         }
 
-        private (string hodling_addresses, string blocks_24h, string nodes, string blockchain_size) blockchairComJSONRefresh()
+        private (string hodling_addresses, string blocks_24h, string nodes, string blockchain_size) BlockchairComJSONRefresh()
         {
             using (WebClient client = new WebClient())
             {
@@ -1361,7 +1357,7 @@ namespace Statamoto
         //====================================================================================================================
         //--------------------------ON-SCREEN CLOCK----------------------------
 
-        private void updateOnScreenClock()
+        private void UpdateOnScreenClock()
         {
             lblTime.Text = DateTime.Now.ToString("HH:mm");
             lblSeconds.Text = DateTime.Now.ToString("ss");
@@ -1408,6 +1404,7 @@ namespace Statamoto
                 e.Graphics.DrawLine(pen, (lblChannelCount.Right + lblAverageCapacity.Left) / 2, lblMedBaseFeeTokens.Top + (lblMedBaseFeeTokens.Height / 2), lblMedBaseFeeTokens.Left, lblMedBaseFeeTokens.Top + (lblMedBaseFeeTokens.Height / 2));
             }
         }
+
         //---------------------- END CONNECTING LINES BETWEEN FIELDS---------------------------
         //====================================================================================================================
         //---------------------- DETERMINE BITCOIN ADDRESS TYPE---------------------------
@@ -1458,6 +1455,14 @@ namespace Statamoto
 
         private void TboxSubmittedAddress_TextChanged(object sender, EventArgs e) // validate the address update the address type label
         {
+            if (tboxSubmittedAddress.Text == "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa")
+            {
+                lblGenesisAddress.Text = "(This is Satoshi's Genesis address. Enter any bitcoin address)";
+            }
+            else
+            {
+                lblGenesisAddress.Text = null;
+            }
             string addressString = tboxSubmittedAddress.Text; 
             string addressType = DetermineAddressType(addressString);
             if (addressType == "P2PKH (legacy)" || addressType == "P2SH" || addressType == "P2WPKH (segwit)" || addressType == "P2WSH" || addressType == "P2TT (taproot)" || addressType == "unknown") 
@@ -1468,18 +1473,23 @@ namespace Statamoto
                 QRCode qrCode = new QRCode(qrCodeData);
                 var qrCodeImage = qrCode.GetGraphic(20, Color.FromArgb(255, 192, 192, 192), Color.Black, false);
                 qrCodeImage.MakeTransparent(Color.Black);
-                //var qrCodeImage = qrCode.GetGraphic(20);
                 QRCodePicturebox.Image = qrCodeImage;
-                //string addressString = tboxSubmittedAddress.Text;
-               // string addressType = DetermineAddressType(addressString);
                 lblAddressType.Text = addressType + " fetching balance";
                 GetAddressBalance(addressString);
+                GetConfirmedTransactionsForAddress(addressString);
                 lblAddressType.Text = addressType + " address type";
             }
             else
             {
                 lblAddressType.Text = "Invalid address format";
                 QRCodePicturebox.Image = null;
+                lblConfirmedReceived.Text = string.Empty;
+                lblConfirmedReceivedOutputs.Text = string.Empty;
+                lblConfirmedSpent.Text = string.Empty;
+                lblConfirmedSpentOutputs.Text = string.Empty;
+                lblConfirmedTransactionCount.Text = string.Empty;
+                lblConfirmedUnspent.Text = string.Empty;
+                lblConfirmedUnspentOutputs.Text = string.Empty;
             }
         }
 
@@ -1487,29 +1497,26 @@ namespace Statamoto
         //====================================================================================================================
         //------------------------------------------ GET ADDRESS BALANCE--------------------------------
 
-        private async void GetAddressBalance(string addressString) // P2SH address - tested
+        private async void GetAddressBalance(string addressString) 
         {
-            // var nodeUrl = "https://blockstream.info/api/";
-            var nodeUrl = "https://mempool.space/api/";
             var request = "address/" + addressString;
-            //var client = new HttpClient { BaseAddress = new Uri(nodeUrl) };
-            //var response = await client.GetAsync("address/3JXP37UzVKyWZ1AmGVwpnceVUyCAkHNHRr");
-            var url = nodeUrl + request;
+            var RequestURL = NodeURL + request;
+            //var RequestURL = "http://umbrel.local:3006/api/" + request;
             var client = new HttpClient();
-            var response = await client.GetAsync($"https://blockstream.info/api/address/{addressString}");
+            var response = await client.GetAsync($"{RequestURL}");
             if (!response.IsSuccessStatusCode)
             {
-                Console.WriteLine("Failed to retrieve data.");
+                lblNodeStatusLight.ForeColor = Color.Red;
+                lblActiveNode.Text = "Disconnected/error";
                 return;
             }
             var jsonData = await response.Content.ReadAsStringAsync();
-            //var addressData = JsonConvert.DeserializeObject<dynamic>(jsonData);
             var addressData = JObject.Parse(jsonData);
             lblConfirmedTransactionCount.Text = Convert.ToString(addressData["chain_stats"]["tx_count"]);
-            lblConfirmedReceived.Text = Convert.ToString(addressData["chain_stats"]["funded_txo_sum"]);
+            lblConfirmedReceived.Text = ConvertSatsToBitcoin(Convert.ToString(addressData["chain_stats"]["funded_txo_sum"])).ToString();
             lblConfirmedReceivedOutputs.Location = new Point(lblConfirmedReceived.Location.X + lblConfirmedReceived.Width, lblConfirmedReceivedOutputs.Location.Y);
             lblConfirmedReceivedOutputs.Text = "(" + addressData["chain_stats"]["funded_txo_count"] + " outputs)";
-            lblConfirmedSpent.Text = Convert.ToString(addressData["chain_stats"]["spent_txo_sum"]);
+            lblConfirmedSpent.Text = ConvertSatsToBitcoin(Convert.ToString(addressData["chain_stats"]["spent_txo_sum"])).ToString();
             lblConfirmedSpentOutputs.Location = new Point(lblConfirmedSpent.Location.X + lblConfirmedSpent.Width -5, lblConfirmedSpentOutputs.Location.Y);
             lblConfirmedSpentOutputs.Text = " (" + addressData["chain_stats"]["spent_txo_count"] + " outputs)";
             var fundedTx = Convert.ToDouble(addressData["chain_stats"]["funded_txo_count"]);
@@ -1518,68 +1525,92 @@ namespace Statamoto
             var confirmedSpent = Convert.ToDouble(addressData["chain_stats"]["spent_txo_sum"]);
             var confirmedUnspent = confirmedReceived - confirmedSpent;
             var unSpentTxOutputs = fundedTx - spentTx;
-            lblConfirmedUnspent.Text = Convert.ToString(confirmedUnspent);
+            lblConfirmedUnspent.Text = ConvertSatsToBitcoin(Convert.ToString(confirmedUnspent)).ToString();
             lblConfirmedUnspentOutputs.Location = new Point(lblConfirmedUnspent.Location.X + lblConfirmedUnspent.Width, lblConfirmedUnspentOutputs.Location.Y);
             lblConfirmedUnspentOutputs.Text = "(" + Convert.ToString(unSpentTxOutputs) + " outputs)";
         }
 
-        //---------------------- END GET ADDRESS BALANCE---------------------------
+        //---------------------- END GET ADDRESS BALANCE ---------------------------
         //====================================================================================================================
-        
+        //---------------------- GET CONFIRMED TRANSACTIONS FOR ADDRESS ------------
+        private async void GetConfirmedTransactionsForAddress(string addressString)
+        {
+            var request = "address/" + addressString + "/txs/chain";
+        }
+        //------------------ END GET CONFIRMED TRANSACTIONS FOR ADDRESS ------------
+        private async void CheckBlockchainExplorerApiStatus()
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    Ping pingSender = new Ping();
+                    string pingAddress = null;
+                    if (NodeURL == "https://blockstream.info/api/")
+                    {
+                        pingAddress = "blockstream.info";
+                    }
+                    if (NodeURL == "https://mempool.space/api/")
+                    {
+                        pingAddress = "mempool.space";
+                    }
+                    PingReply reply = await pingSender.SendPingAsync(pingAddress);
+                    if (reply.Status == IPStatus.Success)
+                    {
+                        lblNodeStatusLight.ForeColor = Color.Green;
+                        var displayNodeName = "";
+                        if (NodeURL == "https://blockstream.info/api/")
+                        {
+                            displayNodeName = "Blockstream";
+                        }
+                        if (NodeURL == "https://mempool.space/api/")
+                        {
+                            displayNodeName = "Mempool.space";
+                        }
+                        lblActiveNode.Text = displayNodeName + " status";
+                    }
+                    else
+                    {
+                        // API is not online
+                        lblNodeStatusLight.ForeColor = Color.Red;
+                        var displayNodeName = "";
+                        if (NodeURL == "https://blockstream.info/api/")
+                        {
+                            displayNodeName = "Blockstream";
+                        }
+                        if (NodeURL == "https://mempool.space/api/")
+                        {
+                            displayNodeName = "Mempool.space";
+                        }
+                        lblActiveNode.Text = displayNodeName + " status";
+                    }
+                }
+                catch (HttpRequestException)
+                {
+                    // API is not online
+                    lblNodeStatusLight.ForeColor = Color.Red;
+                    var displayNodeName = "";
+                    if (NodeURL == "https://blockstream.info/api/")
+                    {
+                        displayNodeName = "Blockstream";
+                    }
+                    if (NodeURL == "https://mempool.space/api/")
+                    {
+                        displayNodeName = "Mempool.space";
+                    }
+                    lblActiveNode.Text = displayNodeName + " status";
+                }
+            }
+        }
 
+        private decimal ConvertSatsToBitcoin(string numerics)
+        {
+            decimal number = decimal.Parse(numerics);
+            decimal result = number / 100000000;
+            return result;
+        }
     }
 }
-
-
-
-
-
-
-
-
-
-/* private async void GetP2PKHLegacyAddressBalance(string addressString) // Legacy/P2PKH address - tested
- {
-     BitcoinPubKeyAddress address = new BitcoinPubKeyAddress(addressString, Network.Main);
-     var client = new QBitNinjaClient(Network.Main);
-     var balance = await client.GetBalance(address, unspentOnly: true);
-     decimal totalBalance = balance.Operations.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
-     MessageBox.Show("Balance: " + totalBalance);
- }
-
-   private async void GetP2SHAddressBalance(string addressString) // P2SH address - tested
-   {
-       BitcoinScriptAddress address = new BitcoinScriptAddress(addressString, Network.Main);
-       var client = new QBitNinjaClient(Network.Main);
-     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-     var balance = await client.GetBalance(address, unspentOnly: true);
-       decimal totalBalance = balance.Operations.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
-       MessageBox.Show("Balance: " + totalBalance);
-   }
-
-private async void GetP2WPKHSegwitAddressBalance(string addressString)  // Segwit/P2WPKH address - tested
-{
-    BitcoinWitPubKeyAddress address = new BitcoinWitPubKeyAddress(addressString, Network.Main);
-    var client = new QBitNinjaClient(Network.Main);
-    var balance = await client.GetBalance(address, unspentOnly: true);
-    decimal totalBalance = balance.Operations.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
-    MessageBox.Show("Balance: " + totalBalance);
-}
-
-private async void GetP2WSHAddressBalance(string addressString)
-{
-    BitcoinWitScriptAddress address = new BitcoinWitScriptAddress(addressString, Network.Main);
-    var client = new QBitNinjaClient(Network.Main);
-    var balance = await client.GetBalance(address, unspentOnly: true);
-    decimal totalBalance = balance.Operations.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
-    MessageBox.Show("Balance: " + totalBalance);
-}
-
-/*private async void GetTaprootAddressBalance(string addressString) // Taproot(P2TR) - not yet working!
-{
-    var taprootAddress = TaprootAddress.Create(addressString, Network.Main);
-    var client = new QBitNinjaClient(Network.Main);
-    var balance = await client.GetBalance(taprootAddress, unspentOnly: true);
-    decimal totalBalance = balance.Operations.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
-    MessageBox.Show("Balance: " + totalBalance);
-}*/
+//====================================================================================================================================================================
+//====================================================================================================================================================================
+//====================================================================================================================================================================

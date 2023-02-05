@@ -12,23 +12,19 @@ namespace Statamoto
 {
     public partial class settingsScreen : Form
     {
+        private bool hasAPISelectorComboBoxJustBeenPainted = true;
         public bool BitcoinExplorerEndpointsEnabled { get; set; }
         public bool BlockchainInfoEndpointsEnabled { get; set; }
-
         public bool BitcoinExplorerOrgJSONEnabled { get; set; }
         public bool BlockchainInfoJSONEnabled { get; set; }
-
         public bool CoingeckoComJSONEnabled { get; set; }
-
         public bool BlockchairComJSONEnabled { get; set; }
-
         public bool MempoolSpaceLightningJSONEnabled { get; set; }
-
+        public string NodeURL { get; set; }
         public int APIGroup1RefreshInMinsSelection { get; set; } = 1;
-
         public int APIGroup2RefreshInHoursSelection { get; set; } = 24;
-
         public static settingsScreen Instance { get; private set; }
+        
         public static void CreateInstance()
         {
             if (Instance == null)
@@ -43,17 +39,17 @@ namespace Statamoto
             comboAPISelectorForQueries.SelectedIndex = 1;
         }
 
-        private void btnExitSettings_Click(object sender, EventArgs e)
+        private void BtnExitSettings_Click(object sender, EventArgs e)
         {
             
         }
 
-        private void settings_Paint(object sender, PaintEventArgs e)
+        private void Settings_Paint(object sender, PaintEventArgs e)
         {
             ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Gray, ButtonBorderStyle.Solid);
         }
 
-        private void lblBitcoinExplorerEndpoints_Click(object sender, EventArgs e)
+        private void LblBitcoinExplorerEndpoints_Click(object sender, EventArgs e)
           {
               if (lblBitcoinExplorerEndpoints.Text == "✔️")
               {
@@ -67,7 +63,7 @@ namespace Statamoto
               }
          }
 
-        private void lblBlockchainInfoEndpoints_Click(object sender, EventArgs e)
+        private void LblBlockchainInfoEndpoints_Click(object sender, EventArgs e)
         {
             if (lblBlockchainInfoEndpoints.Text == "✔️")
             {
@@ -81,7 +77,7 @@ namespace Statamoto
             }
         }
 
-        private void lblBlockchainExplorerJSON_Click(object sender, EventArgs e)
+        private void LblBlockchainExplorerJSON_Click(object sender, EventArgs e)
         {
             if (lblBlockchainExplorerJSON.Text == "✔️")
             {
@@ -95,7 +91,7 @@ namespace Statamoto
             }
         }
 
-        private void lblBlockchainInfoJSON_Click(object sender, EventArgs e)
+        private void LblBlockchainInfoJSON_Click(object sender, EventArgs e)
         {
             if (lblBlockchainInfoJSON.Text == "✔️")
             {
@@ -109,7 +105,7 @@ namespace Statamoto
             }
         }
 
-        private void lblCoingeckoComJSON_Click(object sender, EventArgs e)
+        private void LblCoingeckoComJSON_Click(object sender, EventArgs e)
         {
             if (lblCoingeckoComJSON.Text == "✔️")
             {
@@ -123,7 +119,7 @@ namespace Statamoto
             }
         }
 
-        private void lblBlockchairComJSON_Click(object sender, EventArgs e)
+        private void LblBlockchairComJSON_Click(object sender, EventArgs e)
         {
             if (lblBlockchairComJSON.Text == "✔️")
             {
@@ -137,7 +133,7 @@ namespace Statamoto
             }
         }
 
-        private void lblMempoolLightningJSON_Click(object sender, EventArgs e)
+        private void LblMempoolLightningJSON_Click(object sender, EventArgs e)
         {
             if (lblMempoolLightningJSON.Text == "✔️")
             {
@@ -151,7 +147,7 @@ namespace Statamoto
             }
         }
 
-        private void settingsScreen_FormClosing(object sender, FormClosingEventArgs e)
+        private void SettingsScreen_FormClosing(object sender, FormClosingEventArgs e)  // make sure all values are passed back to calling screen
         {
             if (lblBitcoinExplorerEndpoints.Text == "✔️")
             {
@@ -209,33 +205,40 @@ namespace Statamoto
             {
                 MempoolSpaceLightningJSONEnabled = false;
             }
-            // APIGroup1RefreshInMinsSelection = (int)numericUpDownAPIGroup1.Value;
+            if (comboAPISelectorForQueries.SelectedIndex == 0)
+            {
+                NodeURL = "https://blockstream.info/api/";
+            }
+            if (comboAPISelectorForQueries.SelectedIndex == 1)
+            {
+                NodeURL = "https://mempool.space/api/";
+            }
         }
 
-        private void button_MouseHover(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            button.BackColor = Color.Gray;
-            button.ForeColor = System.Drawing.ColorTranslator.FromHtml("#1D1D1D");
-        }
-
-        private void button_MouseLeave(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            button.BackColor = System.Drawing.ColorTranslator.FromHtml("#1D1D1D");
-            button.ForeColor = Color.Gray;
-        }
-
-        private void numericUpDownAPIGroup1_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDownAPIGroup1_ValueChanged(object sender, EventArgs e) // number of mins between refreshes for API group 1 has been changed
         {
             APIGroup1RefreshInMinsSelection = (int)numericUpDownAPIGroup1.Value;
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        private void NumericUpDownAPIGroup2_ValueChanged(object sender, EventArgs e) // number of mins between refreshes for API group 2 has been changed
         {
             APIGroup2RefreshInHoursSelection = (int)numericUpDownAPIGroup2.Value;
         }
 
-
+        private void ComboAPISelectorForQueries_SelectedIndexChanged(object sender, EventArgs e) // set the node to be used for user queries
+        {
+            if (!hasAPISelectorComboBoxJustBeenPainted) // ignore the selectedindexchanged event that occurs during form paint
+            {
+                if (comboAPISelectorForQueries.SelectedIndex == 0)
+                {
+                    NodeURL = "https://blockstream.info/api/";
+                }
+                if (comboAPISelectorForQueries.SelectedIndex == 1)
+                {
+                NodeURL = "https://mempool.space/api/";
+                }
+            }
+            hasAPISelectorComboBoxJustBeenPainted = false; // ignored first event now
+        }
     }
 }

@@ -52,8 +52,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
             this.comboAPISelectorForQueries = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAPIGroup1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -78,7 +78,7 @@
             this.btnExitSettings.TabStop = false;
             this.btnExitSettings.Text = "close";
             this.btnExitSettings.UseVisualStyleBackColor = false;
-            this.btnExitSettings.Click += new System.EventHandler(this.btnExitSettings_Click);
+            this.btnExitSettings.Click += new System.EventHandler(this.BtnExitSettings_Click);
             // 
             // lblWhatever
             // 
@@ -102,7 +102,7 @@
             this.lblBitcoinExplorerEndpoints.Size = new System.Drawing.Size(23, 18);
             this.lblBitcoinExplorerEndpoints.TabIndex = 6;
             this.lblBitcoinExplorerEndpoints.Text = "✔️";
-            this.lblBitcoinExplorerEndpoints.Click += new System.EventHandler(this.lblBitcoinExplorerEndpoints_Click);
+            this.lblBitcoinExplorerEndpoints.Click += new System.EventHandler(this.LblBitcoinExplorerEndpoints_Click);
             // 
             // lblBlockchainInfoEndpoints
             // 
@@ -115,7 +115,7 @@
             this.lblBlockchainInfoEndpoints.Size = new System.Drawing.Size(23, 18);
             this.lblBlockchainInfoEndpoints.TabIndex = 8;
             this.lblBlockchainInfoEndpoints.Text = "✔️";
-            this.lblBlockchainInfoEndpoints.Click += new System.EventHandler(this.lblBlockchainInfoEndpoints_Click);
+            this.lblBlockchainInfoEndpoints.Click += new System.EventHandler(this.LblBlockchainInfoEndpoints_Click);
             // 
             // label4
             // 
@@ -139,7 +139,7 @@
             this.lblBlockchainExplorerJSON.Size = new System.Drawing.Size(23, 18);
             this.lblBlockchainExplorerJSON.TabIndex = 10;
             this.lblBlockchainExplorerJSON.Text = "✔️";
-            this.lblBlockchainExplorerJSON.Click += new System.EventHandler(this.lblBlockchainExplorerJSON_Click);
+            this.lblBlockchainExplorerJSON.Click += new System.EventHandler(this.LblBlockchainExplorerJSON_Click);
             // 
             // label6
             // 
@@ -163,7 +163,7 @@
             this.lblBlockchainInfoJSON.Size = new System.Drawing.Size(23, 18);
             this.lblBlockchainInfoJSON.TabIndex = 12;
             this.lblBlockchainInfoJSON.Text = "✔️";
-            this.lblBlockchainInfoJSON.Click += new System.EventHandler(this.lblBlockchainInfoJSON_Click);
+            this.lblBlockchainInfoJSON.Click += new System.EventHandler(this.LblBlockchainInfoJSON_Click);
             // 
             // label8
             // 
@@ -187,7 +187,7 @@
             this.lblCoingeckoComJSON.Size = new System.Drawing.Size(23, 18);
             this.lblCoingeckoComJSON.TabIndex = 14;
             this.lblCoingeckoComJSON.Text = "✔️";
-            this.lblCoingeckoComJSON.Click += new System.EventHandler(this.lblCoingeckoComJSON_Click);
+            this.lblCoingeckoComJSON.Click += new System.EventHandler(this.LblCoingeckoComJSON_Click);
             // 
             // label10
             // 
@@ -211,7 +211,7 @@
             this.lblBlockchairComJSON.Size = new System.Drawing.Size(23, 18);
             this.lblBlockchairComJSON.TabIndex = 17;
             this.lblBlockchairComJSON.Text = "✔️";
-            this.lblBlockchairComJSON.Click += new System.EventHandler(this.lblBlockchairComJSON_Click);
+            this.lblBlockchairComJSON.Click += new System.EventHandler(this.LblBlockchairComJSON_Click);
             // 
             // label3
             // 
@@ -245,7 +245,7 @@
             0,
             0,
             0});
-            this.numericUpDownAPIGroup1.ValueChanged += new System.EventHandler(this.numericUpDownAPIGroup1_ValueChanged);
+            this.numericUpDownAPIGroup1.ValueChanged += new System.EventHandler(this.NumericUpDownAPIGroup1_ValueChanged);
             // 
             // label2
             // 
@@ -292,7 +292,7 @@
             this.lblMempoolLightningJSON.Size = new System.Drawing.Size(23, 18);
             this.lblMempoolLightningJSON.TabIndex = 21;
             this.lblMempoolLightningJSON.Text = "✔️";
-            this.lblMempoolLightningJSON.Click += new System.EventHandler(this.lblMempoolLightningJSON_Click);
+            this.lblMempoolLightningJSON.Click += new System.EventHandler(this.LblMempoolLightningJSON_Click);
             // 
             // label9
             // 
@@ -355,7 +355,7 @@
             0,
             0,
             0});
-            this.numericUpDownAPIGroup2.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.numericUpDownAPIGroup2.ValueChanged += new System.EventHandler(this.NumericUpDownAPIGroup2_ValueChanged);
             // 
             // label1
             // 
@@ -389,16 +389,6 @@
             this.panel4.Size = new System.Drawing.Size(353, 106);
             this.panel4.TabIndex = 24;
             // 
-            // label7
-            // 
-            this.label7.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.Silver;
-            this.label7.Location = new System.Drawing.Point(18, 15);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(319, 44);
-            this.label7.TabIndex = 22;
-            this.label7.Text = "Select API to use for specific blockchain queries";
-            // 
             // comboAPISelectorForQueries
             // 
             this.comboAPISelectorForQueries.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -416,6 +406,17 @@
             this.comboAPISelectorForQueries.Size = new System.Drawing.Size(319, 26);
             this.comboAPISelectorForQueries.TabIndex = 23;
             this.comboAPISelectorForQueries.TabStop = false;
+            this.comboAPISelectorForQueries.SelectedIndexChanged += new System.EventHandler(this.ComboAPISelectorForQueries_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.Silver;
+            this.label7.Location = new System.Drawing.Point(18, 15);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(319, 44);
+            this.label7.TabIndex = 22;
+            this.label7.Text = "Select API to use for specific blockchain queries";
             // 
             // settingsScreen
             // 
@@ -432,8 +433,8 @@
             this.Name = "settingsScreen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "settingsScreen";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.settingsScreen_FormClosing);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.settings_Paint);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsScreen_FormClosing);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Settings_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAPIGroup1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
