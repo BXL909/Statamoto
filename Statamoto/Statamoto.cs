@@ -2,7 +2,7 @@
 ────██──██─────  ╔═╗┌┬┐┌─┐┌┬┐┌─┐┌┬┐┌─┐┌┬┐┌─┐
 ███████████▄───  ╚═╗ │ ├─┤ │ ├─┤││││ │ │ │ │
 ──███████████▄─  ╚═╝ ┴ ┴ ┴ ┴ ┴ ┴┴ ┴└─┘ ┴ └─┘
-──███────▀████─  Version history
+──███────▀████─  Version history 
 ──███──────███─  1.0 initial release
 ──███────▄███▀─  1.1 Used threading on API calls for speed and UI responsiveness. Added 4 new fields (number of hodling addresses, Blockchain size, 24 hour number of blocks mined, Number of discoverable nodes)
 ──█████████▀───      Added settings screen. Added ability to disable individual API calls. Added options to change API call refresh frequency. Added a 'last updated' timer.
