@@ -16,8 +16,10 @@
 */
 
 /* Stuff to do:
- * 
- * 
+ * transaction list - tidy up column headers & colours.
+ * add balance change to transaction list.
+ * add status (conf/unconf) to transaction list? Along with checkbox to retrieve conf/unconf/both? 
+ * name change? OrangeBit?
  */
 
 using System;
@@ -48,14 +50,16 @@ using QBitNinja.Client.Models;
 using NBitcoin.RPC;
 using NBitcoin.Payment;
 using QRCoder;
+using System.Windows.Controls;
+using ListViewItem = System.Windows.Forms.ListViewItem;
+using System.Reflection;
 
 namespace Statamoto
 {
     public partial class Statamoto : Form
     {
-        //====================================================================================================================
-        //---------------------------INITIALISE-------------------------------
-
+        //=============================================================================================================
+        //---------------------------INITIALISE------------------------------------------------------------------------
         private int intDisplayCountdownToRefresh; // countdown in seconds to next refresh, for display only
         private int intAPIGroup1TimerIntervalMillisecsConstant; // milliseconds, used to reset the interval of the timer for api group1 refresh
         private int APIGroup1DisplayTimerIntervalSecsConstant; // seconds, used to reset the countdown display to its original number
@@ -68,12 +72,13 @@ namespace Statamoto
         private bool RunCoingeckoComJSONAPI = true;
         private bool RunBlockchairComJSONAPI = true;
         private bool RunMempoolSpaceLightningAPI = true;
-        private string NodeURL = "https://mempool.space/api/";
+        private string NodeURL = "https://mempool.space/api/"; // default value. Can be changed by user.
         private int APIGroup1RefreshFrequency = 1; // mins. Default value 1. Initial value only
         private int APIGroup2RefreshFrequency = 24; // hours. Default value 2. Initial value only
         private int intDisplaySecondsElapsedSinceUpdate = 0; // used to count seconds since the data was last refreshed, for display only.
         private bool ObtainedHalveningSecondsRemainingYet = false; // used to check whether we know halvening seconds before we start trying to subtract from them
-        
+        private TransactionService _transactionService;
+        private int TotalTransactionRowsAdded = 0;
 
         [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]  // needed for the code that moves the form as not using a standard control
         private extern static void ReleaseCapture();
@@ -85,6 +90,7 @@ namespace Statamoto
         {
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             InitializeComponent();
+            _transactionService = new TransactionService(NodeURL);
         }
 
         private void Form1_Load(object sender, EventArgs e) // on form loading
@@ -96,10 +102,8 @@ namespace Statamoto
             CheckBlockchainExplorerApiStatus();
         }
 
-        //--------------------------END INITIALISE--------------------------
-        //====================================================================================================================
-        // -------------------------CLOCK TICKS-----------------------------
-
+        //=============================================================================================================
+        // -------------------------CLOCK TICKS------------------------------------------------------------------------
         private void StartTheClocksTicking()
         {
             intDisplayCountdownToRefresh = (APIGroup1RefreshFrequency * 60); //turn minutes into seconds. This is the number used to display remaning time until refresh
@@ -148,10 +152,10 @@ namespace Statamoto
             UpdateAPIGroup2DataFields(); // fetch data and populate fields
         }
 
-        //-------------------------END CLOCK TICKS-----------------------------
-        //====================================================================================================================
-        //-------------------------UPDATE FORM FIELDS---------------------------
-        
+        //==============================================================================================================================================================================================
+        //======================BITCOIN AND LIGHTNING DASHBOARD SPECIFIC STUFF==========================================================================================================================
+        //=============================================================================================================
+        //-------------------------UPDATE FORM FIELDS------------------------------------------------------------------
         public async void UpdateAPIGroup1DataFields()
         {
             using (WebClient client = new WebClient())
@@ -671,12 +675,12 @@ namespace Statamoto
                             var result6 = MempoolSpaceLiquidityRankingJSONRefresh();
                             for (int i = 0; i < 10; i++)
                             {
-                                Label aliasLabel = (Label)this.Controls.Find("aliasLabel" + (i + 1), true)[0];
+                                System.Windows.Forms.Label aliasLabel = (System.Windows.Forms.Label)this.Controls.Find("aliasLabel" + (i + 1), true)[0];
                                 aliasLabel.Invoke((MethodInvoker)delegate
                                 {
                                     aliasLabel.Text = result6.aliases[i];
                                 });
-                                Label capacityLabel = (Label)this.Controls.Find("capacityLabel" + (i + 1), true)[0];
+                                System.Windows.Forms.Label capacityLabel = (System.Windows.Forms.Label)this.Controls.Find("capacityLabel" + (i + 1), true)[0];
                                 capacityLabel.Invoke((MethodInvoker)delegate
                                 {
                                     capacityLabel.Text = result6.capacities[i];
@@ -685,12 +689,12 @@ namespace Statamoto
                             var result7 = MempoolSpaceConnectivityRankingJSONRefresh();
                             for (int i = 0; i < 10; i++)
                             {
-                                Label aliasLabel = (Label)this.Controls.Find("aliasConnLabel" + (i + 1), true)[0];
+                                System.Windows.Forms.Label aliasLabel = (System.Windows.Forms.Label)this.Controls.Find("aliasConnLabel" + (i + 1), true)[0];
                                 aliasLabel.Invoke((MethodInvoker)delegate
                                 {
                                     aliasLabel.Text = result7.aliases[i];
                                 });
-                                Label channelLabel = (Label)this.Controls.Find("channelLabel" + (i + 1), true)[0];
+                                System.Windows.Forms.Label channelLabel = (System.Windows.Forms.Label)this.Controls.Find("channelLabel" + (i + 1), true)[0];
                                 channelLabel.Invoke((MethodInvoker)delegate
                                 {
                                     channelLabel.Text = result7.channels[i];
@@ -887,215 +891,8 @@ namespace Statamoto
             }
         }
 
-            //--------------------------END UPDATE FORM FIELDS----------------------------
-            //====================================================================================================================        
-            //-------------------------- FORM NAVIGATION/BUTTON CONTROLS--------------------------
-
-        private void BtnSplash_Click(object sender, EventArgs e)
-        {
-            splash splash = new splash(); // invoke the about/splash screen
-            splash.ShowDialog();
-        }
-
-        private void BtnExit_Click(object sender, EventArgs e) // exit
-        {
-            this.Close();
-        }
-
-        private void BtnMinimise_Click(object sender, EventArgs e) // minimise the form
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
-
-        private void BtnMoveWindow_MouseDown(object sender, MouseEventArgs e) // move the form when the move control is used
-        {
-            ReleaseCapture();
-            SendMessage(this.Handle, 0x112, 0xf012, 0);
-        }
-
-        private void BtnMoveWindow_MouseUp(object sender, MouseEventArgs e) // reset colour of the move form control
-        {
-            btnMoveWindow.BackColor = System.Drawing.ColorTranslator.FromHtml("#1D1D1D");
-        }
-
-        private void BtnBitcoinDashboard_Click(object sender, EventArgs e)
-        {
-            this.DoubleBuffered = true;
-            this.SuspendLayout();
-            panelLightningDashboard.Visible = false;
-            panelTesting.Visible = false;
-            panelBitcoinDashboard.Visible = true;
-            this.ResumeLayout();
-        }
-
-        private void BtnLightningDashboard_Click(object sender, EventArgs e)
-        {
-            this.DoubleBuffered = true;
-            this.SuspendLayout();
-            panelBitcoinDashboard.Visible = false;
-            panelTesting.Visible = false;
-            panelLightningDashboard.Visible = true;
-            this.ResumeLayout();
-        }
-
-        private void BtnTesting_Click(object sender, EventArgs e)
-        {
-            panelBitcoinDashboard.Visible = false;
-            panelLightningDashboard.Visible = false;
-            panelTesting.Visible = true;
-        }
-
-        private void BtnSettings_Click(object sender, EventArgs e)
-        {
-            settingsScreen.CreateInstance();
-            settingsScreen.Instance.ShowDialog();
-            // read all fields from the settings screen and set variables for use on the main form
-            if (settingsScreen.Instance.BitcoinExplorerEndpointsEnabled)
-            {
-                RunBitcoinExplorerEndpointAPI = true;
-            }
-            else
-            {
-                RunBitcoinExplorerEndpointAPI = false;
-            }
-            if (settingsScreen.Instance.BlockchainInfoEndpointsEnabled)
-            {
-                RunBlockchainInfoEndpointAPI = true;
-            }
-            else
-            {
-                RunBlockchainInfoEndpointAPI = false;
-            }
-            if (settingsScreen.Instance.BitcoinExplorerOrgJSONEnabled)
-            {
-                RunBitcoinExplorerOrgJSONAPI = true;
-            }
-            else
-            {
-                RunBitcoinExplorerOrgJSONAPI = false;
-            }
-            if (settingsScreen.Instance.BlockchainInfoJSONEnabled)
-            {
-                RunBlockchainInfoJSONAPI = true;
-            }
-            else
-            {
-                RunBlockchainInfoJSONAPI = false;
-            }
-            if (settingsScreen.Instance.CoingeckoComJSONEnabled)
-            {
-                RunCoingeckoComJSONAPI = true;
-            }
-            else
-            {
-                RunCoingeckoComJSONAPI = false;
-            }
-            if (settingsScreen.Instance.BlockchairComJSONEnabled)
-            {
-                RunBlockchairComJSONAPI = true;
-            }
-            else
-            {
-                RunBlockchairComJSONAPI = false;
-            }
-            if (settingsScreen.Instance.MempoolSpaceLightningJSONEnabled)
-            {
-                RunMempoolSpaceLightningAPI = true;
-            }
-            else
-            {
-                RunMempoolSpaceLightningAPI = false;
-            }
-            NodeURL = settingsScreen.Instance.NodeURL;
-            CheckBlockchainExplorerApiStatus();
-
-            if (APIGroup1DisplayTimerIntervalSecsConstant != (settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60)) // if user has changed refresh frequency
-            {
-                APIGroup1DisplayTimerIntervalSecsConstant = settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60;
-                intAPIGroup1TimerIntervalMillisecsConstant = ((settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60) * 1000);
-                intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant;
-                timerAPIGroup1.Stop();
-                timerAPIGroup1.Interval = intAPIGroup1TimerIntervalMillisecsConstant;
-                timerAPIGroup1.Start();
-            }
-
-            if (intAPIGroup2TimerIntervalMillisecsConstant != (((settingsScreen.Instance.APIGroup2RefreshInHoursSelection * 60) * 60) * 1000))
-            {
-                intAPIGroup2TimerIntervalMillisecsConstant = (((settingsScreen.Instance.APIGroup2RefreshInHoursSelection * 60) * 60) * 1000);
-                timerAPIGroup2.Stop();
-                timerAPIGroup2.Interval = intAPIGroup2TimerIntervalMillisecsConstant;
-                timerAPIGroup2.Start();
-            }
-        }
-
-        //-----------------------END FORM NAVIGATION/BUTTON CONTROLS--------------------------
-        //====================================================================================================================
-        //--------------------COUNTDOWN, ERROR MESSAGES AND STATUS LIGHTS--------------
-
-        private void UpdateOnScreenCountdownAndFlashLights()
-        {
-            lblSecsCountdown.Text = Convert.ToString(intDisplayCountdownToRefresh); // update the countdown on the form
-            intDisplayCountdownToRefresh--; // reduce the countdown of the 1 minute timer by 1 second
-            if (intDisplayCountdownToRefresh <= 0) // if the 1 minute timer countdown has reached zero...
-            {
-                intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset it
-            }
-            lblSecsCountdown.Location = new Point(lblStatusMessPart1.Location.X + lblStatusMessPart1.Width - 8, lblSecsCountdown.Location.Y); // place the countdown according to the width of the status message
-            if (intDisplayCountdownToRefresh < (APIGroup1DisplayTimerIntervalSecsConstant - 1)) // if more than a second has expired since the data from the blocktimer was refreshed...
-            {
-                ChangeStatusLightAndClearErrorMessage();
-            }
-        }
-
-        private void ChangeStatusLightAndClearErrorMessage()
-        {
-            if (lblStatusLight.ForeColor != Color.DarkRed && lblStatusLight.ForeColor != Color.Green) // check whether a data refresh has just occured to see if a status light flash needs dimming
-            {
-                if (lblStatusLight.ForeColor == Color.Lime) // successful data refresh has occured
-                {
-                    lblStatusLight.ForeColor = Color.Green; // reset the colours to a duller version to give appearance of a flash
-                }
-                else // an error must have just occured
-                {
-                    lblStatusLight.ForeColor = Color.DarkRed; // reset the colours to a duller version to give appearance of a flash
-                    if (intDisplayCountdownToRefresh < 11) // when there are only 10 seconds left until the refresh...
-                    {
-                        lblErrorMessage.Text = ""; // hide any previous error message
-                        lblAlert.Text = ""; // and hide the alert icon
-                    }
-                }
-            }
-        }
-
-        private void ClearAlertAndErrorMessage()
-        {
-            lblAlert.Text = ""; // clear any error message
-            lblErrorMessage.Text = ""; // clear any error message
-        }
-
-        private void SetLightsMessagesAndResetTimers()
-        {
-            // set successful lights and messages on the form
-            lblStatusLight.Invoke((MethodInvoker)delegate
-            {
-                lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
-            });
-            lblStatusLight.Invoke((MethodInvoker)delegate
-            {
-                lblStatusLight.Text = "🟢"; // circle/light
-            });
-            lblStatusMessPart1.Invoke((MethodInvoker)delegate
-            {
-                lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
-            });
-            intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
-            intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
-        }
-
-        //----------------END COUNTDOWN, ERROR MESSAGES AND STATUS LIGHTS--------------
-        //====================================================================================================================
-        //------------------------------------API CALLS----------------------------
-
+        //=============================================================================================================
+        //------------------------------------API CALLS----------------------------------------------------------------
         //------BitcoinExplorer and BlockchainInfo endpoints 
         private (string priceUSD, string moscowTime, string marketCapUSD, string difficultyAdjEst, string txInMempool) BitcoinExplorerOrgEndpointsRefresh()
         {
@@ -1353,32 +1150,8 @@ namespace Statamoto
             }
         }
 
-        //--------------------------END API CALLS------------------------------
-        //====================================================================================================================
-        //--------------------------ON-SCREEN CLOCK----------------------------
-
-        private void UpdateOnScreenClock()
-        {
-            lblTime.Text = DateTime.Now.ToString("HH:mm");
-            lblSeconds.Text = DateTime.Now.ToString("ss");
-            lblDate.Text = DateTime.Now.ToString("MMMM dd yyyy");
-            lblDay.Text = DateTime.Now.ToString("dddd");
-            lblSeconds.Location = new Point(lblTime.Location.X + lblTime.Width - 10, lblSeconds.Location.Y); // place the seconds according to the width of the minutes/seconds (lblTime)
-        }
-
-        //----------------------END ON-SCREEN CLOCK----------------------------
-        //====================================================================================================================
-        //---------------------- BORDER AROUND WINDOW---------------------------
-
-        private void Form1_Paint(object sender, PaintEventArgs e) // place a 1px border around the form
-        {
-            ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Gray, ButtonBorderStyle.Solid);
-        }
-
-        //---------------------END BORDER AROUND WINDOW--------------------------
-        //====================================================================================================================
-        //---------------------- CONNECTING LINES BETWEEN FIELDS---------------------------
-
+        //=============================================================================================================
+        //---------------------- CONNECTING LINES BETWEEN FIELDS-------------------------------------------------------
         private void PanelLightningDashboard_Paint(object sender, PaintEventArgs e)
         {
             using (Pen pen = new Pen(Color.FromArgb(106, 72, 9), 1))
@@ -1405,10 +1178,10 @@ namespace Statamoto
             }
         }
 
-        //---------------------- END CONNECTING LINES BETWEEN FIELDS---------------------------
-        //====================================================================================================================
-        //---------------------- DETERMINE BITCOIN ADDRESS TYPE---------------------------
-
+        //==============================================================================================================================================================================================
+        //======================== ADDRESS TAB =========================================================================================================================================================
+        //=============================================================================================================
+        //---------------------- DETERMINE BITCOIN ADDRESS TYPE--------------------------------------------------------
         private string DetermineAddressType(string address)
         {
             try
@@ -1449,12 +1222,14 @@ namespace Statamoto
             }
         }
 
-        //---------------------- END DETERMINE BITCOIN ADDRESS TYPE---------------------------
-        //====================================================================================================================
-        //--------------- VALIDATE BITCOIN ADDRESS AND GENERATE QR-------------
-
+        //=============================================================================================================
+        //--------------- VALIDATE BITCOIN ADDRESS AND GENERATE QR-----------------------------------------------------
         private void TboxSubmittedAddress_TextChanged(object sender, EventArgs e) // validate the address update the address type label
         {
+            listViewTransactions.Items.Clear();
+            TotalTransactionRowsAdded = 0;
+            btnNextTransactions.Enabled = true;
+
             if (tboxSubmittedAddress.Text == "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa")
             {
                 lblGenesisAddress.Text = "(This is Satoshi's Genesis address. Enter any bitcoin address)";
@@ -1476,7 +1251,8 @@ namespace Statamoto
                 QRCodePicturebox.Image = qrCodeImage;
                 lblAddressType.Text = addressType + " fetching balance";
                 GetAddressBalance(addressString);
-                GetConfirmedTransactionsForAddress(addressString);
+                string lastSeenTxId = "";
+                GetConfirmedTransactionsForAddress(addressString,lastSeenTxId);
                 lblAddressType.Text = addressType + " address type";
             }
             else
@@ -1493,10 +1269,8 @@ namespace Statamoto
             }
         }
 
-        //---------------------- END VALIDATE BITCOIN ADDRESS AND GENERATE QR---------------------------
-        //====================================================================================================================
-        //------------------------------------------ GET ADDRESS BALANCE--------------------------------
-
+        //=============================================================================================================
+        //------------------------------------------ GET ADDRESS BALANCE-----------------------------------------------
         private async void GetAddressBalance(string addressString) 
         {
             var request = "address/" + addressString;
@@ -1530,14 +1304,157 @@ namespace Statamoto
             lblConfirmedUnspentOutputs.Text = "(" + Convert.ToString(unSpentTxOutputs) + " outputs)";
         }
 
-        //---------------------- END GET ADDRESS BALANCE ---------------------------
-        //====================================================================================================================
-        //---------------------- GET CONFIRMED TRANSACTIONS FOR ADDRESS ------------
-        private async void GetConfirmedTransactionsForAddress(string addressString)
+        //=============================================================================================================
+        //---------------------- GET CONFIRMED TRANSACTIONS FOR ADDRESS -----------------------------------------------
+        private async void GetConfirmedTransactionsForAddress(string addressString, string lastSeenTxId)
         {
-            var request = "address/" + addressString + "/txs/chain";
+            var transactionsJson = await _transactionService.GetTransactionsAsync(addressString, lastSeenTxId);
+            var transactions = JsonConvert.DeserializeObject<List<Transaction>>(transactionsJson);
+            // *************************************************************************************************************************************THIS LINE GIVES OCCASIONAL ERRORS
+            List<string> txIds = transactions.Select(t => t.txid).ToList(); 
+            // **********************************************************************************************************************************************************************
+
+            // Update lastSeenTxId
+            if (transactions.Count > 0)
+            {
+                lastSeenTxId = transactions.Last().txid;
+            }
+            //LIST VIEW
+            listViewTransactions.Items.Clear();
+            listViewTransactions.View = View.Details;
+            listViewTransactions.GridLines = false;
+            
+            // Check if the column header already exists
+            if (listViewTransactions.Columns.Count == 0)
+            {
+                // If not, add the column header
+                listViewTransactions.Columns.Add("Transaction ID", 300);
+            }
+
+            // Add the block height column header
+            if (listViewTransactions.Columns.Count == 1)
+            {
+                listViewTransactions.Columns.Add("Block Height", 200);
+            }
+
+            // Add the items to the ListView
+            int counter = 0; // used to count rows in last as they're added
+
+            foreach (Transaction transaction in transactions)
+            {
+                ListViewItem item = new ListViewItem(transaction.txid);
+                item.SubItems.Add(transaction.status.block_height.ToString());
+                listViewTransactions.Items.Add(item);
+                counter++;
+                TotalTransactionRowsAdded++;
+                if (TotalTransactionRowsAdded <= 13)
+                {
+                    btnFirstTransaction.Enabled = false;
+                }
+                else
+                {
+                    btnFirstTransaction.Enabled = true;
+                }
+                lblTXPlaceInfo.Text = "Showing " + (TotalTransactionRowsAdded - counter + 1) + " - " + (TotalTransactionRowsAdded) + " of " + lblConfirmedTransactionCount.Text + " transactions";
+                if (Convert.ToString(TotalTransactionRowsAdded) == lblConfirmedTransactionCount.Text)
+                {
+                    btnNextTransactions.Enabled = false;
+                }
+                if (counter == 13) // stop adding rows at this point
+                {
+                    break;
+                }
+            }
         }
-        //------------------ END GET CONFIRMED TRANSACTIONS FOR ADDRESS ------------
+
+        private void btnGetNextTransactions(object sender, EventArgs e)
+        {
+            // Get the address from the address text box
+            var address = tboxSubmittedAddress.Text;
+            // Get the last seen transaction ID from the list view
+            var lastSeenTxId = listViewTransactions.Items[listViewTransactions.Items.Count - 1].Text;
+            // Call the GetConfirmedTransactionsForAddress method with the updated lastSeenTxId
+            GetConfirmedTransactionsForAddress(address, lastSeenTxId);
+        }
+
+        private void btnFirstTransaction_Click(object sender, EventArgs e)
+        {
+            // Get the address from the address text box
+            var address = tboxSubmittedAddress.Text;
+
+            // Get the last seen transaction ID from the list view
+            var lastSeenTxId = "";
+            TotalTransactionRowsAdded = 0;
+            btnNextTransactions.Enabled = true;
+
+            // Call the GetConfirmedTransactionsForAddress method with the updated lastSeenTxId
+            GetConfirmedTransactionsForAddress(address, lastSeenTxId);
+        }
+
+        //=============================================================================================================
+        //--------------- OVERRIDE COLOURS FOR LISTVIEW HEADINGS ------------------------------------------------------
+        private void listViewTransactions_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
+        {
+            Color headerColor = Color.FromArgb(50, 50, 50);
+            SolidBrush brush = new SolidBrush(headerColor);
+            e.Graphics.FillRectangle(brush, e.Bounds);
+            // Change text color and alignment
+            SolidBrush textBrush = new SolidBrush(Color.Silver);
+            StringFormat format = new StringFormat();
+            format.Alignment = StringAlignment.Near;
+            format.LineAlignment = StringAlignment.Center;
+            e.Graphics.DrawString(e.Header.Text, e.Font, textBrush, e.Bounds, format);
+        }
+
+        //=============================================================================================================
+        //--------------- OVERRIDE COLOURS FOR ROWS IN LISTVIEW -------------------------------------------------------
+        private void listViewTransactions_DrawItem(object sender, DrawListViewItemEventArgs e)
+        {
+            if (e.Item.Selected)
+            {
+                Color backgroundColor = Color.FromArgb(106, 72, 9);
+                SolidBrush brush = new SolidBrush(backgroundColor);
+                e.Graphics.FillRectangle(brush, e.Bounds);
+                e.Item.ForeColor = Color.White;
+            }
+            else
+            {
+                Color backgroundColor = Color.FromArgb(29, 29, 29);
+                SolidBrush brush = new SolidBrush(backgroundColor);
+                e.Graphics.FillRectangle(brush, e.Bounds);
+                e.Item.ForeColor = Color.FromArgb(255, 153, 0);
+            }
+            e.DrawText();
+        }
+
+        //=============================================================================================================
+        //--------- DRAW AN ELLIPSIS WHEN STRINGS DONT FIT IN A LISTVIEW COLUMN ---------------------------------------
+        private void listViewTransactions_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+            var text = e.SubItem.Text;
+            var font = listViewTransactions.Font;
+            var columnWidth = e.Header.Width;
+            var textWidth = TextRenderer.MeasureText(text, font).Width;
+            if (textWidth > columnWidth)
+            {
+                // Truncate the text
+                var maxText = text.Substring(0, text.Length * columnWidth / textWidth - 3) + "...";
+                var bounds = new Rectangle(e.SubItem.Bounds.Left, e.SubItem.Bounds.Top, columnWidth, e.SubItem.Bounds.Height);
+                // Clear the background
+                e.Graphics.FillRectangle(new SolidBrush(listViewTransactions.BackColor), bounds);
+                TextRenderer.DrawText(e.Graphics, maxText, font, bounds, e.Item.ForeColor, TextFormatFlags.EndEllipsis | TextFormatFlags.Left);
+            }
+            else if (textWidth < columnWidth)
+            {
+                // Clear the background
+                var bounds = new Rectangle(e.SubItem.Bounds.Left, e.SubItem.Bounds.Top, columnWidth, e.SubItem.Bounds.Height);
+                e.Graphics.FillRectangle(new SolidBrush(listViewTransactions.BackColor), bounds);
+                TextRenderer.DrawText(e.Graphics, text, font, bounds, e.Item.ForeColor, TextFormatFlags.Left);
+            }
+        }
+
+        //=============================================================================================================
+        //------------------ SHOW STATUS LIGHT FOR NODE ONLINE STATUS -------------------------------------------------
         private async void CheckBlockchainExplorerApiStatus()
         {
             using (var client = new HttpClient())
@@ -1603,14 +1520,301 @@ namespace Statamoto
             }
         }
 
+        //=============================================================================================================
+        //------------------ LIMIT MINIMUM WIDTH OF LISTVIEW COLUMNS --------------------------------------------------
+        private void listViewTransactions_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+        {
+            if (listViewTransactions.Columns[e.ColumnIndex].Width < 120)
+            {
+                e.Cancel = true;
+                e.NewWidth = 120;
+            }
+        }
+
+        //==============================================================================================================================================================================================
+        //====================== GENERIC STUFF =========================================================================================================================================================
+        //=============================================================================================================
+        //-------------------- CONVERT SATS TO BITCOIN ----------------------------------------------------------------
         private decimal ConvertSatsToBitcoin(string numerics)
         {
             decimal number = decimal.Parse(numerics);
             decimal result = number / 100000000;
             return result;
         }
+
+        //=============================================================================================================
+        //--------------------COUNTDOWN, ERROR MESSAGES AND STATUS LIGHTS----------------------------------------------
+        private void UpdateOnScreenCountdownAndFlashLights()
+        {
+            lblSecsCountdown.Text = Convert.ToString(intDisplayCountdownToRefresh); // update the countdown on the form
+            intDisplayCountdownToRefresh--; // reduce the countdown of the 1 minute timer by 1 second
+            if (intDisplayCountdownToRefresh <= 0) // if the 1 minute timer countdown has reached zero...
+            {
+                intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset it
+            }
+            lblSecsCountdown.Location = new Point(lblStatusMessPart1.Location.X + lblStatusMessPart1.Width - 8, lblSecsCountdown.Location.Y); // place the countdown according to the width of the status message
+            if (intDisplayCountdownToRefresh < (APIGroup1DisplayTimerIntervalSecsConstant - 1)) // if more than a second has expired since the data from the blocktimer was refreshed...
+            {
+                ChangeStatusLightAndClearErrorMessage();
+            }
+        }
+
+        private void ChangeStatusLightAndClearErrorMessage()
+        {
+            if (lblStatusLight.ForeColor != Color.DarkRed && lblStatusLight.ForeColor != Color.Green) // check whether a data refresh has just occured to see if a status light flash needs dimming
+            {
+                if (lblStatusLight.ForeColor == Color.Lime) // successful data refresh has occured
+                {
+                    lblStatusLight.ForeColor = Color.Green; // reset the colours to a duller version to give appearance of a flash
+                }
+                else // an error must have just occured
+                {
+                    lblStatusLight.ForeColor = Color.DarkRed; // reset the colours to a duller version to give appearance of a flash
+                    if (intDisplayCountdownToRefresh < 11) // when there are only 10 seconds left until the refresh...
+                    {
+                        lblErrorMessage.Text = ""; // hide any previous error message
+                        lblAlert.Text = ""; // and hide the alert icon
+                    }
+                }
+            }
+        }
+
+        private void ClearAlertAndErrorMessage()
+        {
+            lblAlert.Text = ""; // clear any error message
+            lblErrorMessage.Text = ""; // clear any error message
+        }
+
+        private void SetLightsMessagesAndResetTimers()
+        {
+            // set successful lights and messages on the form
+            lblStatusLight.Invoke((MethodInvoker)delegate
+            {
+                lblStatusLight.ForeColor = Color.Lime; // for a bright green flash
+            });
+            lblStatusLight.Invoke((MethodInvoker)delegate
+            {
+                lblStatusLight.Text = "🟢"; // circle/light
+            });
+            lblStatusMessPart1.Invoke((MethodInvoker)delegate
+            {
+                lblStatusMessPart1.Text = "Data updated successfully. Refreshing in ";
+            });
+            intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant; // reset the timer
+            intDisplaySecondsElapsedSinceUpdate = 0; // reset the seconds since last refresh
+        }
+
+        //=============================================================================================================        
+        //-------------------------- GENERAL FORM NAVIGATION/BUTTON CONTROLS-------------------------------------------
+        private void BtnSplash_Click(object sender, EventArgs e)
+        {
+            splash splash = new splash(); // invoke the about/splash screen
+            splash.ShowDialog();
+        }
+
+        private void BtnExit_Click(object sender, EventArgs e) // exit
+        {
+            this.Close();
+        }
+
+        private void BtnMinimise_Click(object sender, EventArgs e) // minimise the form
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void BtnMoveWindow_MouseDown(object sender, MouseEventArgs e) // move the form when the move control is used
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+
+        private void BtnMoveWindow_MouseUp(object sender, MouseEventArgs e) // reset colour of the move form control
+        {
+            btnMoveWindow.BackColor = System.Drawing.ColorTranslator.FromHtml("#1D1D1D");
+        }
+
+        private void BtnBitcoinDashboard_Click(object sender, EventArgs e)
+        {
+            this.DoubleBuffered = true;
+            this.SuspendLayout();
+            panelLightningDashboard.Visible = false;
+            panelTesting.Visible = false;
+            panelBitcoinDashboard.Visible = true;
+            this.ResumeLayout();
+        }
+
+        private void BtnLightningDashboard_Click(object sender, EventArgs e)
+        {
+            this.DoubleBuffered = true;
+            this.SuspendLayout();
+            panelBitcoinDashboard.Visible = false;
+            panelTesting.Visible = false;
+            panelLightningDashboard.Visible = true;
+            this.ResumeLayout();
+        }
+
+        private void BtnAddress_Click(object sender, EventArgs e)
+        {
+            panelBitcoinDashboard.Visible = false;
+            panelLightningDashboard.Visible = false;
+            panelTesting.Visible = true;
+        }
+
+        private void BtnSettings_Click(object sender, EventArgs e)
+        {
+            settingsScreen.CreateInstance();
+            settingsScreen.Instance.ShowDialog();
+            // read all fields from the settings screen and set variables for use on the main form
+            if (settingsScreen.Instance.BitcoinExplorerEndpointsEnabled)
+            {
+                RunBitcoinExplorerEndpointAPI = true;
+            }
+            else
+            {
+                RunBitcoinExplorerEndpointAPI = false;
+            }
+            if (settingsScreen.Instance.BlockchainInfoEndpointsEnabled)
+            {
+                RunBlockchainInfoEndpointAPI = true;
+            }
+            else
+            {
+                RunBlockchainInfoEndpointAPI = false;
+            }
+            if (settingsScreen.Instance.BitcoinExplorerOrgJSONEnabled)
+            {
+                RunBitcoinExplorerOrgJSONAPI = true;
+            }
+            else
+            {
+                RunBitcoinExplorerOrgJSONAPI = false;
+            }
+            if (settingsScreen.Instance.BlockchainInfoJSONEnabled)
+            {
+                RunBlockchainInfoJSONAPI = true;
+            }
+            else
+            {
+                RunBlockchainInfoJSONAPI = false;
+            }
+            if (settingsScreen.Instance.CoingeckoComJSONEnabled)
+            {
+                RunCoingeckoComJSONAPI = true;
+            }
+            else
+            {
+                RunCoingeckoComJSONAPI = false;
+            }
+            if (settingsScreen.Instance.BlockchairComJSONEnabled)
+            {
+                RunBlockchairComJSONAPI = true;
+            }
+            else
+            {
+                RunBlockchairComJSONAPI = false;
+            }
+            if (settingsScreen.Instance.MempoolSpaceLightningJSONEnabled)
+            {
+                RunMempoolSpaceLightningAPI = true;
+            }
+            else
+            {
+                RunMempoolSpaceLightningAPI = false;
+            }
+            if (settingsScreen.Instance.NodeURL != NodeURL)
+            {
+                NodeURL = settingsScreen.Instance.NodeURL;
+                _transactionService = new TransactionService(NodeURL);
+            }
+
+            CheckBlockchainExplorerApiStatus();
+
+            if (APIGroup1DisplayTimerIntervalSecsConstant != (settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60)) // if user has changed refresh frequency
+            {
+                APIGroup1DisplayTimerIntervalSecsConstant = settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60;
+                intAPIGroup1TimerIntervalMillisecsConstant = ((settingsScreen.Instance.APIGroup1RefreshInMinsSelection * 60) * 1000);
+                intDisplayCountdownToRefresh = APIGroup1DisplayTimerIntervalSecsConstant;
+                timerAPIGroup1.Stop();
+                timerAPIGroup1.Interval = intAPIGroup1TimerIntervalMillisecsConstant;
+                timerAPIGroup1.Start();
+            }
+
+            if (intAPIGroup2TimerIntervalMillisecsConstant != (((settingsScreen.Instance.APIGroup2RefreshInHoursSelection * 60) * 60) * 1000))
+            {
+                intAPIGroup2TimerIntervalMillisecsConstant = (((settingsScreen.Instance.APIGroup2RefreshInHoursSelection * 60) * 60) * 1000);
+                timerAPIGroup2.Stop();
+                timerAPIGroup2.Interval = intAPIGroup2TimerIntervalMillisecsConstant;
+                timerAPIGroup2.Start();
+            }
+        }
+
+        //=============================================================================================================
+        //--------------------------ON-SCREEN CLOCK--------------------------------------------------------------------
+        private void UpdateOnScreenClock()
+        {
+            lblTime.Text = DateTime.Now.ToString("HH:mm");
+            lblSeconds.Text = DateTime.Now.ToString("ss");
+            lblDate.Text = DateTime.Now.ToString("MMMM dd yyyy");
+            lblDay.Text = DateTime.Now.ToString("dddd");
+            lblSeconds.Location = new Point(lblTime.Location.X + lblTime.Width - 10, lblSeconds.Location.Y); // place the seconds according to the width of the minutes/seconds (lblTime)
+        }
+
+        //=============================================================================================================
+        //---------------------- BORDER AROUND WINDOW------------------------------------------------------------------
+        private void Form1_Paint(object sender, PaintEventArgs e) // place a 1px border around the form
+        {
+            ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Gray, ButtonBorderStyle.Solid);
+        }
+    }
+
+    //==============================================================================================================================================================================================
+    //==============================================================================================================================================================================================
+
+    public class TransactionService
+    {
+        private readonly string _nodeUrl;
+
+        public TransactionService(string nodeUrl)
+        {
+            _nodeUrl = nodeUrl;
+        }
+
+        //public async Task<string> GetTransactionsAsync(string address)
+        public async Task<string> GetTransactionsAsync(string address, string lastSeenTxId = "")
+        {
+            using (var client = new HttpClient())
+            {
+                try
+                {
+                    client.BaseAddress = new Uri(_nodeUrl);
+                    var response = await client.GetAsync($"address/{address}/txs/chain/{lastSeenTxId}");
+                    response.EnsureSuccessStatusCode();
+
+                    return await response.Content.ReadAsStringAsync();
+                }
+                catch (HttpRequestException ex)
+                {
+                    // handle exception
+                }
+            }
+            return string.Empty;
+        }
+    }
+    //=================================================================================================================
+    //----------------------- CLASS TO STORE TXID FOR EACH TRANSACTION ------------------------------------------------
+
+    public class Transaction
+    {
+        public string txid { get; set; }
+        public Status status { get; set; }
+    }
+
+    public class Status
+    {
+        public int block_height { get; set; }
     }
 }
-//====================================================================================================================================================================
-//====================================================================================================================================================================
-//====================================================================================================================================================================
+//==================================================================================================================================================================================================
+//======================================================================================== END =====================================================================================================
+//==================================================================================================================================================================================================
+

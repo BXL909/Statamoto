@@ -204,12 +204,16 @@
             this.label38 = new System.Windows.Forms.Label();
             this.lblTotalCapacity = new System.Windows.Forms.Label();
             this.panelTesting = new System.Windows.Forms.Panel();
+            this.lblTXPlaceInfo = new System.Windows.Forms.Label();
+            this.btnFirstTransaction = new System.Windows.Forms.Button();
+            this.btnNextTransactions = new System.Windows.Forms.Button();
+            this.listViewTransactions = new System.Windows.Forms.ListView();
             this.lblNodeStatusLight = new System.Windows.Forms.Label();
             this.lblGenesisAddress = new System.Windows.Forms.Label();
             this.lblConfirmedUnspentOutputs = new System.Windows.Forms.Label();
-            this.lblActiveNode = new System.Windows.Forms.Label();
             this.lblConfirmedSpentOutputs = new System.Windows.Forms.Label();
             this.lblConfirmedReceivedOutputs = new System.Windows.Forms.Label();
+            this.lblActiveNode = new System.Windows.Forms.Label();
             this.QRCodePicturebox = new System.Windows.Forms.PictureBox();
             this.label61 = new System.Windows.Forms.Label();
             this.lblConfirmedUnspent = new System.Windows.Forms.Label();
@@ -222,7 +226,7 @@
             this.label58 = new System.Windows.Forms.Label();
             this.lblAddressType = new System.Windows.Forms.Label();
             this.tboxSubmittedAddress = new System.Windows.Forms.TextBox();
-            this.btnTesting = new System.Windows.Forms.Button();
+            this.btnAddress = new System.Windows.Forms.Button();
             this.panelBitcoinDashboard.SuspendLayout();
             this.panelLightningDashboard.SuspendLayout();
             this.panelTesting.SuspendLayout();
@@ -375,7 +379,7 @@
             this.lblStatusMessPart1.BackColor = System.Drawing.Color.Transparent;
             this.lblStatusMessPart1.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatusMessPart1.ForeColor = System.Drawing.Color.Gray;
-            this.lblStatusMessPart1.Location = new System.Drawing.Point(20, 588);
+            this.lblStatusMessPart1.Location = new System.Drawing.Point(24, 588);
             this.lblStatusMessPart1.Name = "lblStatusMessPart1";
             this.lblStatusMessPart1.Size = new System.Drawing.Size(294, 15);
             this.lblStatusMessPart1.TabIndex = 36;
@@ -410,7 +414,7 @@
             this.lblErrorMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblErrorMessage.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblErrorMessage.ForeColor = System.Drawing.Color.Gray;
-            this.lblErrorMessage.Location = new System.Drawing.Point(31, 564);
+            this.lblErrorMessage.Location = new System.Drawing.Point(24, 572);
             this.lblErrorMessage.Name = "lblErrorMessage";
             this.lblErrorMessage.Size = new System.Drawing.Size(0, 15);
             this.lblErrorMessage.TabIndex = 40;
@@ -421,7 +425,7 @@
             this.lblAlert.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblAlert.Font = new System.Drawing.Font("Consolas", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAlert.ForeColor = System.Drawing.Color.Gold;
-            this.lblAlert.Location = new System.Drawing.Point(9, 562);
+            this.lblAlert.Location = new System.Drawing.Point(3, 568);
             this.lblAlert.Name = "lblAlert";
             this.lblAlert.Size = new System.Drawing.Size(0, 22);
             this.lblAlert.TabIndex = 41;
@@ -2527,6 +2531,10 @@
             // panelTesting
             // 
             this.panelTesting.BackColor = System.Drawing.Color.Transparent;
+            this.panelTesting.Controls.Add(this.lblTXPlaceInfo);
+            this.panelTesting.Controls.Add(this.btnFirstTransaction);
+            this.panelTesting.Controls.Add(this.btnNextTransactions);
+            this.panelTesting.Controls.Add(this.listViewTransactions);
             this.panelTesting.Controls.Add(this.lblNodeStatusLight);
             this.panelTesting.Controls.Add(this.lblGenesisAddress);
             this.panelTesting.Controls.Add(this.lblConfirmedUnspentOutputs);
@@ -2550,6 +2558,74 @@
             this.panelTesting.Size = new System.Drawing.Size(773, 371);
             this.panelTesting.TabIndex = 90;
             this.panelTesting.Visible = false;
+            // 
+            // lblTXPlaceInfo
+            // 
+            this.lblTXPlaceInfo.AutoSize = true;
+            this.lblTXPlaceInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblTXPlaceInfo.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTXPlaceInfo.ForeColor = System.Drawing.Color.Silver;
+            this.lblTXPlaceInfo.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.lblTXPlaceInfo.Location = new System.Drawing.Point(253, 338);
+            this.lblTXPlaceInfo.Name = "lblTXPlaceInfo";
+            this.lblTXPlaceInfo.Size = new System.Drawing.Size(210, 15);
+            this.lblTXPlaceInfo.TabIndex = 142;
+            this.lblTXPlaceInfo.Text = "Showing n-n of n transactions";
+            // 
+            // btnFirstTransaction
+            // 
+            this.btnFirstTransaction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.btnFirstTransaction.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(72)))), ((int)(((byte)(9)))));
+            this.btnFirstTransaction.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(36)))), ((int)(((byte)(4)))));
+            this.btnFirstTransaction.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFirstTransaction.ForeColor = System.Drawing.Color.Gray;
+            this.btnFirstTransaction.Location = new System.Drawing.Point(598, 347);
+            this.btnFirstTransaction.Name = "btnFirstTransaction";
+            this.btnFirstTransaction.Size = new System.Drawing.Size(70, 22);
+            this.btnFirstTransaction.TabIndex = 141;
+            this.btnFirstTransaction.Text = "◀ newest";
+            this.btnFirstTransaction.UseVisualStyleBackColor = false;
+            this.btnFirstTransaction.Click += new System.EventHandler(this.btnFirstTransaction_Click);
+            // 
+            // btnNextTransactions
+            // 
+            this.btnNextTransactions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.btnNextTransactions.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(72)))), ((int)(((byte)(9)))));
+            this.btnNextTransactions.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(36)))), ((int)(((byte)(4)))));
+            this.btnNextTransactions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNextTransactions.ForeColor = System.Drawing.Color.Gray;
+            this.btnNextTransactions.Location = new System.Drawing.Point(683, 347);
+            this.btnNextTransactions.Name = "btnNextTransactions";
+            this.btnNextTransactions.Size = new System.Drawing.Size(70, 22);
+            this.btnNextTransactions.TabIndex = 140;
+            this.btnNextTransactions.Text = "▷ next";
+            this.btnNextTransactions.UseVisualStyleBackColor = false;
+            this.btnNextTransactions.Click += new System.EventHandler(this.btnGetNextTransactions);
+            // 
+            // listViewTransactions
+            // 
+            this.listViewTransactions.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listViewTransactions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.listViewTransactions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listViewTransactions.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listViewTransactions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
+            this.listViewTransactions.FullRowSelect = true;
+            this.listViewTransactions.GridLines = true;
+            this.listViewTransactions.HideSelection = false;
+            this.listViewTransactions.LabelWrap = false;
+            this.listViewTransactions.Location = new System.Drawing.Point(252, 78);
+            this.listViewTransactions.MultiSelect = false;
+            this.listViewTransactions.Name = "listViewTransactions";
+            this.listViewTransactions.OwnerDraw = true;
+            this.listViewTransactions.Scrollable = false;
+            this.listViewTransactions.Size = new System.Drawing.Size(499, 293);
+            this.listViewTransactions.TabIndex = 139;
+            this.listViewTransactions.UseCompatibleStateImageBehavior = false;
+            this.listViewTransactions.View = System.Windows.Forms.View.Tile;
+            this.listViewTransactions.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.listViewTransactions_ColumnWidthChanging);
+            this.listViewTransactions.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.listViewTransactions_DrawColumnHeader);
+            this.listViewTransactions.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.listViewTransactions_DrawItem);
+            this.listViewTransactions.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.listViewTransactions_DrawSubItem);
             // 
             // lblNodeStatusLight
             // 
@@ -2585,19 +2661,6 @@
             this.lblConfirmedUnspentOutputs.TabIndex = 135;
             this.lblConfirmedUnspentOutputs.Text = "(no data)";
             // 
-            // lblActiveNode
-            // 
-            this.lblActiveNode.AutoSize = true;
-            this.lblActiveNode.BackColor = System.Drawing.Color.Transparent;
-            this.lblActiveNode.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblActiveNode.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblActiveNode.ForeColor = System.Drawing.Color.Gray;
-            this.lblActiveNode.Location = new System.Drawing.Point(689, 0);
-            this.lblActiveNode.Name = "lblActiveNode";
-            this.lblActiveNode.Size = new System.Drawing.Size(84, 15);
-            this.lblActiveNode.TabIndex = 137;
-            this.lblActiveNode.Text = "Node status";
-            // 
             // lblConfirmedSpentOutputs
             // 
             this.lblConfirmedSpentOutputs.AutoSize = true;
@@ -2617,6 +2680,19 @@
             this.lblConfirmedReceivedOutputs.Size = new System.Drawing.Size(80, 18);
             this.lblConfirmedReceivedOutputs.TabIndex = 133;
             this.lblConfirmedReceivedOutputs.Text = "(no data)";
+            // 
+            // lblActiveNode
+            // 
+            this.lblActiveNode.AutoSize = true;
+            this.lblActiveNode.BackColor = System.Drawing.Color.Transparent;
+            this.lblActiveNode.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblActiveNode.Font = new System.Drawing.Font("Consolas", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblActiveNode.ForeColor = System.Drawing.Color.Gray;
+            this.lblActiveNode.Location = new System.Drawing.Point(689, 0);
+            this.lblActiveNode.Name = "lblActiveNode";
+            this.lblActiveNode.Size = new System.Drawing.Size(84, 15);
+            this.lblActiveNode.TabIndex = 137;
+            this.lblActiveNode.Text = "Node status";
             // 
             // QRCodePicturebox
             // 
@@ -2758,25 +2834,25 @@
             this.tboxSubmittedAddress.TabIndex = 2;
             this.tboxSubmittedAddress.TextChanged += new System.EventHandler(this.TboxSubmittedAddress_TextChanged);
             // 
-            // btnTesting
+            // btnAddress
             // 
-            this.btnTesting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
-            this.btnTesting.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnTesting.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(72)))), ((int)(((byte)(9)))));
-            this.btnTesting.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(36)))), ((int)(((byte)(4)))));
-            this.btnTesting.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTesting.Font = new System.Drawing.Font("Orator Std", 7F);
-            this.btnTesting.ForeColor = System.Drawing.Color.Gray;
-            this.btnTesting.Location = new System.Drawing.Point(361, 11);
-            this.btnTesting.Margin = new System.Windows.Forms.Padding(0);
-            this.btnTesting.Name = "btnTesting";
-            this.btnTesting.Size = new System.Drawing.Size(119, 22);
-            this.btnTesting.TabIndex = 91;
-            this.btnTesting.TabStop = false;
-            this.btnTesting.Text = "ADDRESS";
-            this.btnTesting.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnTesting.UseVisualStyleBackColor = false;
-            this.btnTesting.Click += new System.EventHandler(this.BtnTesting_Click);
+            this.btnAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(29)))), ((int)(((byte)(29)))));
+            this.btnAddress.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnAddress.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(106)))), ((int)(((byte)(72)))), ((int)(((byte)(9)))));
+            this.btnAddress.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(36)))), ((int)(((byte)(4)))));
+            this.btnAddress.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddress.Font = new System.Drawing.Font("Orator Std", 7F);
+            this.btnAddress.ForeColor = System.Drawing.Color.Gray;
+            this.btnAddress.Location = new System.Drawing.Point(361, 11);
+            this.btnAddress.Margin = new System.Windows.Forms.Padding(0);
+            this.btnAddress.Name = "btnAddress";
+            this.btnAddress.Size = new System.Drawing.Size(119, 22);
+            this.btnAddress.TabIndex = 91;
+            this.btnAddress.TabStop = false;
+            this.btnAddress.Text = "ADDRESS";
+            this.btnAddress.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnAddress.UseVisualStyleBackColor = false;
+            this.btnAddress.Click += new System.EventHandler(this.BtnAddress_Click);
             // 
             // Statamoto
             // 
@@ -2787,7 +2863,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(800, 607);
-            this.Controls.Add(this.btnTesting);
+            this.Controls.Add(this.btnAddress);
             this.Controls.Add(this.panelTesting);
             this.Controls.Add(this.panelLightningDashboard);
             this.Controls.Add(this.panelBitcoinDashboard);
@@ -3019,7 +3095,7 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label lblHalveningSecondsRemaining;
         private System.Windows.Forms.Panel panelTesting;
-        private System.Windows.Forms.Button btnTesting;
+        private System.Windows.Forms.Button btnAddress;
         private System.Windows.Forms.Label lblAddressType;
         private System.Windows.Forms.TextBox tboxSubmittedAddress;
         private System.Windows.Forms.Label label58;
@@ -3038,6 +3114,10 @@
         private System.Windows.Forms.Label lblGenesisAddress;
         private System.Windows.Forms.Label lblActiveNode;
         private System.Windows.Forms.Label lblNodeStatusLight;
+        private System.Windows.Forms.ListView listViewTransactions;
+        private System.Windows.Forms.Button btnNextTransactions;
+        private System.Windows.Forms.Button btnFirstTransaction;
+        private System.Windows.Forms.Label lblTXPlaceInfo;
     }
 }
 
