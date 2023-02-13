@@ -7,19 +7,18 @@
 ──███────▄███▀─  1.1 Used threading on API calls for speed and UI responsiveness. Added 4 new fields (number of hodling addresses, Blockchain size, 24 hour number of blocks mined, Number of discoverable nodes)
 ──█████████▀───      Added settings screen. Added ability to disable individual API calls. Added options to change API call refresh frequency. Added a 'last updated' timer.
 ──███████████▄─  1.2 Added Lightning stats, node rankings, etc. Hover behaviour on buttons much more responsive as is the UI in general. More data fields added. Threading bugs fixed. Various UI improvements.
-──███─────▀████  1.3 Added address lookup for all address types via choice of API.
+──███─────▀████  1.3 Added address lookup for all address types via choice of API, returning all transactions, balance changes, etc.
 ──███───────███  
 ──███─────▄████  
 ──████████████─  
 ████████████▀──  
 ────██──██─────
-*/
 
-/* Stuff to do:
- * transaction list - tidy up column headers & colours.
- * add balance change to transaction list.
+ * Stuff to do:
+ * further testing of own node connection, then add to settings once tested, with warning it will be much slower
  * add status (conf/unconf) to transaction list? Along with checkbox to retrieve conf/unconf/both? 
- * name change? OrangeBit?
+ * name change? 
+ * add block and transaction screens
  */
 
 using System;
@@ -78,8 +77,8 @@ namespace Statamoto
         private int intDisplaySecondsElapsedSinceUpdate = 0; // used to count seconds since the data was last refreshed, for display only.
         private bool ObtainedHalveningSecondsRemainingYet = false; // used to check whether we know halvening seconds before we start trying to subtract from them
         private TransactionService _transactionService;
-        private int TotalTransactionRowsAdded = 0;
-
+        private int TotalTransactionRowsAdded = 0; // keeps track of how many rows of transactions have been added to the listview
+        
         [DllImport("user32.dll", EntryPoint = "ReleaseCapture")]  // needed for the code that moves the form as not using a standard control
         private extern static void ReleaseCapture();
 
@@ -98,8 +97,8 @@ namespace Statamoto
             UpdateAPIGroup1DataFields(); // setting them now avoids waiting a whole minute for the first refresh
             UpdateAPIGroup2DataFields(); // set the initial data for the daily updates to avoid waiting a whole day for the first data
             StartTheClocksTicking(); // start all the timers
-            tboxSubmittedAddress.Text = "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa";
-            CheckBlockchainExplorerApiStatus();
+            tboxSubmittedAddress.Text = "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"; // initial value (Genesis block address) for demo purposes
+            CheckBlockchainExplorerApiStatus(); // check that the users choice of api for onchain queries is online (not the dashboard/stats views)
         }
 
         //=============================================================================================================
@@ -110,7 +109,7 @@ namespace Statamoto
             APIGroup1DisplayTimerIntervalSecsConstant = (APIGroup1RefreshFrequency * 60); //turn minutes into seconds. This is kept constant and used to reset the timer to this number
             intAPIGroup1TimerIntervalMillisecsConstant = ((APIGroup1RefreshFrequency * 60) * 1000); // turn minutes into seconds, then into milliseconds
             timerAPIGroup1.Interval = intAPIGroup1TimerIntervalMillisecsConstant; // set the timer interval
-            intAPIGroup2TimerIntervalMillisecsConstant = (((APIGroup2RefreshFrequency * 60) *60) * 1000);  // turn hours to minutes, then seconds, then milliseconds
+            intAPIGroup2TimerIntervalMillisecsConstant = (((APIGroup2RefreshFrequency * 60) * 60) * 1000);  // turn hours to minutes, then seconds, then milliseconds
             timerAPIGroup2.Interval = intAPIGroup2TimerIntervalMillisecsConstant; // set the time interval
             timer1Sec.Start(); // timer used to refresh the clock values
             timerAPIGroup1.Start(); // timer used to refresh most btc data
@@ -120,7 +119,7 @@ namespace Statamoto
         {
             UpdateOnScreenClock();
             UpdateOnScreenCountdownAndFlashLights();
-            intDisplaySecondsElapsedSinceUpdate ++; // increment displayed time elapsed since last update
+            intDisplaySecondsElapsedSinceUpdate++; // increment displayed time elapsed since last update
             if (intDisplaySecondsElapsedSinceUpdate == 1)
             {
                 lblElapsedSinceUpdate.Text = "Last updated " + intDisplaySecondsElapsedSinceUpdate.ToString() + " second ago";
@@ -141,7 +140,7 @@ namespace Statamoto
             }
         }
 
-        private void TimerAPIGroup1_Tick(object sender, EventArgs e) // call the function to update the btc fields
+        private void TimerAPIGroup1_Tick(object sender, EventArgs e) // update the btc/lightning dashboard fields
         {
             ClearAlertAndErrorMessage(); // wipe anything that may be showing in the error area (it should be empty anyway)
             UpdateAPIGroup1DataFields(); // fetch data and populate fields
@@ -149,7 +148,7 @@ namespace Statamoto
 
         private void TimerAPIGroup2_Tick(object sender, EventArgs e)
         {
-            UpdateAPIGroup2DataFields(); // fetch data and populate fields
+            UpdateAPIGroup2DataFields(); // update the rest of the btc/lightning fields
         }
 
         //==============================================================================================================================================================================================
@@ -163,12 +162,12 @@ namespace Statamoto
                 bool errorOccurred = false;
                 Task task1 = Task.Run(() =>  // call bitcoinexplorer.org endpoints and populate the fields on the form
                 {
-                try
-                {
-                    if (RunBitcoinExplorerEndpointAPI)
+                    try
                     {
-                        var result = BitcoinExplorerOrgEndpointsRefresh();
-                        // move returned data to the labels on the form
+                        if (RunBitcoinExplorerEndpointAPI)
+                        {
+                            var result = BitcoinExplorerOrgEndpointsRefresh();
+                            // move returned data to the labels on the form
                             lblPriceUSD.Invoke((MethodInvoker)delegate
                             {
                                 lblPriceUSD.Text = result.priceUSD;
@@ -217,7 +216,7 @@ namespace Statamoto
                     }
                     catch (Exception ex)
                     {
-                        errorOccurred = true; 
+                        errorOccurred = true;
                         lblErrorMessage.Invoke((MethodInvoker)delegate
                         {
                             lblErrorMessage.Text = ex.Message; // move returned error to the error message label on the form
@@ -670,7 +669,7 @@ namespace Statamoto
                                 lblUnknownCapacity.Text = "Disabled";
                             });
                         }
-                        if (RunMempoolSpaceLightningAPI) 
+                        if (RunMempoolSpaceLightningAPI)
                         {
                             var result6 = MempoolSpaceLiquidityRankingJSONRefresh();
                             for (int i = 0; i < 10; i++)
@@ -811,7 +810,7 @@ namespace Statamoto
                         });
                     }
                 });
-                
+
                 Task task8 = Task.Run(() =>  // call blockchair.com endpoints and populate the fields on the form
                 {
                     try
@@ -864,7 +863,7 @@ namespace Statamoto
                         });
                     }
                 });
-                
+
                 await Task.WhenAll(task7, task8);
 
                 // If any errors occurred with any of the API calls, a decent error message has already been displayed. Now display the red light and generic error.
@@ -892,7 +891,7 @@ namespace Statamoto
         }
 
         //=============================================================================================================
-        //------------------------------------API CALLS----------------------------------------------------------------
+        //-----------------------BITCOIN AND LIGHTNING DASHBOARD API CALLS---------------------------------------------
         //------BitcoinExplorer and BlockchainInfo endpoints 
         private (string priceUSD, string moscowTime, string marketCapUSD, string difficultyAdjEst, string txInMempool) BitcoinExplorerOrgEndpointsRefresh()
         {
@@ -992,12 +991,12 @@ namespace Statamoto
                 string torCapacity = ConvertSatsToBitcoin(torCapacityString).ToString();
                 double dblTorCapacity = Convert.ToDouble(torCapacity);
                 dblTorCapacity = Math.Round(dblTorCapacity, 2);
-                torCapacity= Convert.ToString(dblTorCapacity);
+                torCapacity = Convert.ToString(dblTorCapacity);
                 string unknownCapacityString = Convert.ToString(data["unknownCapacity"]);
                 string unknownCapacity = ConvertSatsToBitcoin(unknownCapacityString).ToString();
                 double dblUnknownCapacity = Convert.ToDouble(unknownCapacity);
                 dblUnknownCapacity = Math.Round(dblUnknownCapacity, 2);
-                unknownCapacity= Convert.ToString(dblUnknownCapacity);
+                unknownCapacity = Convert.ToString(dblUnknownCapacity);
                 return (clearnetCapacity, torCapacity, unknownCapacity);
             }
         }
@@ -1024,7 +1023,7 @@ namespace Statamoto
                 var medCapacity = (string)data["latest"]["med_capacity"];
                 var medFeeRate = (string)data["latest"]["med_fee_rate"];
                 var medBaseeFeeMtokens = (string)data["latest"]["med_basee_fee_mtokens"];
-                if (medBaseeFeeMtokens == null) 
+                if (medBaseeFeeMtokens == null)
                 {
                     medBaseeFeeMtokens = "0";
                 }
@@ -1051,7 +1050,7 @@ namespace Statamoto
             var data2 = JObject.Parse(json2);
             var txInNextBlock = (string)data2["txCount"]; //transaction count
             var nextBlockMinFee = (string)data2["minFeeRate"]; // minimum fee rate
-            double valuetoround = Convert.ToDouble(nextBlockMinFee); 
+            double valuetoround = Convert.ToDouble(nextBlockMinFee);
             double roundedValue = Math.Round(valuetoround, 2);
             nextBlockMinFee = Convert.ToString(roundedValue);
             var nextBlockMaxFee = (string)data2["maxFeeRate"]; // maximum fee rate
@@ -1072,21 +1071,21 @@ namespace Statamoto
             {
                 // LATEST BLOCK
                 string jsonurl = "https://blockchain.info/rawblock/";  // use this...
-                string blockNumberUrl = "https://blockchain.info/q/getblockcount"; 
+                string blockNumberUrl = "https://blockchain.info/q/getblockcount";
                 string blocknumber = client.DownloadString(blockNumberUrl); //combined with the result of that (we can't rely on already knowing the latest block number)
                 string finalurl = jsonurl + blocknumber; // to create a url we can use to get the JSON of the latest block
                 string size;
                 var response3 = client.DownloadString(finalurl);
-                var data3 = JObject.Parse(response3); 
+                var data3 = JObject.Parse(response3);
                 var n_tx = (string)data3["n_tx"] + " transactions";  // number of transactions
-                var sizeInKB = ((double)data3["size"] /1000); // size in bytes divided by 1000 to get kb
+                var sizeInKB = ((double)data3["size"] / 1000); // size in bytes divided by 1000 to get kb
                 if (sizeInKB < 1024) // if less than 1MB
                 {
                     size = sizeInKB + " KB block size";
                 }
                 else // if more than 1MB
                 {
-                    size = Convert.ToString(Math.Round((sizeInKB / 1000), 2)) + "MB block size"; 
+                    size = Convert.ToString(Math.Round((sizeInKB / 1000), 2)) + "MB block size";
                 }
                 // NEXT DIFFICULTY ADJUSTMENT BLOCK
                 var response4 = client.DownloadString("https://api.blockchain.info/stats");
@@ -1151,7 +1150,7 @@ namespace Statamoto
         }
 
         //=============================================================================================================
-        //---------------------- CONNECTING LINES BETWEEN FIELDS-------------------------------------------------------
+        //---------------------- CONNECTING LINES BETWEEN FIELDS ON LIGHTNING DASHBOARD -------------------------------
         private void PanelLightningDashboard_Paint(object sender, PaintEventArgs e)
         {
             using (Pen pen = new Pen(Color.FromArgb(106, 72, 9), 1))
@@ -1223,36 +1222,47 @@ namespace Statamoto
         }
 
         //=============================================================================================================
-        //--------------- VALIDATE BITCOIN ADDRESS AND GENERATE QR-----------------------------------------------------
-        private void TboxSubmittedAddress_TextChanged(object sender, EventArgs e) // validate the address update the address type label
+        //--------------- VALIDATE BITCOIN ADDRESS,GENERATE QR, BALANCE, TX, ETC---------------------------------------
+        private async void TboxSubmittedAddress_TextChanged(object sender, EventArgs e)
         {
-            listViewTransactions.Items.Clear();
+            listViewTransactions.Items.Clear(); // wipe any data in the transaction listview
             TotalTransactionRowsAdded = 0;
-            btnNextTransactions.Enabled = true;
 
-            if (tboxSubmittedAddress.Text == "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa")
+            if (tboxSubmittedAddress.Text == "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa") // demo data
             {
-                lblGenesisAddress.Text = "(This is Satoshi's Genesis address. Enter any bitcoin address)";
+                lblGenesisAddress.Text = "(This is Satoshi's Genesis address. Enter any bitcoin address)"; 
             }
             else
             {
                 lblGenesisAddress.Text = null;
             }
-            string addressString = tboxSubmittedAddress.Text; 
-            string addressType = DetermineAddressType(addressString);
-            if (addressType == "P2PKH (legacy)" || addressType == "P2SH" || addressType == "P2WPKH (segwit)" || addressType == "P2WSH" || addressType == "P2TT (taproot)" || addressType == "unknown") 
+
+            if (tboxSubmittedAddress.Text == "")
+            {
+                AddressInvalidHideControls();
+            }
+            else
+            {
+                AddressValidShowControls();
+            }
+            string addressString = tboxSubmittedAddress.Text; //user entered address
+            string addressType = DetermineAddressType(addressString); // check address is valid and what type of address
+            if (addressType == "P2PKH (legacy)" || addressType == "P2SH" || addressType == "P2WPKH (segwit)" || addressType == "P2WSH" || addressType == "P2TT (taproot)" || addressType == "unknown") // address is valid
             {
                 lblAddressType.Text = addressType + " address type";
+
+                // generate QR code for address
                 QRCodeGenerator qrGenerator = new QRCodeGenerator();
                 QRCodeData qrCodeData = qrGenerator.CreateQrCode(addressString, QRCodeGenerator.ECCLevel.Q);
                 QRCode qrCode = new QRCode(qrCodeData);
-                var qrCodeImage = qrCode.GetGraphic(20, Color.FromArgb(255, 192, 192, 192), Color.Black, false);
+                var qrCodeImage = qrCode.GetGraphic(20, Color.Gray, Color.Black, false);
                 qrCodeImage.MakeTransparent(Color.Black);
                 QRCodePicturebox.Image = qrCodeImage;
+
                 lblAddressType.Text = addressType + " fetching balance";
-                GetAddressBalance(addressString);
-                string lastSeenTxId = "";
-                GetConfirmedTransactionsForAddress(addressString,lastSeenTxId);
+                await GetAddressBalanceAsync(addressString); // make sure we get these results before processing transactions
+                string lastSeenTxId = ""; // start from the top of the JSON (most recent tx)
+                await GetConfirmedTransactionsForAddress(addressString, lastSeenTxId); // get first batch of transactions
                 lblAddressType.Text = addressType + " address type";
             }
             else
@@ -1266,18 +1276,43 @@ namespace Statamoto
                 lblConfirmedTransactionCount.Text = string.Empty;
                 lblConfirmedUnspent.Text = string.Empty;
                 lblConfirmedUnspentOutputs.Text = string.Empty;
+                AddressInvalidHideControls();
             }
+        }
+
+        private void AddressValidShowControls() // show all address related controls
+        {
+            btnNextTransactions.Visible = true;
+            btnFirstTransaction.Visible = true;
+            lblTXPlaceInfo.Visible = true;
+            label59.Visible = true;
+            label61.Visible = true;
+            label67.Visible = true;
+            label63.Visible = true;
+            listViewTransactions.Visible = true;
+        }
+
+        private void AddressInvalidHideControls() // hide all address related controls
+        {
+            btnNextTransactions.Visible = false;
+            btnFirstTransaction.Visible = false;
+            lblTXPlaceInfo.Visible = false;
+            label59.Visible = false;
+            label61.Visible = false;
+            label67.Visible = false;
+            label63.Visible = false;
+            listViewTransactions.Visible = false;
         }
 
         //=============================================================================================================
         //------------------------------------------ GET ADDRESS BALANCE-----------------------------------------------
-        private async void GetAddressBalance(string addressString) 
+        private async Task GetAddressBalance(string addressString)
         {
             var request = "address/" + addressString;
             var RequestURL = NodeURL + request;
             //var RequestURL = "http://umbrel.local:3006/api/" + request;
             var client = new HttpClient();
-            var response = await client.GetAsync($"{RequestURL}");
+            var response = await client.GetAsync($"{RequestURL}"); // get the JSON to get address balance and no of transactions etc
             if (!response.IsSuccessStatusCode)
             {
                 lblNodeStatusLight.ForeColor = Color.Red;
@@ -1291,7 +1326,7 @@ namespace Statamoto
             lblConfirmedReceivedOutputs.Location = new Point(lblConfirmedReceived.Location.X + lblConfirmedReceived.Width, lblConfirmedReceivedOutputs.Location.Y);
             lblConfirmedReceivedOutputs.Text = "(" + addressData["chain_stats"]["funded_txo_count"] + " outputs)";
             lblConfirmedSpent.Text = ConvertSatsToBitcoin(Convert.ToString(addressData["chain_stats"]["spent_txo_sum"])).ToString();
-            lblConfirmedSpentOutputs.Location = new Point(lblConfirmedSpent.Location.X + lblConfirmedSpent.Width -5, lblConfirmedSpentOutputs.Location.Y);
+            lblConfirmedSpentOutputs.Location = new Point(lblConfirmedSpent.Location.X + lblConfirmedSpent.Width - 5, lblConfirmedSpentOutputs.Location.Y);
             lblConfirmedSpentOutputs.Text = " (" + addressData["chain_stats"]["spent_txo_count"] + " outputs)";
             var fundedTx = Convert.ToDouble(addressData["chain_stats"]["funded_txo_count"]);
             var spentTx = Convert.ToDouble(addressData["chain_stats"]["spent_txo_count"]);
@@ -1304,91 +1339,131 @@ namespace Statamoto
             lblConfirmedUnspentOutputs.Text = "(" + Convert.ToString(unSpentTxOutputs) + " outputs)";
         }
 
+        private async Task GetAddressBalanceAsync(string addressString)
+        {
+            await GetAddressBalance(addressString);
+        }
+
         //=============================================================================================================
         //---------------------- GET CONFIRMED TRANSACTIONS FOR ADDRESS -----------------------------------------------
-        private async void GetConfirmedTransactionsForAddress(string addressString, string lastSeenTxId)
+        private async Task GetConfirmedTransactionsForAddress(string addressString, string lastSeenTxId)
         {
             var transactionsJson = await _transactionService.GetTransactionsAsync(addressString, lastSeenTxId);
             var transactions = JsonConvert.DeserializeObject<List<Transaction>>(transactionsJson);
-            // *************************************************************************************************************************************THIS LINE GIVES OCCASIONAL ERRORS
-            List<string> txIds = transactions.Select(t => t.txid).ToList(); 
-            // **********************************************************************************************************************************************************************
+            List<string> txIds = transactions.Select(t => t.txid).ToList();
 
-            // Update lastSeenTxId
-            if (transactions.Count > 0)
+            // Update lastSeenTxId if this isn't our first fetch of tranasctions to restart from the right place
+            if (transactions.Count > 0) 
             {
                 lastSeenTxId = transactions.Last().txid;
             }
             //LIST VIEW
-            listViewTransactions.Items.Clear();
-            listViewTransactions.View = View.Details;
-            listViewTransactions.GridLines = false;
-            
+            listViewTransactions.Items.Clear(); // remove any data that may be there already
+            listViewTransactions.GetType().InvokeMember("DoubleBuffered", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty, null, listViewTransactions, new object[] { true });
+
             // Check if the column header already exists
             if (listViewTransactions.Columns.Count == 0)
             {
                 // If not, add the column header
-                listViewTransactions.Columns.Add("Transaction ID", 300);
+                listViewTransactions.Columns.Add("Transaction ID (confirmed)", 355);
             }
 
             // Add the block height column header
             if (listViewTransactions.Columns.Count == 1)
             {
-                listViewTransactions.Columns.Add("Block Height", 200);
+                listViewTransactions.Columns.Add("Block", 60);
+            }
+
+            // Add the balance change column header
+            if (listViewTransactions.Columns.Count == 2)
+            {
+                listViewTransactions.Columns.Add("Amount", 100);
             }
 
             // Add the items to the ListView
-            int counter = 0; // used to count rows in last as they're added
-
+            int counter = 0; // used to count rows in list as they're added
+                        
             foreach (Transaction transaction in transactions)
             {
-                ListViewItem item = new ListViewItem(transaction.txid);
-                item.SubItems.Add(transaction.status.block_height.ToString());
-                listViewTransactions.Items.Add(item);
-                counter++;
-                TotalTransactionRowsAdded++;
-                if (TotalTransactionRowsAdded <= 13)
+                decimal balanceChange = 0; // will hold net result of transaction to this address
+                decimal balanceChangeVin = 0; // will hold net result of inputs to this address
+                decimal balanceChangeVout = 0; // will hold net result of outputs to this address
+
+                balanceChangeVout = (decimal)transaction.vout // value of all outputs where address is the provided address
+                    .Where(v => v.scriptpubkey_address == addressString)
+                    .Sum(v => v.value);
+                balanceChangeVin = (decimal)transaction.vin // value of all inputs where address is the provided address
+                    .Where(v => v.prevout.scriptpubkey_address == addressString)
+                    .Sum(v => v.prevout.value);
+
+                balanceChange = balanceChangeVout - balanceChangeVin; // calculate net change to balance for this transaction
+                string balanceChangeString = balanceChange.ToString();
+                balanceChange = ConvertSatsToBitcoin(balanceChangeString); // convert it to bitcoin
+                if (balanceChange >= 0)
                 {
-                    btnFirstTransaction.Enabled = false;
+                    balanceChangeString = "+" + balanceChange.ToString("0.00000000"); // add a + for positive numbers
                 }
                 else
                 {
-                    btnFirstTransaction.Enabled = true;
+                    balanceChangeString = balanceChange.ToString("0.00000000"); // - already there for negatives
+                }
+
+                ListViewItem item = new ListViewItem(transaction.txid); // create new row
+                item.SubItems.Add(transaction.status.block_height.ToString()); // add block height
+                item.SubItems.Add(balanceChangeString.ToString()); // add change to balance
+                listViewTransactions.Items.Add(item); // add row
+                counter++; // increment rows for this batch
+                TotalTransactionRowsAdded++; // increment all rows
+                if (TotalTransactionRowsAdded <= 13) // display back to first button?
+                {
+                    btnFirstTransaction.Visible = false;
+                }
+                else
+                {
+                    btnFirstTransaction.Visible = true;
                 }
                 lblTXPlaceInfo.Text = "Showing " + (TotalTransactionRowsAdded - counter + 1) + " - " + (TotalTransactionRowsAdded) + " of " + lblConfirmedTransactionCount.Text + " transactions";
-                if (Convert.ToString(TotalTransactionRowsAdded) == lblConfirmedTransactionCount.Text)
+                if (Convert.ToString(TotalTransactionRowsAdded) == lblConfirmedTransactionCount.Text) // show next button?
                 {
-                    btnNextTransactions.Enabled = false;
+                    btnNextTransactions.Visible = false;
                 }
-                if (counter == 13) // stop adding rows at this point
+                else
+                {
+                    btnNextTransactions.Visible = true;
+                }
+
+                if (counter == 13) // List is full. stop adding rows at this point and pick up from here next time.
                 {
                     break;
                 }
             }
         }
 
-        private void btnGetNextTransactions(object sender, EventArgs e)
+        private async void BtnGetNextTransactions(object sender, EventArgs e)
         {
+            btnNextTransactions.Enabled = false; // disable button until operation complete
             // Get the address from the address text box
             var address = tboxSubmittedAddress.Text;
             // Get the last seen transaction ID from the list view
             var lastSeenTxId = listViewTransactions.Items[listViewTransactions.Items.Count - 1].Text;
             // Call the GetConfirmedTransactionsForAddress method with the updated lastSeenTxId
-            GetConfirmedTransactionsForAddress(address, lastSeenTxId);
+            await GetConfirmedTransactionsForAddress(address, lastSeenTxId);
+            btnNextTransactions.Enabled = true; // enable button again
         }
 
-        private void btnFirstTransaction_Click(object sender, EventArgs e)
+        private async void BtnFirstTransaction_Click(object sender, EventArgs e)
         {
+            btnFirstTransaction.Enabled = false;
             // Get the address from the address text box
             var address = tboxSubmittedAddress.Text;
 
-            // Get the last seen transaction ID from the list view
+            // Reset the last seen transaction ID to go back to start
             var lastSeenTxId = "";
             TotalTransactionRowsAdded = 0;
-            btnNextTransactions.Enabled = true;
+            btnNextTransactions.Visible = true;
 
             // Call the GetConfirmedTransactionsForAddress method with the updated lastSeenTxId
-            GetConfirmedTransactionsForAddress(address, lastSeenTxId);
+            await GetConfirmedTransactionsForAddress(address, lastSeenTxId);
         }
 
         //=============================================================================================================
@@ -1407,31 +1482,39 @@ namespace Statamoto
         }
 
         //=============================================================================================================
-        //--------------- OVERRIDE COLOURS FOR ROWS IN LISTVIEW -------------------------------------------------------
-        private void listViewTransactions_DrawItem(object sender, DrawListViewItemEventArgs e)
+        //------------------------ CHANGE COLOUR OF SELECTED ROW ------------------------------------------------------
+        private void listViewTransactions_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            if (e.Item.Selected)
+            foreach (ListViewItem item in listViewTransactions.Items)
             {
-                Color backgroundColor = Color.FromArgb(106, 72, 9);
-                SolidBrush brush = new SolidBrush(backgroundColor);
-                e.Graphics.FillRectangle(brush, e.Bounds);
-                e.Item.ForeColor = Color.White;
+                if (item.Selected)
+                {
+                    item.ForeColor = Color.White;
+                }
+                else
+                {
+                    item.ForeColor = Color.FromArgb(255, 153, 0);
+                }
             }
-            else
-            {
-                Color backgroundColor = Color.FromArgb(29, 29, 29);
-                SolidBrush brush = new SolidBrush(backgroundColor);
-                e.Graphics.FillRectangle(brush, e.Bounds);
-                e.Item.ForeColor = Color.FromArgb(255, 153, 0);
-            }
-            e.DrawText();
         }
 
         //=============================================================================================================
-        //--------- DRAW AN ELLIPSIS WHEN STRINGS DONT FIT IN A LISTVIEW COLUMN ---------------------------------------
-        private void listViewTransactions_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        //-----DRAW AN ELLIPSIS WHEN STRINGS DONT FIT IN LISTVIEW COLUMN (ALSO COLOUR BALANCE DIFFERENCE RED/GREEN)----
+        private void ListViewTransactions_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
             var text = e.SubItem.Text;
+            
+            if (text[0] == '+') // if the string is a change to an amount and positive
+            {
+                e.SubItem.ForeColor = Color.OliveDrab; // make it green
+
+            }
+            else
+            if (text[0] == '-') // if the string is a change to an amount and negative
+            {
+                e.SubItem.ForeColor = Color.IndianRed; // make it red
+            }
+
             var font = listViewTransactions.Font;
             var columnWidth = e.Header.Width;
             var textWidth = TextRenderer.MeasureText(text, font).Width;
@@ -1448,8 +1531,10 @@ namespace Statamoto
             {
                 // Clear the background
                 var bounds = new Rectangle(e.SubItem.Bounds.Left, e.SubItem.Bounds.Top, columnWidth, e.SubItem.Bounds.Height);
+
                 e.Graphics.FillRectangle(new SolidBrush(listViewTransactions.BackColor), bounds);
-                TextRenderer.DrawText(e.Graphics, text, font, bounds, e.Item.ForeColor, TextFormatFlags.Left);
+
+                TextRenderer.DrawText(e.Graphics, text, font, bounds, e.SubItem.ForeColor, TextFormatFlags.Left);
             }
         }
 
@@ -1474,7 +1559,7 @@ namespace Statamoto
                     PingReply reply = await pingSender.SendPingAsync(pingAddress);
                     if (reply.Status == IPStatus.Success)
                     {
-                        lblNodeStatusLight.ForeColor = Color.Green;
+                        lblNodeStatusLight.ForeColor = Color.OliveDrab;
                         var displayNodeName = "";
                         if (NodeURL == "https://blockstream.info/api/")
                         {
@@ -1524,10 +1609,34 @@ namespace Statamoto
         //------------------ LIMIT MINIMUM WIDTH OF LISTVIEW COLUMNS --------------------------------------------------
         private void listViewTransactions_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
         {
-            if (listViewTransactions.Columns[e.ColumnIndex].Width < 120)
+            if (e.ColumnIndex == 0)
             {
-                e.Cancel = true;
-                e.NewWidth = 120;
+                if (listViewTransactions.Columns[e.ColumnIndex].Width < 355) // min width
+                {
+                    e.Cancel = true;
+                    e.NewWidth = 355;
+                }
+                if (listViewTransactions.Columns[e.ColumnIndex].Width > 460) // max width
+                {
+                    e.Cancel = true;
+                    e.NewWidth = 460;
+                }
+            }
+            if (e.ColumnIndex == 1)
+            {
+                if (listViewTransactions.Columns[e.ColumnIndex].Width != 60) // don't allow this one to change
+                {
+                    e.Cancel = true;
+                    e.NewWidth = 60;
+                }
+            }
+            if (e.ColumnIndex == 2)
+            {
+                if (listViewTransactions.Columns[e.ColumnIndex].Width != 100) // don't allow this one to change
+                {
+                    e.Cancel = true;
+                    e.NewWidth = 100;
+                }
             }
         }
 
@@ -1561,15 +1670,15 @@ namespace Statamoto
 
         private void ChangeStatusLightAndClearErrorMessage()
         {
-            if (lblStatusLight.ForeColor != Color.DarkRed && lblStatusLight.ForeColor != Color.Green) // check whether a data refresh has just occured to see if a status light flash needs dimming
+            if (lblStatusLight.ForeColor != Color.IndianRed && lblStatusLight.ForeColor != Color.OliveDrab) // check whether a data refresh has just occured to see if a status light flash needs dimming
             {
                 if (lblStatusLight.ForeColor == Color.Lime) // successful data refresh has occured
                 {
-                    lblStatusLight.ForeColor = Color.Green; // reset the colours to a duller version to give appearance of a flash
+                    lblStatusLight.ForeColor = Color.OliveDrab; // reset the colours to a duller version to give appearance of a flash
                 }
                 else // an error must have just occured
                 {
-                    lblStatusLight.ForeColor = Color.DarkRed; // reset the colours to a duller version to give appearance of a flash
+                    lblStatusLight.ForeColor = Color.IndianRed; // reset the colours to a duller version to give appearance of a flash
                     if (intDisplayCountdownToRefresh < 11) // when there are only 10 seconds left until the refresh...
                     {
                         lblErrorMessage.Text = ""; // hide any previous error message
@@ -1807,6 +1916,28 @@ namespace Statamoto
     {
         public string txid { get; set; }
         public Status status { get; set; }
+        public List<Vout> vout { get; set; }
+        public List<Vin> vin { get; set; }
+    }
+
+    public class Vin
+    {
+        public Prevout prevout { get; set; }
+        public decimal value { get; set; }
+        public decimal amount { get; set; }
+    }
+
+    public class Prevout
+    {
+        public string scriptpubkey_address { get; set; }
+        public decimal value { get; set; }
+    }
+
+    public class Vout
+    {
+        public double value { get; set; }
+        public decimal amount { get; set; }
+        public string scriptpubkey_address { get; set; }
     }
 
     public class Status

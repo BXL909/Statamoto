@@ -211,6 +211,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BTC48.ico" />
+    <Content Include="greentriangle.png" />
+    <Content Include="redtriangle.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

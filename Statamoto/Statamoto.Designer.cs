@@ -208,6 +208,7 @@
             this.btnFirstTransaction = new System.Windows.Forms.Button();
             this.btnNextTransactions = new System.Windows.Forms.Button();
             this.listViewTransactions = new System.Windows.Forms.ListView();
+            this.imageListUpDownArrows = new System.Windows.Forms.ImageList(this.components);
             this.lblNodeStatusLight = new System.Windows.Forms.Label();
             this.lblGenesisAddress = new System.Windows.Forms.Label();
             this.lblConfirmedUnspentOutputs = new System.Windows.Forms.Label();
@@ -2579,13 +2580,13 @@
             this.btnFirstTransaction.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(36)))), ((int)(((byte)(4)))));
             this.btnFirstTransaction.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFirstTransaction.ForeColor = System.Drawing.Color.Gray;
-            this.btnFirstTransaction.Location = new System.Drawing.Point(598, 347);
+            this.btnFirstTransaction.Location = new System.Drawing.Point(602, 339);
             this.btnFirstTransaction.Name = "btnFirstTransaction";
             this.btnFirstTransaction.Size = new System.Drawing.Size(70, 22);
             this.btnFirstTransaction.TabIndex = 141;
             this.btnFirstTransaction.Text = "◀ newest";
             this.btnFirstTransaction.UseVisualStyleBackColor = false;
-            this.btnFirstTransaction.Click += new System.EventHandler(this.btnFirstTransaction_Click);
+            this.btnFirstTransaction.Click += new System.EventHandler(this.BtnFirstTransaction_Click);
             // 
             // btnNextTransactions
             // 
@@ -2594,13 +2595,13 @@
             this.btnNextTransactions.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(36)))), ((int)(((byte)(4)))));
             this.btnNextTransactions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNextTransactions.ForeColor = System.Drawing.Color.Gray;
-            this.btnNextTransactions.Location = new System.Drawing.Point(683, 347);
+            this.btnNextTransactions.Location = new System.Drawing.Point(687, 339);
             this.btnNextTransactions.Name = "btnNextTransactions";
             this.btnNextTransactions.Size = new System.Drawing.Size(70, 22);
             this.btnNextTransactions.TabIndex = 140;
             this.btnNextTransactions.Text = "▷ next";
             this.btnNextTransactions.UseVisualStyleBackColor = false;
-            this.btnNextTransactions.Click += new System.EventHandler(this.btnGetNextTransactions);
+            this.btnNextTransactions.Click += new System.EventHandler(this.BtnGetNextTransactions);
             // 
             // listViewTransactions
             // 
@@ -2610,7 +2611,7 @@
             this.listViewTransactions.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listViewTransactions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(0)))));
             this.listViewTransactions.FullRowSelect = true;
-            this.listViewTransactions.GridLines = true;
+            this.listViewTransactions.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewTransactions.HideSelection = false;
             this.listViewTransactions.LabelWrap = false;
             this.listViewTransactions.Location = new System.Drawing.Point(252, 78);
@@ -2618,14 +2619,24 @@
             this.listViewTransactions.Name = "listViewTransactions";
             this.listViewTransactions.OwnerDraw = true;
             this.listViewTransactions.Scrollable = false;
+            this.listViewTransactions.ShowGroups = false;
             this.listViewTransactions.Size = new System.Drawing.Size(499, 293);
+            this.listViewTransactions.SmallImageList = this.imageListUpDownArrows;
             this.listViewTransactions.TabIndex = 139;
+            this.listViewTransactions.TabStop = false;
             this.listViewTransactions.UseCompatibleStateImageBehavior = false;
-            this.listViewTransactions.View = System.Windows.Forms.View.Tile;
+            this.listViewTransactions.View = System.Windows.Forms.View.Details;
             this.listViewTransactions.ColumnWidthChanging += new System.Windows.Forms.ColumnWidthChangingEventHandler(this.listViewTransactions_ColumnWidthChanging);
             this.listViewTransactions.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.listViewTransactions_DrawColumnHeader);
-            this.listViewTransactions.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.listViewTransactions_DrawItem);
-            this.listViewTransactions.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.listViewTransactions_DrawSubItem);
+            this.listViewTransactions.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewTransactions_DrawSubItem);
+            this.listViewTransactions.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listViewTransactions_ItemSelectionChanged);
+            // 
+            // imageListUpDownArrows
+            // 
+            this.imageListUpDownArrows.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListUpDownArrows.ImageStream")));
+            this.imageListUpDownArrows.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListUpDownArrows.Images.SetKeyName(0, "greentriangle.png");
+            this.imageListUpDownArrows.Images.SetKeyName(1, "redtriangle.png");
             // 
             // lblNodeStatusLight
             // 
@@ -3118,6 +3129,7 @@
         private System.Windows.Forms.Button btnNextTransactions;
         private System.Windows.Forms.Button btnFirstTransaction;
         private System.Windows.Forms.Label lblTXPlaceInfo;
+        private System.Windows.Forms.ImageList imageListUpDownArrows;
     }
 }
 
