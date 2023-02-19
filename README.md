@@ -2,10 +2,12 @@
 
 Version history
 
-1.0 initial release
+1.2 Lightning network dashboard added. Please see https://btcdir.org/statamoto/ for info/screenshots. This project has now widened in scope and will now be known as 'SATSuma' and will continue development in a new repository of that name.
 
 1.1 Used threading on API calls for speed and UI responsiveness. Added 4 new fields (number of hodling addresses, Blockchain size, 24 hour number of blocks mined, Number of discoverable nodes)
 Added settings screen. Added ability to disable individual API calls. Added options to change API call refresh frequency. Added a 'last updated' timer.
+
+1.0 initial release
 
 
 Statamoto is a simple dashboard of Bitcoin metrics derived from market, on-chain and mempool data, built in C#.
