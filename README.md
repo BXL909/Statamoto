@@ -1,6 +1,6 @@
 # Statamoto 🟠⚡
 
-⚠️<b>This project has now widened in scope and will now be known as 'SATSuma' and will continue development in a new repository of that name</b>
+⚠️<b>This project has widened in scope and will now be known as 'SATSuma' and will continue in a new repository of that name</b>
 
 Version history
 
